@@ -1,4 +1,4 @@
-package com.example.rememberme.ui.dashboard;
+package com.example.rememberme.ui.quiz;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

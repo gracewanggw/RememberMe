@@ -1,4 +1,4 @@
-package com.example.rememberme.ui.notifications;
+package com.example.rememberme.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.R;
 
-public class NotificationsFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
 
