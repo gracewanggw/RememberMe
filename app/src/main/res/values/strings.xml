@@ -4,10 +4,18 @@
     <string name="title_quiz">Quiz</string>
     <string name="title_profile">Profile</string>
 
+    <string name="back">&lt; Back to People</string>
     <string name="quiz_me">Quiz Me</string>
-    <string name="back">Back</string>
-    <string name="edit">Edit</string>
-    <string name="add_memory">Add Memory</string>
-    
-    <string name="backItem">Back</string>
+    <string name="name">FIRST LAST</string>
+    <string name="call">Call Name</string>
+    <string name="relationship">RELATIONSHIP:</string>
+    <string name="age">AGE:</string>
+    <string name="birthday">BIRTHDAY:</string>
+    <string name="location">LOCATION:</string>
+    <string name="memories">MEMORIES</string>
+    <string name="edit">EDIT</string>
+    <string name="backItem">&lt; BACK TO PERSON</string>
+    <string name="add_memory">+</string>
+    <string name="cancel">CANCEL</string>
+    <string name="save">SAVE CHANGES</string>
 </resources>

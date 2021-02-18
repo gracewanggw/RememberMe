@@ -1,4 +1,4 @@
-package com.example.remembermeryan.DB;
+package com.example.rememberme.DB;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
