@@ -14,8 +14,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.remembermeryan.DB.FramilyDbHelper;
-import com.example.remembermeryan.DB.FramilyDbSource;
+import com.example.rememberme.DB.FramilyDbHelper;
+import com.example.rememberme.DB.FramilyDbSource;
 
 import java.util.ArrayList;
 

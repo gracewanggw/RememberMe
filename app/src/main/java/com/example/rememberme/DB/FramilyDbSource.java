@@ -1,4 +1,4 @@
-package com.example.remembermeryan.DB;
+package com.example.rememberme.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.amitshekhar.DebugDB;
-import com.example.remembermeryan.Framily;
+import com.example.rememberme.Framily;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
