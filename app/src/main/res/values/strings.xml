@@ -3,4 +3,11 @@
     <string name="title_people">People</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_profile">Profile</string>
+
+    <string name="quiz_me">Quiz Me</string>
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="add_memory">Add Memory</string>
+    
+    <string name="backItem">Back</string>
 </resources>

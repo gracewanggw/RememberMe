@@ -1,4 +1,4 @@
-package com.example.remembermeryan;
+package com.example.rememberme;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
