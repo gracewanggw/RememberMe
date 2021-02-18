@@ -59,7 +59,7 @@
         android:paddingTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/photo"
-        android:text="@string/name"
+        android:text="Name"
         android:textSize="30dp"
         android:textColor="@color/black"/>
 
@@ -76,7 +76,7 @@
         android:bottomLeftRadius="80dp"
         android:topLeftRadius="80dp"
         android:topRightRadius="80dp"
-        android:text="@string/call"/>
+        android:text="Call"/>
 
     <TableLayout
         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                 android:id="@+id/relationship_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/relationship"
+                android:text="Relationship"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14dp" />
@@ -125,7 +125,7 @@
                 android:id="@+id/age_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/age"
+                android:text="Age"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14dp" />
@@ -153,7 +153,7 @@
                 android:id="@+id/birthday_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/birthday"
+                android:text="Birthday"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14dp" />
@@ -181,7 +181,7 @@
                 android:id="@+id/location_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/location"
+                android:text="Location"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14dp" />
@@ -206,7 +206,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/memories"
-        android:text="@string/memories"
+        android:text="Memories"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:paddingTop="20dp"
