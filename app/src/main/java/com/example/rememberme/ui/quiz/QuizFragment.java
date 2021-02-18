@@ -35,7 +35,7 @@ public class QuizFragment extends Fragment {
 
         quizAll = root.findViewById(R.id.quiz_all_button);
         nameFace = root.findViewById(R.id.name_to_face_button);
-        birthdays = root.findViewById(R.id.birthday);
+        birthdays = root.findViewById(R.id.quiz_birthday_button);
         review = root.findViewById(R.id.quiz_review_button);
 
         quizAll.setOnClickListener(new View.OnClickListener() {
