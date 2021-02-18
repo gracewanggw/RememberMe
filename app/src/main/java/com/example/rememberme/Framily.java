@@ -1,5 +1,9 @@
 package com.example.remembermeryan;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.util.ArrayList;
 
 public class Framily {
@@ -11,11 +15,14 @@ public class Framily {
     public int age;
     public String birthday;
     public String location;
-    public long phoneNumber;
+    public String phoneNumber;
     public ArrayList<Integer> memories;
+    public int image;
+
 
     public Framily() {
         memories = new ArrayList<Integer>();
+        image = R.drawable._pic;
     }
 
     public void setId(int id) {this.id = id;}
@@ -39,10 +46,13 @@ public class Framily {
     public void setLocation(String location) {this.location = location;}
     public String getLocation() {return location;}
 
-    public void setPhoneNumber(long phoneNumber) {this.phoneNumber = phoneNumber;}
-    public long getPhoneNumber() {return phoneNumber;}
+    public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
+    public String getPhoneNumber() {return phoneNumber;}
 
     public void setMemories(ArrayList<Integer> memories) {this.memories = memories;}
     public ArrayList<Integer> getMemories() {return memories;}
     public void addMemory(int memory) {memories.add(memory);}
+
+    public void setImage(int image) {this.image = image;}
+    public int getImage() {return image;}
 }
