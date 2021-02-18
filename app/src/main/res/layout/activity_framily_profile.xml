@@ -37,7 +37,7 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@drawable/test_pic"/>
+        android:src="@drawable/_pic"/>
 
     <TextView
         android:layout_width="wrap_content"

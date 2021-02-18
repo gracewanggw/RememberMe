@@ -14,14 +14,20 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.remembermeryan.DB.FramilyDbHelper;
+import com.example.remembermeryan.DB.FramilyDbSource;
+
 import java.util.ArrayList;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
 
+    FramilyDbSource dbSource;
+    private Framily framily;
+    int framilyId;
+
     ImageView photo;
     RoundImage roundedImage;
     private MemoriesAdapter memoriesAdapter;
-    private Framily framily;
     GridView gridView;
     ArrayList<Integer> memories;
 
@@ -47,11 +53,25 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framily_profile);
 
+        dbSource = new FramilyDbSource(this);
+        dbSource.open();
+        Intent intent = getIntent();
+        framilyId = intent.getIntExtra(ID_KEY, -1);
+        if(framilyId > 0)
+            framily = dbSource.fetchEntryByIndex(framilyId);
+        else
+            framily = new Framily();
+
         name = findViewById(R.id.name);
+        name.setText(framily.getNameFirst() + " " + framily.getNameLast());
         relationship = findViewById(R.id.relationship);
+        relationship.setText(framily.getRelationship());
         age = findViewById(R.id.age);
+        age.setText(framily.getAge() + "");
         birthday = findViewById(R.id.birthday);
+        birthday.setText(framily.getBirthday());
         location = findViewById(R.id.location);
+        location.setText(framily.getLocation());
 
         call = findViewById(R.id.call);
         call.setOnClickListener(this);
@@ -64,7 +84,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         addMemory = findViewById(R.id.add_memory);
         addMemory.setOnClickListener(this);
 
-        framily = new Framily(); //TODO: Link to database
         memories = framily.getMemories();
         memoriesAdapter = new MemoriesAdapter(this, memories);
         gridView = (GridView)findViewById(R.id.gridview);
