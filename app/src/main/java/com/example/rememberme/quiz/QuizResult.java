@@ -63,11 +63,11 @@ public class QuizResult extends DialogFragment implements DialogInterface.OnClic
             if(type == REVIEW) {
                 //for wrong answer if not in wrong answers already
                 //add to the set
-                Toast.makeText(getActivity(), "add right answers", Toast.LENGTH_SHORT );
+                Toast.makeText(getActivity(), "add right answers", Toast.LENGTH_SHORT ).show();
             }
             //fpr review quizes, remove the right answers from the review set
             if(type == REVIEW){
-                Toast.makeText(getActivity(), "remove right answers", Toast.LENGTH_SHORT );
+                Toast.makeText(getActivity(), "remove right answers", Toast.LENGTH_SHORT ).show();
             }
         }else{
             //throw some error

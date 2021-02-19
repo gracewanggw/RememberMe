@@ -12,10 +12,11 @@
         <!--progress bar -->
 
         <TextView
+            android:id = "@+id/question"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="275dp"
             android:textSize="55sp"
-            android:text="QUESTION Here"
+            android:text="QUESTION HERE"
             android:gravity = "center"
             android:layout_marginTop="20dp"
             android:layout_weight="0"
@@ -30,6 +31,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/button"
             android:layout_weight="0"
+            android:textAllCaps="false"
             />
 
         <Button
@@ -39,6 +41,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/button"
             android:layout_weight="0"
+            android:textAllCaps="false"
             />
         <Button
             android:id="@+id/op3"
@@ -47,6 +50,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/button"
             android:layout_weight="0"
+            android:textAllCaps="false"
             />
         <Button
             android:id="@+id/op4"
@@ -55,6 +59,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/button"
             android:layout_weight="0"
+            android:textAllCaps="false"
             />
 
 
@@ -68,6 +73,7 @@
         android:gravity="bottom|center"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
+        android:background="@color/custom_blue"
         />
 
 </FrameLayout>

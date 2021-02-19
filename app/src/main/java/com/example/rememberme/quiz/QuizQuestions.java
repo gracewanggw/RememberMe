@@ -2,23 +2,41 @@ package com.example.rememberme.quiz;
 
 public class QuizQuestions {
 
-    String question ,
+    private int totalQuestions = 4;
+
+    private String testQuestions[] = {
+            "What is the color of the sky?",
+            "What term is it right now",
+            "If you had to choose between never eating sugar again or never eating salt again what is the right choice?",
+            "What is the best state in the US?"
+    };
+
+    private String choices[][] = {
+            {"Blue", "Red", "Pink", "Green"},
+            {"20W", "16F", "21W", "21S"},
+            {"Never eating sugar", "Never eating salt", "I refuse", "Both, I hate sugar and salt"},
+            {"New Hampshire", "California", "Texas", "Oregon"}
+    };
+
+    private int correctAns[] = {0,2,2,3};
+
+    public String question ,
             op1 ,
             op2 ,
             op3 ,
             op4 ,
             correct_answer;
 
-    QuizQuestions (String question , String op1 , String op2 ,String op3, String op4 , String corrAns) {
-        this.question = question ;
-        this.op1 = op1;
-        this.op2 = op2;
-        this.op3 = op3 ;
-        this.op4 = op4 ;
-        this.correct_answer = corrAns ;
-    }
+    public int total;
 
-    public QuizQuestions getQuestion(){
+    public QuizQuestions getQuestion(int num){
+        question = testQuestions[num] ;
+        op1 = choices[num][0];
+        op2 = choices[num][1];
+        op3 = choices[num][2] ;
+        op4 = choices[num][3] ;
+        correct_answer = choices[num][correctAns[num]];
+        total = totalQuestions;
         return this;
     }
 }
