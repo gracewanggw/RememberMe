@@ -1,67 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/quiz_fragment"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Input Type" >
-    </TextView>
+    <LinearLayout
+        android:id="@+id/quiz_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--progress bar -->
 
-    <Spinner
-        android:id="@+id/input_type_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="55sp"
+            android:text="QUESTION Here"
+            android:gravity = "center"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0"
+            >
+        </TextView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Activity Type" >
-    </TextView>
 
-    <Spinner
-        android:id="@+id/activity_type_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
+        <Button
+            android:id="@+id/op1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:layout_weight="0"
+            />
+
+        <Button
+            android:id="@+id/op2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:layout_weight="0"
+            />
+        <Button
+            android:id="@+id/op3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:layout_weight="0"
+            />
+        <Button
+            android:id="@+id/op4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:layout_weight="0"
+            />
+
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/choice1"
+        android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:onClick="onStartClicked"
-        />
-
-    <Button
-        android:id="@+id/choice2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:text="@string/exit"
+        android:gravity="bottom|center"
+        android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:text="@string/ui_sync_btn"
-        android:onClick="onSyncClicked"
-        />
-    <Button
-        android:id="@+id/choice3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/ui_sync_btn"
-        android:onClick="onSyncClicked"
-        />
-    <Button
-        android:id="@+id/choice4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/ui_sync_btn"
-        android:onClick="onSyncClicked"
         />
 
-</LinearLayout>
+</FrameLayout>

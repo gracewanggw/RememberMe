@@ -5,6 +5,9 @@
     <string name="title_profile">Profile</string>
 
     <!-- strings for quiz things -->
+    <string name="exit">Exit Quiz</string>
+
+
     <string name="results_txt">Your Results: </string>
     <string name="wrong_ans">Wrong Answers</string>
     <string name="wrong">Wrong</string>
