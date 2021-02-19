@@ -18,7 +18,7 @@
             android:textSize="55sp"
             android:text="QUESTION HERE"
             android:gravity = "center"
-            android:layout_marginTop="20dp"
+            android:layout_margin="20dp"
             android:layout_weight="0"
             >
         </TextView>

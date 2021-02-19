@@ -1,4 +1,4 @@
-package com.example.remembermeryan;
+package com.example.rememberme;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
