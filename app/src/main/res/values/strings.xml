@@ -3,4 +3,10 @@
     <string name="title_people">People</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_profile">Profile</string>
+
+    <!-- strings for quiz things -->
+    <string name="results_txt">Your Results: </string>
+    <string name="wrong_ans">Wrong Answers</string>
+    <string name="wrong">Wrong</string>
+    <string name="right">Correct</string>
 </resources>
