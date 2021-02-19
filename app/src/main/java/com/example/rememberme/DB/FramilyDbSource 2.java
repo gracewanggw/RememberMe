@@ -118,10 +118,6 @@ public class FramilyDbSource {
         return entries;
     }
 
-    public void updateEntry(int rowId) {
-
-    }
-
     private Framily cursorToFramily(Cursor cursor) {
         Framily framily = new Framily();
         framily.setId(cursor.getInt(0));
