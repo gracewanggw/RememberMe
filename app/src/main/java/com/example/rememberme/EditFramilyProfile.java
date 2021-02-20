@@ -1,4 +1,4 @@
-package com.example.remembermeryan;
+package com.example.rememberme;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.remembermeryan.DB.FramilyDbSource;
+import com.example.rememberme.DB.FramilyDbSource;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
