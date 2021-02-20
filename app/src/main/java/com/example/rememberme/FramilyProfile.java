@@ -127,7 +127,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.back:
-                finish();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.quiz:

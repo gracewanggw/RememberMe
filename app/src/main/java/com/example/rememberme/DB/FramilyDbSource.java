@@ -144,21 +144,21 @@ public class FramilyDbSource {
             values.put(FramilyDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
 //        if (framily.getImage() != null)
 //            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
-        database.update(FramilyDbHelper.TABLE_NAME, values, "_id=" + rowId, null);
+        database.update(FramilyDbHelper.TABLE_NAME, values, FramilyDbHelper.ID + " = " + rowId, null);
     }
 
     private Framily cursorToFramily(Cursor cursor) {
         Framily framily = new Framily();
-        framily.setId(cursor.getInt(0));
-        framily.setNameFirst(cursor.getString(1));
-        framily.setNameLast(cursor.getString(2));
-        framily.setRelationship(cursor.getString(3));
-        framily.setAge(cursor.getInt(4));
-        framily.setBirthday(cursor.getString(5));
-        framily.setLocation(cursor.getString(6));
-        framily.setPhoneNumber(cursor.getString(7));
-        if (cursor.getBlob(8) != null)
-            framily.setMemories(byteArrayToArrayList(cursor.getBlob(8)));
+        framily.setId(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.ID)));
+        framily.setNameFirst(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_FIRST)));
+        framily.setNameLast(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_LAST)));
+        framily.setRelationship(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.RELATIONSHIP)));
+        framily.setAge(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.AGE)));
+        framily.setBirthday(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.BIRTHDAY)));
+        framily.setLocation(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.LOCATION)));
+        framily.setPhoneNumber(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.PHONE_NUMBER)));
+        if (cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES)) != null)
+            framily.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES))));
         return framily;
     }
 
