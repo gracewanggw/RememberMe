@@ -1,4 +1,4 @@
-package com.example.rememberme;
+package com.example.remembermeryan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +14,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.rememberme.DB.FramilyDbHelper;
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.remembermeryan.DB.FramilyDbHelper;
+import com.example.remembermeryan.DB.FramilyDbSource;
 
 import java.util.ArrayList;
 
@@ -43,10 +43,10 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     TextView edit;
     TextView addMemory;
 
-    public static final String ID_KEY = "id_key";
+    private static final String ID_KEY = "id_key";
 
-    public static final String IMAGE_KEY = "image";
-    public static final String POSITION_KEY = "position";
+    private static final String IMAGE_KEY = "image";
+    private static final String POSITION_KEY = "position";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         });
 
         photo = (ImageView) findViewById(R.id.photo);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.test_pic);
         roundedImage = new RoundImage(bm);
         photo.setImageDrawable(roundedImage);
     }
@@ -120,27 +120,22 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel: " + framily.getPhoneNumber()));
                 startActivity(intent);
-                break;
 
             case R.id.back:
                 //TODO: Back to people
-                break;
 
             case R.id.quiz:
                 //TODO: Go to quiz
-                break;
 
             case R.id.edit:
                 intent = new Intent(this, EditFramilyProfile.class);
                 intent.putExtra(ID_KEY, framily.getId());
                 startActivity(intent);
-                break;
 
             case R.id.add_memory:
                 intent = new Intent(this, AddMemoryActivity.class);
                 intent.putExtra(ID_KEY, framily.getId());
                 startActivity(intent);
-                break;
         }
     }
 }

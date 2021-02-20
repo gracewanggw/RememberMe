@@ -1,4 +1,4 @@
-package com.example.rememberme.DB;
+package com.example.remembermeryan.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-//import com.amitshekhar.DebugDB;
-import com.example.rememberme.Framily;
+import com.amitshekhar.DebugDB;
+import com.example.remembermeryan.Framily;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -75,14 +75,14 @@ public class FramilyDbSource {
 
     // Remove an entry by giving its index
     public void removeEntry(long rowIndex) {
-       // Log.d("rdudak", DebugDB.getAddressLog());
+        Log.d("rdudak", DebugDB.getAddressLog());
         database.delete(FramilyDbHelper.TABLE_NAME, FramilyDbHelper.ID
                 + " = " + rowIndex, null);
     }
 
     // Query a specific entry by its index.
     public Framily fetchEntryByIndex(int rowId) {
-        //Log.d("rdudak", DebugDB.getAddressLog());
+        Log.d("rdudak", DebugDB.getAddressLog());
         Cursor cursor = database.query(FramilyDbHelper.TABLE_NAME, allColumns,
                 FramilyDbHelper.ID + " = " + rowId, null,
                 null, null, null);
@@ -116,10 +116,6 @@ public class FramilyDbSource {
         // Make sure to close the cursor
         cursor.close();
         return entries;
-    }
-
-    public void updateEntry(int rowId) {
-
     }
 
     private Framily cursorToFramily(Cursor cursor) {
