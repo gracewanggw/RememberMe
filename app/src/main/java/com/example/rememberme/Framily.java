@@ -55,4 +55,8 @@ public class Framily {
 
     public void setImage(int image) {this.image = image;}
     public int getImage() {return image;}
+
+    public String toString() {
+        return nameFirst + " " + nameLast + ", Relationship = " + relationship;
+    }
 }

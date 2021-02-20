@@ -20,8 +20,8 @@ public class FramilyDbHelper extends SQLiteOpenHelper {
     public static final String MEMORIES = "memories";
     public static final String IMAGE = "image";
 
-    private static final String DATABASE_NAME = "framilyMembers.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "framily.db";
+    private static final int DATABASE_VERSION = 2;
 
     private static final String CREATE_TABLE_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "( " +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
