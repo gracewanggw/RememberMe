@@ -1,38 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FramilyProfile"
+    tools:context=".ui.profile.ProfileFragment"
     android:background="@drawable/background">
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/back"
-        android:text="@string/back"
-        android:background="@android:color/transparent"
-        android:textColor="@color/white" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quiz_me"
-        android:id="@+id/quiz"
-        android:background="@android:color/transparent"
-        android:layout_toRightOf="@+id/back"
-        android:paddingLeft="150dp"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/white" />
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/photo"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_below="@+id/back"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
@@ -48,9 +28,10 @@
         android:textColor="@color/black"
         android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="105dp"
-        android:layout_marginRight="5dp"
-        android:layout_below="@id/quiz"/>
+        android:layout_marginTop="160dp"
+        android:textSize="16dp"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackground"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,25 +44,10 @@
         android:textSize="30dp"
         android:textColor="@color/black"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/name"
-        android:id="@+id/call"
-        android:backgroundTint="@color/custom_blue"
-        android:bottomRightRadius="80dp"
-        android:bottomLeftRadius="80dp"
-        android:topLeftRadius="80dp"
-        android:topRightRadius="80dp"
-        android:text="Call"/>
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/call"
+        android:layout_below="@id/name"
         android:layout_marginTop="20dp"
         android:id="@+id/table"
         android:stretchColumns="*"
@@ -100,7 +66,7 @@
                 android:text="Relationship"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
 
@@ -110,7 +76,7 @@
                 android:text="insert here"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
@@ -128,7 +94,7 @@
                 android:text="Age"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
 
@@ -138,7 +104,7 @@
                 android:text="insert here"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
@@ -156,7 +122,7 @@
                 android:text="Birthday"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
 
@@ -166,7 +132,7 @@
                 android:text="insert here"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
@@ -184,7 +150,7 @@
                 android:text="Location"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <TextView
 
@@ -194,52 +160,66 @@
                 android:text="insert here"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
 
+        <TableRow
+            android:id="@+id/row5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:id="@+id/emergency_contact_label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emergency Contact #1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16dp" />
+
+            <TextView
+
+                android:id="@+id/emergency_contact_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="insert here"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_gravity="right"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:id="@+id/emergency_contact_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emergency Contact #2"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16dp" />
+
+            <TextView
+
+                android:id="@+id/emergency_contact_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="insert here"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_gravity="right"/>
+
+        </TableRow>
 
     </TableLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/memories"
-        android:text="Memories"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:paddingTop="20dp"
-        android:paddingLeft="5dp"
-        android:layout_below="@id/table"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_memory"
-        android:text="@string/add_memory"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/table"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:paddingTop="18dp"
-        android:paddingRight="5dp"
-        android:clickable="true"
-        android:textStyle="bold"/>
-
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:columnWidth="100dp"
-        android:numColumns="3"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
-        android:layout_below="@id/memories"
-        />
-
-
-
-
 </RelativeLayout>
