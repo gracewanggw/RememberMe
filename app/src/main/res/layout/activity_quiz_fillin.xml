@@ -11,17 +11,13 @@
         android:orientation="vertical">
         <!--progress bar -->
 
-        <TextView
-            android:id = "@+id/question"
+        <FrameLayout
+            android:id="@+id/card"
             android:layout_width="match_parent"
-            android:layout_height="275dp"
-            android:textSize="55sp"
-            android:text="QUESTION HERE"
-            android:gravity = "center"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="100dp"
-            >
-        </TextView>
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <include layout="@layout/flashcard" />
+        </FrameLayout>
 
 
         <EditText
@@ -30,6 +26,15 @@
             android:layout_margin="20dp"
             >
         </EditText>
+
+        <Button
+            android:id="@+id/submit_ans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            />
 
 
     </LinearLayout>

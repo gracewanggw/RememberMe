@@ -1,12 +1,19 @@
 package com.example.rememberme.quiz;
 
+import android.animation.AnimatorSet;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rememberme.R;
+import com.example.rememberme.ui.quiz.QuizFragment;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 //Quiz Activity
@@ -16,23 +23,35 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private QuizQuestions questions;
 
     private TextView mQuestion;
+    private FrameLayout questionCard;
     private Button c1;
     private Button c2;
     private Button c3;
     private Button c4;
+    private EditText input;
+    private Button submit;
 
     private int questionNum;
     private String answer;
 
+    private int type = 0;
     private int correct_answers;
     private int wrong_answers;
     private int score;
+
+    private AnimatorSet mSetRightOut;
+    private AnimatorSet mSetLeftIn;
+    private boolean mIsBackVisible = false;
+    private View mCardFrontLayout;
+    private View mCardBackLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_mc);
+
+        Intent myintent = getIntent();
+        //type = myintent.getIntExtra(QuizFragment.TYPE_KEY, 0);
 
         questions = new QuizQuestions();
         correct_answers = 0;
@@ -40,27 +59,55 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         score = 0;
         questionNum = 0;
 
-        mQuestion = (TextView) findViewById(R.id.question);
-        c1 = (Button) findViewById(R.id.op1);
-        c2 = (Button) findViewById(R.id.op2);
-        c3 = (Button) findViewById(R.id.op3);
-        c4 = (Button) findViewById(R.id.op4);
 
-        c1.setOnClickListener(this);
-        c2.setOnClickListener(this);
-        c3.setOnClickListener(this);
-        c4.setOnClickListener(this);
+
+        if (type == 0) {
+            setContentView(R.layout.activity_quiz_mc);
+
+            c1 = (Button) findViewById(R.id.op1);
+            c2 = (Button) findViewById(R.id.op2);
+            c3 = (Button) findViewById(R.id.op3);
+            c4 = (Button) findViewById(R.id.op4);
+
+            c1.setOnClickListener(this);
+            c2.setOnClickListener(this);
+            c3.setOnClickListener(this);
+            c4.setOnClickListener(this);
+        }else if (type == 1){
+
+            setContentView(R.layout.activity_quiz_fillin);
+
+            submit = (Button) findViewById(R.id.submit_ans);
+            submit.setOnClickListener(this);
+
+        }else{
+            Log.d("debug", "invalid quiz type");
+        }
+
+        questionCard = (FrameLayout) findViewById(R.id.card);
+        questionCard.setOnClickListener(this);
+        float scale = this.getResources().getDisplayMetrics().density;
+        questionCard.setCameraDistance(8000 * scale);
+
+
+        mQuestion = (TextView) findViewById(R.id.question);
 
         updateQuestion();
 
     }
 
     private void updateQuestion(){
+
         mQuestion.setText(questions.getQuestion(questionNum).question);
-        c1.setText(questions.getQuestion(questionNum).op1);
-        c2.setText(questions.getQuestion(questionNum).op2);
-        c3.setText(questions.getQuestion(questionNum).op3);
-        c4.setText(questions.getQuestion(questionNum).op4);
+
+        if(type == 0) {
+            c1.setText(questions.getQuestion(questionNum).op1);
+            c2.setText(questions.getQuestion(questionNum).op2);
+            c3.setText(questions.getQuestion(questionNum).op3);
+            c4.setText(questions.getQuestion(questionNum).op4);
+        }else{
+            Log.d("debug", "invalid quiz type");
+        }
 
     }
 
@@ -92,6 +139,26 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
                     correct = true;
                 }
                 break;
+            case R.id.submit_ans:
+                if(input.getText().toString() == answer){
+                    correct = true;
+                }
+                break;
+            case R.id.card:
+                if (!mIsBackVisible) {
+                    mSetRightOut.setTarget(mCardFrontLayout);
+                    mSetLeftIn.setTarget(mCardBackLayout);
+                    mSetRightOut.start();
+                    mSetLeftIn.start();
+                    mIsBackVisible = true;
+                } else {
+                    mSetRightOut.setTarget(mCardBackLayout);
+                    mSetLeftIn.setTarget(mCardFrontLayout);
+                    mSetRightOut.start();
+                    mSetLeftIn.start();
+                    mIsBackVisible = false;
+                }
+                break;
             }
 
         if (correct){
@@ -99,22 +166,30 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         }else{
             wrong_answers++;
         }
+
         questionNum ++;
         if (questionNum < questions.getQuestion(questionNum).total){
             updateQuestion();
         }
         else{
-            QuizResult resultDialog = new QuizResult();
-            Bundle bundle = new Bundle();
-
-            bundle.putInt(QuizResult.QUIZ_KEY, resultDialog.PERSON);
-            resultDialog.setArguments(bundle);
-            resultDialog.show(this.getSupportFragmentManager(), TAG);
-            Toast.makeText(this, "End of quiz", Toast.LENGTH_SHORT).show();
-
+           endQuiz();
         }
 
+    }
 
+    public void endQuiz(){
+        score = (int) correct_answers/questions.getQuestion(questionNum).total;
+
+        QuizResult resultDialog = new QuizResult();
+        Bundle bundle = new Bundle();
+
+        bundle.putInt(QuizResult.QUIZ_KEY, resultDialog.PERSON);
+        bundle.putInt(QuizResult.CORRECT_KEY, correct_answers);
+        bundle.putInt(QuizResult.WRONG_KEY, wrong_answers);
+        bundle.putInt(QuizResult.PERCENT_KEY, score);
+        resultDialog.setArguments(bundle);
+        resultDialog.show(this.getSupportFragmentManager(), TAG);
+        Toast.makeText(this, "End of quiz", Toast.LENGTH_SHORT).show();
     }
 
 }

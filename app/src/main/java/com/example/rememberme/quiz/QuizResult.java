@@ -22,6 +22,10 @@ public class QuizResult extends DialogFragment implements DialogInterface.OnClic
     public static final int PERSON = 0;
     public static final int REVIEW = 1;
     public static final String QUIZ_KEY = "type of quiz";
+    public static final String CORRECT_KEY = "type of quiz";
+    public static final String WRONG_KEY = "type of quiz";
+    public static final String PERCENT_KEY = "type of quiz";
+
 
 //    public static int MODE = Context.MODE_PRIVATE;
 //    public SharedPreferences preferences;

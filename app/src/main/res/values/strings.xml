@@ -6,6 +6,7 @@
 
     <!-- strings for quiz things -->
     <string name="exit">Exit Quiz</string>
+    <string name="submit">Submit Answer</string>
 
 
     <string name="results_txt">Your Results: </string>
