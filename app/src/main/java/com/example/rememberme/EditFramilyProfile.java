@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.remembermeryan.DB.FramilyDbSource;
+import com.example.rememberme.DB.FramilyDbSource;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
