@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -57,8 +58,11 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         dbSource.open();
         Intent intent = getIntent();
         framilyId = intent.getIntExtra(ID_KEY, -1);
-        if(framilyId > 0)
+        Log.d("rdudak", "ID = " + framilyId);
+        if(framilyId >= 0) {
             framily = dbSource.fetchEntryByIndex(framilyId);
+            Log.d("rdudak", framily.toString());
+        }
         else
             framily = new Framily();
 
@@ -123,7 +127,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.back:
-                //TODO: Back to people
+                finish();
                 break;
 
             case R.id.quiz:

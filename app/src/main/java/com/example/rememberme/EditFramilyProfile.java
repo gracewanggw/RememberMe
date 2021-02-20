@@ -28,7 +28,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class EditFramilyProfile extends AppCompatActivity implements View.OnClickListener{
-//CS65 is cool
     ImageView photo;
     RoundImage roundedImage;
     Calendar myCalendar;
@@ -40,7 +39,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     TextView addMemory;
 
     FramilyDbSource dbSource;
-    Framily framily;
+    public static Framily framily;
     int id;
 
     EditText nameFirst;
@@ -71,7 +70,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
 
         Intent intent = getIntent();
         id = intent.getIntExtra(FramilyProfile.ID_KEY, -1);
-        if (id <= 0) {
+        if (id < 0) {
             framily = new Framily();
             memories = new ArrayList<Integer>();
         }
@@ -143,16 +142,10 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.save:
-                if (id > 0) {
-                    saveEntry();
-                    finish();
-                    loadData();
-                }
-                else {
-                    saveEntry();
-                    finish();
-                    loadData();
-                }
+                saveEntry();
+                intent = new Intent(this, FramilyProfile.class);
+                intent.putExtra(FramilyProfile.ID_KEY, id);
+                startActivity(intent);
                 break;
 
             case R.id.add_memory:
@@ -163,7 +156,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
 
             case R.id.remove:
                 askRemove(this);
-                //dbSource.removeEntry(framily.getId());
         }
     }
 
@@ -171,20 +163,23 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         framily.setNameFirst(nameFirst.getText().toString());
         framily.setNameLast(nameLast.getText().toString());
         framily.setRelationship(relationship.getText().toString());
-        framily.setAge(Integer.parseInt(age.getText().toString()));
+        if (!age.getText().toString().equals(""))
+            framily.setAge(Integer.parseInt(age.getText().toString()));
+        else
+            framily.setAge(0);
         framily.setBirthday(birthday.getText().toString());
         framily.setPhoneNumber(phone.getText().toString());
         framily.setLocation(location.getText().toString());
         framily.setMemories(memories);
-        if (id > 0) {
+        if (id >= 0) {
             dbSource.updateEntry(id);
             Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
         }
         else {
             dbSource.insertFramily(framily);
             Toast.makeText(this, "New Framily Member Saved", Toast.LENGTH_SHORT).show();
+            id = dbSource.fetchLastEntry().getId();
         }
-
     }
 
     public void askRemove(Context context) {
