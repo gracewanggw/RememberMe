@@ -8,7 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+<<<<<<< HEAD
 //import com.amitshekhar.DebugDB;
+=======
+import com.amitshekhar.DebugDB;
+>>>>>>> 49247e55edad5785c8fdae45cf341ced29dab54e
 import com.example.rememberme.Framily;
 
 import java.io.ByteArrayInputStream;
