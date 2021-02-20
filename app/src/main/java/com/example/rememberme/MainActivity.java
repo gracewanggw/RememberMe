@@ -1,27 +1,17 @@
 package com.example.rememberme;
-<<<<<<< HEAD
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-=======
->>>>>>> 49247e55edad5785c8fdae45cf341ced29dab54e
 
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-<<<<<<< HEAD
-=======
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
->>>>>>> 49247e55edad5785c8fdae45cf341ced29dab54e
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
