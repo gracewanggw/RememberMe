@@ -23,7 +23,8 @@
         android:id="@+id/save"
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/back"
-        android:paddingLeft="150dp"
+        android:paddingLeft="140dp"
+        android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:textColor="@color/white" />
 

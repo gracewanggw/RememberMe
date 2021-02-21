@@ -16,12 +16,12 @@ public class Framily {
     public String birthday;
     public String location;
     public String phoneNumber;
-    public ArrayList<Integer> memories;
+    public ArrayList<Memory> memories;
     public int image;
 
 
     public Framily() {
-        memories = new ArrayList<Integer>();
+        memories = new ArrayList<Memory>();
         image = R.drawable._pic;
     }
 
@@ -49,9 +49,9 @@ public class Framily {
     public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
     public String getPhoneNumber() {return phoneNumber;}
 
-    public void setMemories(ArrayList<Integer> memories) {this.memories = memories;}
-    public ArrayList<Integer> getMemories() {return memories;}
-    public void addMemory(int memory) {memories.add(memory);}
+    public void setMemories(ArrayList<Memory> memories) {this.memories = memories;}
+    public ArrayList<Memory> getMemories() {return memories;}
+    public void addMemory(Memory memory) {memories.add(memory);}
 
     public void setImage(int image) {this.image = image;}
     public int getImage() {return image;}

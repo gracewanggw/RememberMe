@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 public class AddMemoryActivity extends AppCompatActivity {
 
+    public static Memory memory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

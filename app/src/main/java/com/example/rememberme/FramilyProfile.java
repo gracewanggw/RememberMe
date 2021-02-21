@@ -30,7 +30,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     RoundImage roundedImage;
     private MemoriesAdapter memoriesAdapter;
     GridView gridView;
-    ArrayList<Integer> memories;
+    ArrayList<Memory> memories;
 
     TextView name;
     TextView relationship;
@@ -104,7 +104,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             //opens the GridItemActivity when a picture is clicked
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), GridItem.class);
-                intent.putExtra(IMAGE_KEY, memories.get(position));
+               // intent.putExtra(IMAGE_KEY, memories.get(position));
                 intent.putExtra(POSITION_KEY, position);
                 startActivity(intent);
             }

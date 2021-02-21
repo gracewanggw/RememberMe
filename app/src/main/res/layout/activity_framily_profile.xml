@@ -15,7 +15,8 @@
         android:id="@+id/back"
         android:text="@string/back"
         android:background="@android:color/transparent"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_marginLeft="5dp"/>
 
     <Button
         android:layout_width="wrap_content"

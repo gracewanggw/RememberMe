@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.amitshekhar.DebugDB;
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
+import com.example.rememberme.Memory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -162,13 +163,13 @@ public class FramilyDbSource {
         return framily;
     }
 
-    public byte[] arrayListToByteArray(ArrayList<Integer> memories) {
+    public byte[] arrayListToByteArray(ArrayList<Memory> memories) {
         if (memories.isEmpty()) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(baos);
         byte[] bytes = new byte[memories.size()];
         try {
-            for (Integer element : memories) {
+            for (Memory element : memories) {
                 out.writeUTF(element.toString());
             }
             bytes = baos.toByteArray();
@@ -178,15 +179,15 @@ public class FramilyDbSource {
         return bytes;
     }
 
-    public ArrayList<Integer> byteArrayToArrayList(byte[] memoryBytes) {
-        ArrayList<Integer> memories = new ArrayList<Integer>();
+    public ArrayList<Memory> byteArrayToArrayList(byte[] memoryBytes) {
+        ArrayList<Memory> memories = new ArrayList<Memory>();
         if (memoryBytes != null) {
             ByteArrayInputStream bais = new ByteArrayInputStream(memoryBytes);
             DataInputStream in = new DataInputStream(bais);
             try {
                 while (in.available() > 0) {
                     String memory = in.readUTF();
-                    memories.add(Integer.parseInt(memory));
+                  //  memories.add(Integer.parseInt(memory));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

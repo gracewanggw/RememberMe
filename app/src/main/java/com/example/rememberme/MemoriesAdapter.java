@@ -12,9 +12,9 @@ import java.util.ArrayList;
 public class MemoriesAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final ArrayList<Integer> memories;
+    private final ArrayList<Memory> memories;
 
-    public MemoriesAdapter(Context context, ArrayList<Integer> memories) {
+    public MemoriesAdapter(Context context, ArrayList<Memory> memories) {
         this.mContext = context;
         this.memories = memories;
     }
@@ -40,7 +40,7 @@ public class MemoriesAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.grid_data, null);
 
         ImageView imageView = view.findViewById(R.id.images);
-        imageView.setImageResource(memories.get(position));
+     //   imageView.setImageResource(memories.get(position));
 
         return view;
     }

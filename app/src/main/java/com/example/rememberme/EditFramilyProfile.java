@@ -68,11 +68,21 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         location = findViewById(R.id.location);
         phone = findViewById(R.id.phone);
 
+        cancelBtn = (Button)findViewById(R.id.cancel);
+        cancelBtn.setOnClickListener(this);
+        saveBtn = (Button)findViewById(R.id.save);
+        saveBtn.setOnClickListener(this);
+        remove = findViewById(R.id.remove);
+        remove.setOnClickListener(this);
+        addMemory = findViewById(R.id.add_memory);
+        addMemory.setOnClickListener(this);
+
         Intent intent = getIntent();
         id = intent.getIntExtra(FramilyProfile.ID_KEY, -1);
         if (id < 0) {
             framily = new Framily();
             memories = new ArrayList<Integer>();
+            remove.setVisibility(View.GONE);
         }
 
         else {
@@ -103,15 +113,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             }
         });
 
-        cancelBtn = (Button)findViewById(R.id.cancel);
-        cancelBtn.setOnClickListener(this);
-        saveBtn = (Button)findViewById(R.id.save);
-        saveBtn.setOnClickListener(this);
-        remove = findViewById(R.id.remove);
-        remove.setOnClickListener(this);
-        addMemory = findViewById(R.id.add_memory);
-        addMemory.setOnClickListener(this);
-
         photo = (ImageView) findViewById(R.id.photo);
         Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
         roundedImage = new RoundImage(bm);
@@ -125,6 +126,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         age.setText(framily.getAge() + "");
         birthday.setText(framily.getBirthday());
         location.setText(framily.getLocation());
+        phone.setText(framily.getPhoneNumber());
     }
 
     private void updateLabel() {
