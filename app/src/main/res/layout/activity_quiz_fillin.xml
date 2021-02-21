@@ -12,7 +12,7 @@
         <!--progress bar -->
 
         <FrameLayout
-            android:id="@+id/card"
+            android:id="@+id/question_sec"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">

@@ -1,5 +1,6 @@
 package com.example.rememberme.quiz;
 
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.os.Bundle;
@@ -84,16 +85,29 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
             Log.d("debug", "invalid quiz type");
         }
 
-        questionCard = (FrameLayout) findViewById(R.id.card);
-        questionCard.setOnClickListener(this);
-        float scale = this.getResources().getDisplayMetrics().density;
-        questionCard.setCameraDistance(8000 * scale);
+        mQuestion = (TextView)findViewById(R.id.question);
+        mCardBackLayout = findViewById(R.id.card_back);
+        mCardFrontLayout = findViewById(R.id.card_front);
 
-
-        mQuestion = (TextView) findViewById(R.id.question);
+        loadAnimations();
+        changeCameraDistance();
 
         updateQuestion();
 
+    }
+
+
+
+    private void changeCameraDistance() {
+        int distance = 8000;
+        float scale = getResources().getDisplayMetrics().density * distance;
+        mCardFrontLayout.setCameraDistance(scale);
+        mCardBackLayout.setCameraDistance(scale);
+    }
+
+    private void loadAnimations() {
+        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.start_flip);
+        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.end_flip);
     }
 
     private void updateQuestion(){
@@ -144,7 +158,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
                     correct = true;
                 }
                 break;
-            case R.id.card:
+            case R.id.question_sec:
                 if (!mIsBackVisible) {
                     mSetRightOut.setTarget(mCardFrontLayout);
                     mSetLeftIn.setTarget(mCardBackLayout);

@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ImageView
+    <FrameLayout
+        android:id="@+id/card_front"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:src="@drawable/card"
-        android:background="@color/purple_200"
-        />
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <include layout="@layout/flashcard_front" />
+    </FrameLayout>
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/card_back"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="quesiton here"
-        android:textSize="40dp"
-        android:textColor="@color/black"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <include layout="@layout/flashcard_back" />
+    </FrameLayout>
 
 </FrameLayout>

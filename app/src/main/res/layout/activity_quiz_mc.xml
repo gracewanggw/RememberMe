@@ -12,21 +12,11 @@
         <!--progress bar -->
 
         <FrameLayout
-            android:id="@+id/card_front"
+            android:id="@+id/question_sec"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
             <include layout="@layout/flashcard" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/card_back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <include layout="@layout/flashcard_back" />
-
         </FrameLayout>
 
 
@@ -58,6 +48,7 @@
             android:layout_weight="0"
             android:textAllCaps="false"
             />
+
         <Button
             android:id="@+id/op4"
             android:layout_width="match_parent"
