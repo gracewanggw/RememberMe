@@ -33,7 +33,7 @@ public class PeopleFragment extends Fragment {
 
     FramilyDbSource dataSource;
 
-    public static final String FRAMILY_KEY = "framily key";
+   // public static final String FRAMILY_KEY = "framily key";
     
     private HomeViewModel homeViewModel;
 
@@ -71,7 +71,7 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), FramilyProfile.class);
-                intent.putExtra(FRAMILY_KEY,customAdapter.getItem(position).getId());
+                intent.putExtra(FramilyProfile.ID_KEY,customAdapter.getItem(position).getId());
                 startActivity(intent);
             }
         });

@@ -7,12 +7,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.FrameLayout;
 
-<<<<<<< HEAD
-//import com.amitshekhar.DebugDB;
-=======
 import com.amitshekhar.DebugDB;
->>>>>>> 49247e55edad5785c8fdae45cf341ced29dab54e
+import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
 
 import java.io.ByteArrayInputStream;
@@ -65,7 +63,7 @@ public class FramilyDbSource {
             values.put(FramilyDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
 //        if (framily.getImage() != null)
 //            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
-        long insertId = database.insert(FramilyDbHelper.TABLE_NAME, null,	values);
+        long insertId = database.insert(FramilyDbHelper.TABLE_NAME, null, values);
         Cursor cursor = database.query(FramilyDbHelper.TABLE_NAME,
                 allColumns,
                 FramilyDbHelper.ID + " = " + insertId,
@@ -106,6 +104,15 @@ public class FramilyDbSource {
         return entry;
     }
 
+    //Fetches the most recent entry
+    public Framily fetchLastEntry() {
+        String selectQuery = "SELECT  * FROM " + "sqlite_sequence";
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        cursor.moveToLast();
+        Framily framily = cursorToFramily(cursor);
+        return framily;
+    }
+
     // Query the entire table, return all rows
     public List<Framily> fetchEntries() {
         List<Framily> entries = new ArrayList<Framily>();
@@ -123,21 +130,35 @@ public class FramilyDbSource {
     }
 
     public void updateEntry(int rowId) {
-
+        ContentValues values = new ContentValues();
+        Framily framily = EditFramilyProfile.framily;
+        values.put(FramilyDbHelper.ID, framily.getId());
+        values.put(FramilyDbHelper.NAME_FIRST, framily.getNameFirst());
+        values.put(FramilyDbHelper.NAME_LAST, framily.getNameLast());
+        values.put(FramilyDbHelper.RELATIONSHIP, framily.getRelationship());
+        values.put(FramilyDbHelper.AGE, framily.getAge());
+        values.put(FramilyDbHelper.BIRTHDAY, framily.getBirthday());
+        values.put(FramilyDbHelper.LOCATION, framily.getLocation());
+        values.put(FramilyDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
+        if (!framily.getMemories().isEmpty())
+            values.put(FramilyDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
+//        if (framily.getImage() != null)
+//            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
+        database.update(FramilyDbHelper.TABLE_NAME, values, FramilyDbHelper.ID + " = " + rowId, null);
     }
 
     private Framily cursorToFramily(Cursor cursor) {
         Framily framily = new Framily();
-        framily.setId(cursor.getInt(0));
-        framily.setNameFirst(cursor.getString(1));
-        framily.setNameLast(cursor.getString(2));
-        framily.setRelationship(cursor.getString(3));
-        framily.setAge(cursor.getInt(4));
-        framily.setBirthday(cursor.getString(5));
-        framily.setLocation(cursor.getString(6));
-        framily.setPhoneNumber(cursor.getString(7));
-        if (cursor.getBlob(8) != null)
-            framily.setMemories(byteArrayToArrayList(cursor.getBlob(8)));
+        framily.setId(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.ID)));
+        framily.setNameFirst(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_FIRST)));
+        framily.setNameLast(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_LAST)));
+        framily.setRelationship(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.RELATIONSHIP)));
+        framily.setAge(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.AGE)));
+        framily.setBirthday(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.BIRTHDAY)));
+        framily.setLocation(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.LOCATION)));
+        framily.setPhoneNumber(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.PHONE_NUMBER)));
+        if (cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES)) != null)
+            framily.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES))));
         return framily;
     }
 
@@ -159,15 +180,17 @@ public class FramilyDbSource {
 
     public ArrayList<Integer> byteArrayToArrayList(byte[] memoryBytes) {
         ArrayList<Integer> memories = new ArrayList<Integer>();
-        ByteArrayInputStream bais = new ByteArrayInputStream(memoryBytes);
-        DataInputStream in = new DataInputStream(bais);
-        try {
-            while (in.available() > 0) {
-                String memory = in.readUTF();
-                memories.add(Integer.parseInt(memory));
+        if (memoryBytes != null) {
+            ByteArrayInputStream bais = new ByteArrayInputStream(memoryBytes);
+            DataInputStream in = new DataInputStream(bais);
+            try {
+                while (in.available() > 0) {
+                    String memory = in.readUTF();
+                    memories.add(Integer.parseInt(memory));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return memories;
     }

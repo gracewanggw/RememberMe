@@ -72,6 +72,7 @@
         android:layout_below="@id/name"
         android:id="@+id/call"
         android:backgroundTint="@color/custom_blue"
+        android:textColor="@color/white"
         android:bottomRightRadius="80dp"
         android:bottomLeftRadius="80dp"
         android:topLeftRadius="80dp"
