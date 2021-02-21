@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMemoryActivity"
+    tools:context=".AddEditMemoryActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:hint="Memory Title"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:id="@+id/title"/>
 
         <ImageView
             android:layout_width="300dp"
@@ -26,7 +27,8 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/memory"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/custom_blue"/>
+            android:backgroundTint="@color/custom_blue"
+            android:id="@+id/memory_image"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -34,7 +36,8 @@
             android:layout_gravity="center_horizontal"
             android:inputType="textMultiLine"
             android:maxLines="10"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:id="@+id/text"/>
 
         <Button
             android:layout_width="match_parent"
@@ -42,7 +45,8 @@
             android:text="Click here to record audio"
             android:backgroundTint="@color/custom_blue"
             android:textColor="@color/white"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:id="@+id/add_audio"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +62,8 @@
                 android:backgroundTint="@color/custom_blue"
                 android:textColor="@color/white"
                 android:layout_weight="1"
-                android:layout_gravity="center_horizontal|bottom"/>
+                android:layout_gravity="center_horizontal|bottom"
+                android:id="@+id/cancel_memory"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -67,9 +72,23 @@
                 android:backgroundTint="@color/custom_blue"
                 android:textColor="@color/white"
                 android:layout_weight="1"
-                android:layout_gravity="center_horizontal|bottom"/>
+                android:layout_gravity="center_horizontal|bottom"
+                android:id="@+id/save_memory"/>
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/remove"
+            android:id="@+id/remove"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/custom_blue"
+            android:bottomRightRadius="80dp"
+            android:bottomLeftRadius="80dp"
+            android:topLeftRadius="80dp"
+            android:topRightRadius="80dp"/>
 
     </LinearLayout>
 

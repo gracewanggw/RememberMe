@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.amitshekhar.DebugDB;
-import com.example.rememberme.AddMemoryActivity;
+import com.example.rememberme.AddEditMemoryActivity;
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
 import com.example.rememberme.Memory;
@@ -69,7 +69,7 @@ public class MemoriesDbSource {
     }
 
     // Query a specific entry by its index.
-    public Memory fetchEntryByIndex(int rowId) {
+    public Memory fetchEntryByIndex(long rowId) {
         Log.d("rdudak", DebugDB.getAddressLog());
         Cursor cursor = database.query(MemoriesDbHelper.TABLE_NAME, allColumns,
                 MemoriesDbHelper.ID + " = " + rowId, null,
@@ -111,9 +111,9 @@ public class MemoriesDbSource {
         return entries;
     }
 
-    public void updateEntry(int rowId) {
+    public void updateEntry(long rowId) {
         ContentValues values = new ContentValues();
-        Memory memory = AddMemoryActivity.memory;
+        Memory memory = AddEditMemoryActivity.memory;
         values.put(MemoriesDbHelper.ID, memory.getId());
         values.put(MemoriesDbHelper.TITLE, memory.getTitle());
         values.put(MemoriesDbHelper.TEXT, memory.getText());

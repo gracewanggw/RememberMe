@@ -15,7 +15,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.rememberme.DB.FramilyDbHelper;
 import com.example.rememberme.DB.FramilyDbSource;
 
 import java.util.ArrayList;
@@ -103,7 +102,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             @Override
             //opens the GridItemActivity when a picture is clicked
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), GridItem.class);
+                Intent intent = new Intent(getApplicationContext(), ViewMemory.class);
                // intent.putExtra(IMAGE_KEY, memories.get(position));
                 intent.putExtra(POSITION_KEY, position);
                 startActivity(intent);
