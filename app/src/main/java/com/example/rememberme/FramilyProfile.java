@@ -142,7 +142,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.add_memory:
-                intent = new Intent(this, AddMemoryActivity.class);
+                intent = new Intent(this, AddEditMemoryActivity.class);
                 intent.putExtra(ID_KEY, framily.getId());
                 startActivity(intent);
                 break;

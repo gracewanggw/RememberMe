@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class AddMemoryActivity extends AppCompatActivity {
+public class AddEditMemoryActivity extends AppCompatActivity {
 
     public static Memory memory;
 
@@ -13,4 +13,5 @@ public class AddMemoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_memory);
     }
+
 }

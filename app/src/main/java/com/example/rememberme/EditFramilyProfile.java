@@ -49,7 +49,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     EditText birthday;
     EditText location;
     EditText phone;
-    ArrayList<Integer> memories;
+    ArrayList<Memory> memories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         id = intent.getIntExtra(FramilyProfile.ID_KEY, -1);
         if (id < 0) {
             framily = new Framily();
-            memories = new ArrayList<Integer>();
+            memories = new ArrayList<Memory>();
             remove.setVisibility(View.GONE);
         }
 
@@ -151,7 +151,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.add_memory:
-                intent = new Intent(this, AddMemoryActivity.class);
+                intent = new Intent(this, AddEditMemoryActivity.class);
                 intent.putExtra(FramilyProfile.ID_KEY, framily.getId());
                 startActivity(intent);
                 break;
