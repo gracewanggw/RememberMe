@@ -30,6 +30,10 @@ public class QuizFragment extends Fragment {
     Switch fib;
 
     public static final String QUIZ_TYPE_KEY = "quiz type";
+    public static final int QUIZ_TYPE_ALL_KEY = 0;
+    public static final int QUIZ_TYPE_PERSON_KEY = 1;
+    public static final int QUIZ_TYPE_REVIEW_KEY = 2;
+
     public static final String FILL_IN_BLANK = "fill in blank";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,7 +53,8 @@ public class QuizFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Quiz.class);
                 intent.putExtra(FILL_IN_BLANK, fib.isSelected());
-                intent.putExtra(QUIZ_TYPE_KEY,"all");
+                intent.putExtra(QUIZ_TYPE_KEY, QUIZ_TYPE_ALL_KEY);
+                startActivityForResult(intent, 0);
             }
         });
 

@@ -6,13 +6,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.rememberme.R;
+import com.example.rememberme.ui.quiz.QuizFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +24,8 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
 
     public static final int PERSON = 0;
     public static final int REVIEW = 1;
-    public static final String QUIZ_KEY = "type of quiz";
+    public static final String QUIZ_KEY = "quiz type";
+
     public static final String CORRECT_KEY = "type of quiz";
     public static final String WRONG_KEY = "type of quiz";
     public static final String PERCENT_KEY = "type of quiz";
@@ -32,6 +36,10 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
 //    public static final String PREFERENCE_NAME = "saved info";
 
     private int type;
+    private int correctans;
+    private int wrongans;
+    private int percentans;
+
     private TextView correctCt;
     private TextView wrongCt;
     private TextView percent;
@@ -39,55 +47,46 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.manual);
-        setTitle("Manual Input");
+        setContentView(R.layout.activity_result);
+        setTitle("Quiz Results");
 
         Intent myintent = getIntent();
+        Bundle bundle = myintent.getExtras();
         //uses the key to know what message to get
-        activity = myintent.getIntExtra(Start.ACTIVITY_KEY, 0);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor mEditor = preferences.edit();
-        removeValues(mEditor);
-
-        Dialog dialog = null;
-        View dialogView;
-        Bundle bundle = getArguments();
-        type = bundle.getInt(QUIZ_KEY);
+        type = bundle.getInt(QUIZ_KEY, 0);
+        correctans = bundle.getInt(CORRECT_KEY, 0);
+        wrongans = bundle.getInt(WRONG_KEY, 0);
+        percentans = bundle.getInt(PERCENT_KEY, 0);
         //preferences = getActivity().getSharedPreferences("MySharedPref", MODE);
 
-        //returns a view that is defined in xml
-        dialogView = getActivity().getLayoutInflater().inflate(R.layout.activity_result, null);
+        Log.d("fjx", "c"+correctans);
+        Log.d("fjx", "w"+wrongans);
+        Log.d("fjx", "p"+percentans);
 
-        correctCt = dialogView.findViewById(R.id.numCorrect);
-        wrongCt = dialogView.findViewById(R.id.numWrong);
-        percent = dialogView.findViewById(R.id.percentage);
 
-        //builder.setView(dialogView)
-        AlertDialog.Builder commentBuilder = new AlertDialog.Builder(getActivity());
-        commentBuilder.setView(dialogView);
+        correctCt = (TextView)findViewById(R.id.numCorrect);
+        wrongCt = (TextView)findViewById(R.id.numWrong);
+        percent = (TextView)findViewById(R.id.percentage);
+        Button button = (Button)findViewById(R.id.btnSave);
 
-        commentBuilder.setPositiveButton("Done", this);
-        //
-        dialog = commentBuilder.create();
-        return dialog;
+//        correctCt.setText(correctans);
+//        wrongCt.setText(wrongans);
+//        percent.setText(percentans);
+        button.setOnClickListener(this);
     }
 
-    public void onClick(View view){
-
-        if(item == DialogInterface.BUTTON_POSITIVE) {
-            if(type == REVIEW) {
-                //for wrong answer if not in wrong answers already
-                //add to the set
-                Toast.makeText(getActivity(), "add right answers", Toast.LENGTH_SHORT ).show();
-            }
-            //fpr review quizes, remove the right answers from the review set
-            if(type == REVIEW){
-                Toast.makeText(getActivity(), "remove right answers", Toast.LENGTH_SHORT ).show();
-            }
-        }else{
-            //throw some error
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnSave:
+                Log.d("fjx", "clicked");
+                updateReviewSet();
+                finish();
+                break;
         }
+    }
 
+    public void updateReviewSet(){
+        //do lofix for updating the set here
     }
 
 }

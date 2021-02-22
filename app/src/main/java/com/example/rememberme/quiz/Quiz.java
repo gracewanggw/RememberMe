@@ -2,6 +2,7 @@ package com.example.rememberme.quiz;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private int type = 0;
     private int correct_answers;
     private int wrong_answers;
-    private int score;
+    private Float score;
 
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
@@ -46,20 +47,34 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private View mCardFrontLayout;
     private View mCardBackLayout;
 
+    public boolean fillIn = false;
+    public int quiz_type;
+
+    private boolean correct = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Intent myintent = getIntent();
-        //type = myintent.getIntExtra(QuizFragment.TYPE_KEY, 0);
+        //uses the key to know what message to get
+        fillIn = myintent.getBooleanExtra(QuizFragment.FILL_IN_BLANK, false);
+        quiz_type = myintent.getIntExtra(QuizFragment.QUIZ_TYPE_KEY, -1);
+        if (quiz_type == 0) {
+            type = 0;
+        } else if (quiz_type == 1) {
+            type = 1;
+        }else{
+            Log.d("DEBUG", "not valid quiz type");
+        }
 
         questions = new QuizQuestions();
         correct_answers = 0;
         wrong_answers = 0;
-        score = 0;
+        score = 0f;
         questionNum = 0;
-
 
 
         if (type == 0) {
@@ -89,8 +104,8 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         mCardBackLayout = findViewById(R.id.card_back);
         mCardFrontLayout = findViewById(R.id.card_front);
 
-        loadAnimations();
-        changeCameraDistance();
+        //loadAnimations();
+        //changeCameraDistance();
 
         updateQuestion();
 
@@ -127,34 +142,36 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View view) {
 
-        boolean correct = false;
         switch (view.getId()) {
+            case R.id.exit:
+                finish();
+                break;
             case R.id.op1:
-                if(c1.getText() == answer) {
+                if(c1.getText().toString().equals(answer)) {
                     c1.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.op2:
-                if(c2.getText() == answer){
+                if(c2.getText().toString().equals(answer)){
                     c2.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.op3:
-                if(c3.getText() == answer) {
+                if(c3.getText().toString().equals(answer)) {
                     c3.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.op4:
-                if(c4.getText() == answer){
+                if(c4.getText().toString().equals(answer)){
                     c4.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.submit_ans:
-                if(input.getText().toString() == answer){
+                if(input.getText().toString().equals(answer)){
                     correct = true;
                 }
                 break;
@@ -177,12 +194,14 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
 
         if (correct){
             correct_answers++;
+            correct = false;
         }else{
             wrong_answers++;
         }
 
+
         questionNum ++;
-        if (questionNum < questions.getQuestion(questionNum).total){
+        if (questionNum < questions.getSize()){
             updateQuestion();
         }
         else{
@@ -192,18 +211,34 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void endQuiz(){
-        score = (int) correct_answers/questions.getQuestion(questionNum).total;
+        score = (float)correct_answers/(float)questions.getSize();
 
-        QuizResult resultDialog = new QuizResult();
+        Intent intent = new Intent( this, QuizResult.class);
         Bundle bundle = new Bundle();
 
-        bundle.putInt(QuizResult.QUIZ_KEY, resultDialog.PERSON);
+        bundle.putInt(QuizResult.QUIZ_KEY, QuizResult.PERSON);
         bundle.putInt(QuizResult.CORRECT_KEY, correct_answers);
         bundle.putInt(QuizResult.WRONG_KEY, wrong_answers);
-        bundle.putInt(QuizResult.PERCENT_KEY, score);
-        resultDialog.setArguments(bundle);
-        resultDialog.show(this.getSupportFragmentManager(), TAG);
-        Toast.makeText(this, "End of quiz", Toast.LENGTH_SHORT).show();
+        bundle.putFloat(QuizResult.PERCENT_KEY, score);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 0);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        //Log.d("dani", "inOnActivityResult");
+        if(resultCode != Activity.RESULT_OK)
+        {
+            Log.d("debug", "starting went wrong");
+            return;
+        }
+        else{
+            if(requestCode == 0){
+                finish();
+            }else{
+                Toast.makeText(this, "Unknown RequestCode",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }

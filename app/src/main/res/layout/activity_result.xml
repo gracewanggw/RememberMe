@@ -57,7 +57,7 @@
             android:padding="5dp"
             android:textColor = "#000000"
             android:textSize = "25sp"
-            android:text = "__"/>
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,8 +73,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textColor = "#000000"
-            android:textSize = "25sp"
-            android:text = "__"/>
+            android:textSize = "25sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -108,5 +107,19 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:choiceMode="multipleChoice"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:text= "@string/done_button"/>
+
+    </LinearLayout>
 
 </LinearLayout>

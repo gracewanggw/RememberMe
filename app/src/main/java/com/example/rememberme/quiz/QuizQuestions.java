@@ -29,6 +29,10 @@ public class QuizQuestions {
 
     public int total;
 
+    public int getSize(){
+        return testQuestions.length;
+    }
+
     public QuizQuestions getQuestion(int num){
         question = testQuestions[num] ;
         op1 = choices[num][0];

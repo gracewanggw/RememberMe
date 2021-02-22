@@ -13,6 +13,7 @@
     <string name="wrong_ans">Wrong Answers</string>
     <string name="wrong">Wrong</string>
     <string name="right">Correct</string>
+    <string name="done_button">Finish</string>
 
     <string name="back">&lt; Back to People</string>
     <string name="quiz_me">Quiz Me</string>
