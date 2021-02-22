@@ -26,6 +26,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mQuestion;
     private FrameLayout questionCard;
+    private Button exit;
     private Button c1;
     private Button c2;
     private Button c3;
@@ -76,7 +77,6 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         score = 0f;
         questionNum = 0;
 
-
         if (type == 0) {
             setContentView(R.layout.activity_quiz_mc);
 
@@ -99,6 +99,10 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         }else{
             Log.d("debug", "invalid quiz type");
         }
+
+
+        exit = (Button)findViewById(R.id.exit);
+        exit.setOnClickListener(this);
 
         mQuestion = (TextView)findViewById(R.id.question);
         mCardBackLayout = findViewById(R.id.card_back);
@@ -221,24 +225,9 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         bundle.putInt(QuizResult.WRONG_KEY, wrong_answers);
         bundle.putFloat(QuizResult.PERCENT_KEY, score);
         intent.putExtras(bundle);
-        startActivityForResult(intent, 0);
+        startActivity(intent);
+        finish();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        //Log.d("dani", "inOnActivityResult");
-        if(resultCode != Activity.RESULT_OK)
-        {
-            Log.d("debug", "starting went wrong");
-            return;
-        }
-        else{
-            if(requestCode == 0){
-                finish();
-            }else{
-                Toast.makeText(this, "Unknown RequestCode",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
 }
