@@ -15,7 +15,7 @@ import com.example.rememberme.DB.FramilyDbSource;
 
 import java.util.ArrayList;
 
-public class EditProfileActivity extends AppCompatActivity{
+public class EditUserProfileActivity extends AppCompatActivity{
 
     Button cancelBtn;
     Button saveBtn;
