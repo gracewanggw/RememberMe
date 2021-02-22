@@ -33,8 +33,7 @@ public class PeopleFragment extends Fragment {
 
     FramilyDbSource dataSource;
 
-   // public static final String FRAMILY_KEY = "framily key";
-    
+
     private HomeViewModel homeViewModel;
 
 
