@@ -11,6 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Switch
+            android:id="@+id/fill_in_blank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Fill in the blank"
+            android:textSize="18dp"/>
+
         <Button
             android:id="@+id/quiz_all_button"
             android:layout_width="match_parent"
