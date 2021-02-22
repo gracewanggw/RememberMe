@@ -20,4 +20,6 @@
     <string name="save">SAVE CHANGES</string>
     <string name="phone">PHONE NUMBER:</string>
     <string name="remove">REMOVE</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+
 </resources>

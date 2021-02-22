@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/background">
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="@string/cancel"
+        android:textColor="@color/white" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/save"
+        android:background="@android:color/transparent"
+        android:layout_toRightOf="@+id/back"
+        android:paddingLeft="150dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photo"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/save"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:src="@drawable/_pic"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/photo">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:id="@+id/name_first"
+                    android:hint="First Name"
+                    android:textSize="30dp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:id="@+id/name_last"
+                    android:hint="Last Name"
+                    android:textSize="30dp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/name_first"
+                android:id="@+id/info_layout">
+
+                <TextView
+                    android:id="@+id/age_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/age"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp" />
+
+                <EditText
+                    android:id="@+id/age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/birthday_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/birthday"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp" />
+
+                <EditText
+                    android:id="@+id/birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:hint="Click to Select Birthday"/>
+
+                <TextView
+                    android:id="@+id/location_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/location"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp" />
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:hint="i.e. Hanover, New Hampshire"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/contact_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Emergency Contact #1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp" />
+
+                <EditText
+                    android:id="@+id/phone1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:inputType="phone"
+                    android:digits="0123456789+"
+                    android:hint="(123)-456-7890"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/contact_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Emergency Contact #2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp" />
+
+                <EditText
+                    android:id="@+id/phone2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:inputType="phone"
+                    android:digits="0123456789+"
+                    android:hint="(123)-456-7890"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

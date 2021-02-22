@@ -54,35 +54,9 @@
         android:gravity="center"
         android:padding="10dip">
 
+
         <TableRow
             android:id="@+id/row1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/relationship_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Relationship"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="16dp" />
-
-            <TextView
-
-                android:id="@+id/relationship"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:layout_gravity="right"/>
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/row2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
@@ -110,7 +84,7 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/row3"
+            android:id="@+id/row2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
@@ -138,7 +112,7 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/row4"
+            android:id="@+id/row3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
@@ -166,7 +140,7 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/row5"
+            android:id="@+id/row4"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
@@ -194,7 +168,7 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/row6"
+            android:id="@+id/row5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
