@@ -1,12 +1,17 @@
 package com.example.rememberme.quiz;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.rememberme.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +36,18 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     private TextView wrongCt;
     private TextView percent;
 
-    public Dialog onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.manual);
+        setTitle("Manual Input");
+
+        Intent myintent = getIntent();
+        //uses the key to know what message to get
+        activity = myintent.getIntExtra(Start.ACTIVITY_KEY, 0);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor mEditor = preferences.edit();
+        removeValues(mEditor);
 
         Dialog dialog = null;
         View dialogView;

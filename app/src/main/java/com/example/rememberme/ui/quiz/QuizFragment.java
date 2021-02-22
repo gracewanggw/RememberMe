@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.R;
+import com.example.rememberme.quiz.Quiz;
 
 public class QuizFragment extends Fragment {
 
@@ -46,9 +47,9 @@ public class QuizFragment extends Fragment {
         quizAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getContext(),QuizActivity.class);
-//                intent.putExtra(FILL_IN_BLANK,fib.isSelected())
-//                intent.putExtra(QUIZ_TYPE_KEY,"all");
+                Intent intent = new Intent(getContext(), Quiz.class);
+                intent.putExtra(FILL_IN_BLANK, fib.isSelected());
+                intent.putExtra(QUIZ_TYPE_KEY,"all");
             }
         });
 
