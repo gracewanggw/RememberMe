@@ -1,23 +1,18 @@
 package com.example.rememberme.quiz;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.rememberme.R;
 import androidx.fragment.app.DialogFragment;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 //Dialog to show the result from a quiz after done
-public class QuizResult extends DialogFragment implements DialogInterface.OnClickListener {
+public class QuizResult extends AppCompatActivity implements View.OnClickListener {
 
     public static final int PERSON = 0;
     public static final int REVIEW = 1;
@@ -36,7 +31,7 @@ public class QuizResult extends DialogFragment implements DialogInterface.OnClic
     private TextView wrongCt;
     private TextView percent;
 
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreate(Bundle savedInstanceState){
 
         Dialog dialog = null;
         View dialogView;
@@ -45,7 +40,7 @@ public class QuizResult extends DialogFragment implements DialogInterface.OnClic
         //preferences = getActivity().getSharedPreferences("MySharedPref", MODE);
 
         //returns a view that is defined in xml
-        dialogView = getActivity().getLayoutInflater().inflate(R.layout.result_dialog, null);
+        dialogView = getActivity().getLayoutInflater().inflate(R.layout.activity_result, null);
 
         correctCt = dialogView.findViewById(R.id.numCorrect);
         wrongCt = dialogView.findViewById(R.id.numWrong);
@@ -61,7 +56,7 @@ public class QuizResult extends DialogFragment implements DialogInterface.OnClic
         return dialog;
     }
 
-    public void onClick(DialogInterface dialogInterface, int item){
+    public void onClick(View view){
 
         if(item == DialogInterface.BUTTON_POSITIVE) {
             if(type == REVIEW) {
