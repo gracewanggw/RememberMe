@@ -17,7 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.EditFramilyProfile;
-import com.example.rememberme.EditProfileActivity;
+import com.example.rememberme.EditUserProfileActivity;
 import com.example.rememberme.R;
 import com.example.rememberme.RoundImage;
 
@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                Intent intent = new Intent(getContext(), EditUserProfileActivity.class);
                 startActivity(intent);
             }
         });

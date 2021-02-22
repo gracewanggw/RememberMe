@@ -1,6 +1,7 @@
 package com.example.rememberme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,29 +10,43 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rememberme.DB.FramilyDbSource;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 public class EditUserProfileActivity extends AppCompatActivity{
 
     Button cancelBtn;
     Button saveBtn;
 
-    FramilyDbSource dbSource;
-    public static Framily framily;
-    int id;
-
     EditText nameFirst;
     EditText nameLast;
-    EditText relationship;
     EditText age;
-    EditText birthday;
     EditText location;
     EditText contact1;
     EditText contact2;
+
+    String fName;
+    String lName;
+    String ageStr;
+    String locationStr;
+    String phone1;
+    String phone2;
+
+    final static String SHARED_PREFS = "shared prefs";
+    final static String FIRST_NAME_KEY = "1st name";
+    final static String LAST_NAME_KEY = "last name";
+    final static String PHONE1_KEY = "phone 1";
+    final static String PHONE2_KEY = "phone 2";
+    final static String LOCATION_KEY = "location key";
+    final static String AGE_KEY = "age key";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +55,13 @@ public class EditUserProfileActivity extends AppCompatActivity{
 
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
-        relationship = findViewById(R.id.relationship);
         age = findViewById(R.id.age);
-        birthday = findViewById(R.id.birthday);
         location = findViewById(R.id.location);
         contact1= findViewById(R.id.phone1);
         contact2 = findViewById(R.id.phone2);
 
-        dbSource = new FramilyDbSource(this);
-        dbSource.open();
-
         cancelBtn = findViewById(R.id.cancel);
         saveBtn = findViewById(R.id.save);
-
-        framily = new Framily();
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,39 +79,53 @@ public class EditUserProfileActivity extends AppCompatActivity{
 
         loadData();
 
+        if(!fName.equals("")){
+            nameFirst.setText(fName);
+        }
+        if(!lName.equals("")){
+            nameLast.setText(lName);
+        }
+        if(!phone1.equals("")){
+            contact1.setText(phone1);
+        }
+        if (!phone2.equals("")) {
+            contact2.setText(phone2);
+        }
+        if (!locationStr.equals("")) {
+            location.setText(locationStr);
+        }
+        if (!ageStr.equals("")) {
+            age.setText(ageStr);
+        }
 
     }
 
     public void loadData() {
-        //load existing data if available;
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        fName = sharedPreferences.getString(FIRST_NAME_KEY,"");
+        lName = sharedPreferences.getString(LAST_NAME_KEY,"");
+        phone1 = sharedPreferences.getString(PHONE1_KEY,"");
+        phone2 = sharedPreferences.getString(PHONE2_KEY,"");
+        locationStr = sharedPreferences.getString(LOCATION_KEY,"");
+        ageStr = sharedPreferences.getString(AGE_KEY,"");
 
-//        nameFirst.setText(framily.nameFirst);
-//        nameLast.setText(framily.nameLast);
-//        age.setText(framily.getAge() + "");
-//        birthday.setText(framily.getBirthday());
-//        location.setText(framily.getLocation());
     }
 
     public void saveEntry() {
-        //save data
-        
-//        framily.setNameFirst(nameFirst.getText().toString());
-//        framily.setNameLast(nameLast.getText().toString());
-//        if (!age.getText().toString().equals(""))
-//            framily.setAge(Integer.parseInt(age.getText().toString()));
-//        else
-//            framily.setAge(0);
-//        framily.setBirthday(birthday.getText().toString());
-//        framily.setPhoneNumber(phone.getText().toString());
-//        framily.setLocation(location.getText().toString());
-//        if (id >= 0) {
-//            dbSource.updateEntry(id);
-//            Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
-//        }
-//        else {
-//            dbSource.insertFramily(framily);
-//            Toast.makeText(this, "New Framily Member Saved", Toast.LENGTH_SHORT).show();
-//            id = dbSource.fetchLastEntry().getId();
-//        }
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        SharedPreferences.Editor editors = sharedPreferences.edit();
+
+        editors.clear();
+        editors.putString(FIRST_NAME_KEY,nameFirst.getText().toString());
+        editors.putString(LAST_NAME_KEY,nameLast.getText().toString());
+        editors.putString(PHONE1_KEY,contact1.getText().toString());
+        editors.putString(PHONE2_KEY,contact2.getText().toString());
+        editors.putString(LOCATION_KEY,location.getText().toString());
+        editors.putString(AGE_KEY,age.getText().toString());
+
+        editors.commit();
+
+        Toast.makeText(this,"Data saved", Toast.LENGTH_SHORT).show();
+        Log.d("gwang","saved data ");
     }
 }
