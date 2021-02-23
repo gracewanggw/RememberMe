@@ -19,79 +19,134 @@
             android:text="Fill in the blank"
             android:textSize="18dp"/>
 
-        <Button
-            android:id="@+id/quiz_all_button"
+        <LinearLayout
+            android:id="@+id/quiz_all"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="All"
-            android:textSize="32dp"/>
+            android:clickable="true"
+            android:background="@color/custom_yellow">
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="ALL"
+                android:padding="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="32dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Go over everything about everyone"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/name_to_face"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Go over everything about everyone"
-            android:textAlignment="center"
-            android:textSize="24dp"/>
-
-
-        <Button
-            android:id="@+id/name_to_face_button"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:background="@color/custom_green">
 
-            android:text="Name to Face"
-            android:textSize="32dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NAME TO FACE"
+                android:layout_marginTop="16dp"
+                android:padding="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="32dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Match names to faces"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quiz_birthdays"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Match names to faces"
-            android:textAlignment="center"
-            android:textSize="24dp"/>
-
-        <Button
-            android:id="@+id/quiz_birthday_button"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Birthdays"
-            android:textSize="32dp"/>
+            android:clickable="true"
+            android:background="@color/custom_red">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Go over birthdays"
-            android:textAlignment="center"
-            android:textSize="24dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BIRTHDAYS"
+                android:layout_marginTop="16dp"
+                android:padding="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="32dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/quiz_review_button"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Go over birthdays"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quiz_review"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Review"
-            android:textSize="32dp"/>
+            android:clickable="true"
+            android:background="@color/custom_light_blue">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Review frequently missed questions"
-            android:textAlignment="center"
-            android:textSize="24dp"
-            android:layout_marginBottom="64dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="REVIEW"
+                android:layout_marginTop="16dp"
+                android:padding="3dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="32dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Review frequently missed questions"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

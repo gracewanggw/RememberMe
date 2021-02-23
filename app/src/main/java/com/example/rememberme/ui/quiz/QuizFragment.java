@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -21,10 +22,10 @@ public class QuizFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
 
-    Button quizAll;
-    Button nameFace;
-    Button birthdays;
-    Button review;
+    LinearLayout quizAll;
+    LinearLayout nameFace;
+    LinearLayout birthdays;
+    LinearLayout review;
 
     Switch fib;
 
@@ -37,10 +38,10 @@ public class QuizFragment extends Fragment {
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        quizAll = root.findViewById(R.id.quiz_all_button);
-        nameFace = root.findViewById(R.id.name_to_face_button);
-        birthdays = root.findViewById(R.id.quiz_birthday_button);
-        review = root.findViewById(R.id.quiz_review_button);
+        quizAll = root.findViewById(R.id.quiz_all);
+        nameFace = root.findViewById(R.id.name_to_face);
+        birthdays = root.findViewById(R.id.quiz_birthdays);
+        review = root.findViewById(R.id.quiz_review);
         fib = root.findViewById(R.id.fill_in_blank);
 
         quizAll.setOnClickListener(new View.OnClickListener() {

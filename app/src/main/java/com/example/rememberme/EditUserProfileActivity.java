@@ -1,12 +1,17 @@
 package com.example.rememberme;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rememberme.DB.FramilyDbSource;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,13 +31,18 @@ public class EditUserProfileActivity extends AppCompatActivity{
 
     Button cancelBtn;
     Button saveBtn;
+    Calendar myCalendar;
 
     EditText nameFirst;
     EditText nameLast;
     EditText age;
+    EditText birthday;
     EditText location;
     EditText contact1;
     EditText contact2;
+
+    ImageView profilePhoto;
+    RoundImage roundedImage;
 
     String fName;
     String lName;
@@ -53,9 +66,18 @@ public class EditUserProfileActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        myCalendar = Calendar.getInstance();
+
+        profilePhoto = (ImageView) findViewById(R.id.photo_profile);
+        profilePhoto = (ImageView) findViewById(R.id.photo);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+        roundedImage = new RoundImage(bm);
+        profilePhoto.setImageDrawable(roundedImage);
+
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
         age = findViewById(R.id.age);
+        birthday = findViewById(R.id.birthday);
         location = findViewById(R.id.location);
         contact1= findViewById(R.id.phone1);
         contact2 = findViewById(R.id.phone2);
@@ -74,8 +96,33 @@ public class EditUserProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 saveEntry();
+                finish();
             }
         });
+
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        birthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("gwang","birthday on click");
+                new DatePickerDialog(EditUserProfileActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
 
         loadData();
 
@@ -98,6 +145,12 @@ public class EditUserProfileActivity extends AppCompatActivity{
             age.setText(ageStr);
         }
 
+    }
+
+    private void updateLabel() {
+        String myFormat = "MMMM dd yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        birthday.setText(sdf.format(myCalendar.getTime()));
     }
 
     public void loadData() {
