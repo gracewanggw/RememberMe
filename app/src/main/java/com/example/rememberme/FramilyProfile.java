@@ -15,21 +15,21 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.RememberMeDbSource;
 
 import java.util.ArrayList;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
 
-    FramilyDbSource dbSource;
+    RememberMeDbSource dbSource;
     private Framily framily;
-    int framilyId;
+    Long framilyId;
 
     ImageView photo;
     RoundImage roundedImage;
     private MemoriesAdapter memoriesAdapter;
     GridView gridView;
-    ArrayList<Memory> memories;
+    ArrayList<Long> memories;
 
     TextView name;
     TextView relationship;
@@ -53,13 +53,13 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framily_profile);
 
-        dbSource = new FramilyDbSource(this);
+        dbSource = new RememberMeDbSource(this);
         dbSource.open();
         Intent intent = getIntent();
-        framilyId = intent.getIntExtra(ID_KEY, -1);
+        framilyId = intent.getLongExtra(ID_KEY, -1);
         Log.d("rdudak", "ID = " + framilyId);
         if(framilyId >= 0) {
-            framily = dbSource.fetchEntryByIndex(framilyId);
+            framily = dbSource.fetchFramilyByIndex(framilyId);
             Log.d("rdudak", framily.toString());
         }
         else
@@ -88,7 +88,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         addMemory.setOnClickListener(this);
 
         memories = framily.getMemories();
-        memoriesAdapter = new MemoriesAdapter(this, memories);
+
+        memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView = (GridView)findViewById(R.id.gridview);
         gridView.setAdapter(memoriesAdapter);
 
@@ -103,7 +104,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             //opens the GridItemActivity when a picture is clicked
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), ViewMemory.class);
-               // intent.putExtra(IMAGE_KEY, memories.get(position));
+                intent.putExtra(IMAGE_KEY, memories.get(position));
                 intent.putExtra(POSITION_KEY, position);
                 startActivity(intent);
             }
@@ -113,6 +114,29 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
         roundedImage = new RoundImage(bm);
         photo.setImageDrawable(roundedImage);
+    }
+
+    public ArrayList<Memory> getMemories() {
+        ArrayList<Memory> memoryItems = new ArrayList<Memory>();
+        for (Long id: memories) {
+            memoryItems.add(dbSource.fetchMemoryByIndex(id));
+        }
+        return memoryItems;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dbSource.open();
+        memoriesAdapter = new MemoriesAdapter(this, getMemories());
+        gridView.setAdapter(memoriesAdapter);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dbSource.close();
     }
 
     @Override

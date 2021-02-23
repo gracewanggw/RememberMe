@@ -20,7 +20,9 @@
 
         <activity android:name=".EditFramilyProfile"></activity>
         <activity android:name=".FramilyProfile"></activity>
-        <activity android:name=".AddMemoryActivity"></activity>
+        <activity android:name=".AddEditMemoryActivity"></activity>
+        <activity android:name=".ViewMemory"></activity>
+
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class MemoriesAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final ArrayList<Memory> memories;
+    TextView title;
 
     public MemoriesAdapter(Context context, ArrayList<Memory> memories) {
         this.mContext = context;
@@ -40,7 +42,10 @@ public class MemoriesAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.grid_data, null);
 
         ImageView imageView = view.findViewById(R.id.images);
+        title = view.findViewById(R.id.memory_title);
+      //  imageView.setImageResource(R.drawable.memory);
      //   imageView.setImageResource(memories.get(position));
+        title.setText(memories.get(position).getTitle());
 
         return view;
     }

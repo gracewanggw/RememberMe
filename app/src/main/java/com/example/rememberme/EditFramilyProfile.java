@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.RememberMeDbSource;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,9 +37,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     Button remove;
     TextView addMemory;
 
-    FramilyDbSource dbSource;
+    RememberMeDbSource dbSource;
     public static Framily framily;
-    int id;
+    Long id;
 
     EditText nameFirst;
     EditText nameLast;
@@ -49,7 +48,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     EditText birthday;
     EditText location;
     EditText phone;
-    ArrayList<Memory> memories;
+    ArrayList<Long> memories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_edit_framily_profile);
         myCalendar = Calendar.getInstance();
 
-        dbSource = new FramilyDbSource(this);
+        dbSource = new RememberMeDbSource(this);
         dbSource.open();
 
         nameFirst = findViewById(R.id.name_first);
@@ -78,16 +77,16 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         addMemory.setOnClickListener(this);
 
         Intent intent = getIntent();
-        id = intent.getIntExtra(FramilyProfile.ID_KEY, -1);
+        id = intent.getLongExtra(FramilyProfile.ID_KEY, -1);
         if (id < 0) {
             framily = new Framily();
-            memories = new ArrayList<Memory>();
+            memories = new ArrayList<Long>();
             remove.setVisibility(View.GONE);
         }
 
         else {
             Log.d("rdudak", id + "");
-            framily = dbSource.fetchEntryByIndex(id);
+            framily = dbSource.fetchFramilyByIndex(id);
             memories = framily.getMemories();
             loadData();
         }
@@ -174,13 +173,13 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         framily.setLocation(location.getText().toString());
         framily.setMemories(memories);
         if (id >= 0) {
-            dbSource.updateEntry(id);
+            dbSource.updateFramilyEntry(id, framily);
             Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
         }
         else {
             dbSource.insertFramily(framily);
             Toast.makeText(this, "New Framily Member Saved", Toast.LENGTH_SHORT).show();
-            id = dbSource.fetchLastEntry().getId();
+            id = dbSource.fetchLastFramilyEntry().getId();
         }
     }
 
@@ -191,8 +190,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 .setPositiveButton("Yes, I'm Sure", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dbSource.removeEntry(id);
-                        finish();
+                        dbSource.removeFramily(id);
+                        Intent intent = new Intent(EditFramilyProfile.this, MainActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("No, go back!", null)

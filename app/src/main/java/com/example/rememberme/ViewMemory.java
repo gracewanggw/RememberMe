@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class ViewMemory extends AppCompatActivity {
 
-    public static final String ID_KEY = "id_key";
+    public static final String ID_MEMORY = "id_memory";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

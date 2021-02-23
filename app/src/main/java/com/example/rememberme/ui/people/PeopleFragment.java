@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
 import com.example.rememberme.FramilyProfile;
@@ -31,7 +31,7 @@ public class PeopleFragment extends Fragment {
     GridView gridView;
     List<Framily> people;
 
-    FramilyDbSource dataSource;
+    RememberMeDbSource dataSource;
 
    // public static final String FRAMILY_KEY = "framily key";
     
@@ -60,10 +60,10 @@ public class PeopleFragment extends Fragment {
 
     public void updateView(){
 
-        dataSource = new FramilyDbSource(getActivity().getApplicationContext());
+        dataSource = new RememberMeDbSource(getActivity().getApplicationContext());
         dataSource.open();
 
-        people = dataSource.fetchEntries();
+        people = dataSource.fetchFramilyEntries();
 
         CustomAdapter customAdapter = new CustomAdapter(people);
         gridView.setAdapter(customAdapter);

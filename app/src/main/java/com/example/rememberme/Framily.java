@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Framily {
 
-    public int id;
+    public Long id;
     public String nameFirst;
     public String nameLast;
     public String relationship;
@@ -16,17 +16,17 @@ public class Framily {
     public String birthday;
     public String location;
     public String phoneNumber;
-    public ArrayList<Memory> memories;
+    public ArrayList<Long> memories;
     public int image;
 
 
     public Framily() {
-        memories = new ArrayList<Memory>();
+        memories = new ArrayList<Long>();
         image = R.drawable._pic;
     }
 
-    public void setId(int id) {this.id = id;}
-    public int getId() {return id;}
+    public void setId(Long id) {this.id = id;}
+    public Long getId() {return id;}
 
     public void setNameFirst(String nameFirst) {this.nameFirst = nameFirst;}
     public String getNameFirst() {return nameFirst;}
@@ -49,9 +49,9 @@ public class Framily {
     public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
     public String getPhoneNumber() {return phoneNumber;}
 
-    public void setMemories(ArrayList<Memory> memories) {this.memories = memories;}
-    public ArrayList<Memory> getMemories() {return memories;}
-    public void addMemory(Memory memory) {memories.add(memory);}
+    public void setMemories(ArrayList<Long> memories) {this.memories = memories;}
+    public ArrayList<Long> getMemories() {return memories;}
+    public void addMemory(Long memory) {memories.add(memory);}
 
     public void setImage(int image) {this.image = image;}
     public int getImage() {return image;}
