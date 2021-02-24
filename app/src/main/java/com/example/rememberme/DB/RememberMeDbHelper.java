@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class RememberMeDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rememberMe.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_NAME_FRAMILY = "framily";
     public static final String ID_FRAMILY = "id";
@@ -37,7 +37,7 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
             BIRTHDAY + " TEXT, " +
             LOCATION + " TEXT, " +
             PHONE_NUMBER + " TEXT, " +
-            IMAGE_FRAMILY + " BLOB, " +
+            IMAGE_FRAMILY + " TEXT, " +
             MEMORIES + " BLOB);";
 
     private static final String CREATE_MEMORY_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_MEMORIES + "( " +

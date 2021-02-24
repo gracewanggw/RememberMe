@@ -3,9 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditFramilyProfile"
+    android:layout_width="match_parent"
     android:background="@drawable/background">
 
     <Button
@@ -23,8 +22,7 @@
         android:id="@+id/save"
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/back"
-        android:paddingLeft="140dp"
-        android:layout_marginRight="10dp"
+        android:paddingLeft="150dp"
         android:layout_alignParentRight="true"
         android:textColor="@color/white" />
 
@@ -37,8 +35,7 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@drawable/_pic"
-        android:onClick="profileImageChange"/>
+        android:src="@drawable/_pic"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -83,25 +80,6 @@
                 android:orientation="vertical"
                 android:layout_below="@+id/name_first"
                 android:id="@+id/info_layout">
-
-                <TextView
-                    android:id="@+id/relationship_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/relationship"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/relationship"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="i.e. Best Friend"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/age_label"
@@ -160,87 +138,49 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/phone_label"
+                    android:id="@+id/contact_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/phone"
+                    android:text="Emergency Contact #1"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="14dp" />
 
                 <EditText
-                    android:id="@+id/phone"
+                    android:id="@+id/phone1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="14dp"
                     android:inputType="phone"
                     android:digits="0123456789+"
+                    android:hint="(123)-456-7890"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/contact_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Emergency Contact #2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14dp" />
+
+                <EditText
+                    android:id="@+id/phone2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    android:inputType="phone"
+                    android:digits="0123456789+"
+                    android:hint="(123)-456-7890"
                     android:textStyle="bold"/>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/memories"
-                    android:text="@string/memories"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="5dp"
-                    android:layout_below="@id/info_layout"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/add_memory"
-                    android:text="@string/add_memory"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/info_layout"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:paddingTop="18dp"
-                    android:paddingRight="5dp"
-                    android:clickable="true"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <GridView
-                android:id="@+id/gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:columnWidth="100dp"
-                android:numColumns="3"
-                android:horizontalSpacing="0dp"
-                android:verticalSpacing="0dp"
-                android:layout_below="@id/memories"
-                />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/remove"
-                android:id="@+id/remove"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/custom_blue"
-                android:bottomRightRadius="80dp"
-                android:bottomLeftRadius="80dp"
-                android:topLeftRadius="80dp"
-                android:topRightRadius="80dp"/>
-
         </LinearLayout>
-
     </ScrollView>
 
 </RelativeLayout>

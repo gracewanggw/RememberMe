@@ -3,9 +3,12 @@ package com.example.rememberme;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -131,5 +134,15 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
                 .setNegativeButton("No, go back!", null)
                 .create();
         dialog.show();
+    }
+
+    private void checkPermissions()
+    {
+        if(Build.VERSION.SDK_INT < 23)
+            return;
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
+        }
     }
 }

@@ -44,8 +44,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     TextView addMemory;
 
     public static final String ID_KEY = "id_key";
-
-    public static final String IMAGE_KEY = "image";
+    public static final String MEMORY_KEY = "memory";
     public static final String POSITION_KEY = "position";
 
     @Override
@@ -104,8 +103,9 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             //opens the GridItemActivity when a picture is clicked
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), ViewMemory.class);
-                intent.putExtra(IMAGE_KEY, memories.get(position));
+                intent.putExtra(ViewMemory.ID_MEMORY, memories.get(position));
                 intent.putExtra(POSITION_KEY, position);
+                intent.putExtra(ID_KEY, framilyId);
                 startActivity(intent);
             }
         });

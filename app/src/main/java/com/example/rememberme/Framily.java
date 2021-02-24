@@ -17,12 +17,11 @@ public class Framily {
     public String location;
     public String phoneNumber;
     public ArrayList<Long> memories;
-    public int image;
+    public String image;
 
 
     public Framily() {
         memories = new ArrayList<Long>();
-        image = R.drawable._pic;
     }
 
     public void setId(Long id) {this.id = id;}
@@ -53,8 +52,8 @@ public class Framily {
     public ArrayList<Long> getMemories() {return memories;}
     public void addMemory(Long memory) {memories.add(memory);}
 
-    public void setImage(int image) {this.image = image;}
-    public int getImage() {return image;}
+    public void setImage(String image) {this.image = image;}
+    public String getImage() {return image;}
 
     public String toString() {
         return nameFirst + " " + nameLast + ", Relationship = " + relationship;

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,10 @@ public class QuizFragment extends Fragment {
     Button birthdays;
     Button review;
 
+    Switch fib;
+
     public static final String QUIZ_TYPE_KEY = "quiz type";
+    public static final String FILL_IN_BLANK = "fill in blank";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,11 +41,13 @@ public class QuizFragment extends Fragment {
         nameFace = root.findViewById(R.id.name_to_face_button);
         birthdays = root.findViewById(R.id.quiz_birthday_button);
         review = root.findViewById(R.id.quiz_review_button);
+        fib = root.findViewById(R.id.fill_in_blank);
 
         quizAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getContext(),QuizActivity.class);
+//                intent.putExtra(FILL_IN_BLANK,fib.isSelected())
 //                intent.putExtra(QUIZ_TYPE_KEY,"all");
             }
         });
@@ -50,6 +56,7 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getContext(),QuizActivity.class);
+//                intent.putExtra(FILL_IN_BLANK,fib.isSelected())
 //                intent.putExtra(QUIZ_TYPE_KEY,"name to face");
             }
         });
@@ -58,6 +65,7 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getContext(),QuizActivity.class);
+//                intent.putExtra(FILL_IN_BLANK,fib.isSelected())
 //                intent.putExtra(QUIZ_TYPE_KEY,"birthdays");
             }
         });
@@ -66,10 +74,12 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getContext(),QuizActivity.class);
+//                intent.putExtra(FILL_IN_BLANK,fib.isSelected())
 //                intent.putExtra(QUIZ_TYPE_KEY,"review");
             }
         });
 
         return root;
     }
+
 }

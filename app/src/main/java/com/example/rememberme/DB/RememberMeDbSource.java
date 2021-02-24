@@ -28,7 +28,7 @@ public class RememberMeDbSource {
     private String[] framilyColumns = { RememberMeDbHelper.ID_FRAMILY, RememberMeDbHelper.NAME_FIRST,
             RememberMeDbHelper.NAME_LAST, RememberMeDbHelper.RELATIONSHIP, RememberMeDbHelper.AGE,
             RememberMeDbHelper.BIRTHDAY, RememberMeDbHelper.LOCATION, RememberMeDbHelper.PHONE_NUMBER,
-            RememberMeDbHelper.MEMORIES/*, FramilyDbHelper.IMAGE*/};
+            RememberMeDbHelper.MEMORIES, RememberMeDbHelper.IMAGE_FRAMILY};
 
     private String[] memoryColumns = { RememberMeDbHelper.ID_MEMORIES,RememberMeDbHelper.TITLE,
             RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, /*RememberMeDbHelper.AUDIO*/};
@@ -61,10 +61,9 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.BIRTHDAY, framily.getBirthday());
         values.put(RememberMeDbHelper.LOCATION, framily.getLocation());
         values.put(RememberMeDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
+        values.put(RememberMeDbHelper.IMAGE_FRAMILY, framily.getImage());
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
-//        if (framily.getImage() != null)
-//            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
         long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_FRAMILY, null, values);
         Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_FRAMILY,
                 framilyColumns,
@@ -128,7 +127,7 @@ public class RememberMeDbSource {
             entry.setLocation(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.LOCATION)));
             entry.setPhoneNumber(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.PHONE_NUMBER)));
             entry.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.MEMORIES))));
-            //entry.setImage(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.IMAGE)));
+            entry.setImage(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_FRAMILY)));
             cursor.close();
         }
         return entry;
@@ -212,10 +211,9 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.BIRTHDAY, framily.getBirthday());
         values.put(RememberMeDbHelper.LOCATION, framily.getLocation());
         values.put(RememberMeDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
+        values.put(RememberMeDbHelper.IMAGE_FRAMILY, framily.getImage());
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
-//        if (framily.getImage() != null)
-//            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
         database.update(RememberMeDbHelper.TABLE_NAME_FRAMILY, values, RememberMeDbHelper.ID_FRAMILY + " = " + rowId, null);
     }
 
@@ -240,8 +238,9 @@ public class RememberMeDbSource {
         framily.setBirthday(cursor.getString(5));
         framily.setLocation(cursor.getString(6));
         framily.setPhoneNumber(cursor.getString(7));
-        if (cursor.getBlob(8) != null)
-            framily.setMemories(byteArrayToArrayList(cursor.getBlob(8)));
+        framily.setImage(cursor.getString(8));
+        if (cursor.getBlob(9) != null)
+            framily.setMemories(byteArrayToArrayList(cursor.getBlob(9)));
         return framily;
     }
 
