@@ -11,16 +11,17 @@
 
         <ImageView
             android:id="@+id/framily_Image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/_pic" />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/_pic"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/framily_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Name" />
+            android:text="Name"/>
 
         <TextView
             android:id="@+id/framily_Relationship"

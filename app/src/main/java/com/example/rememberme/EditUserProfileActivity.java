@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,13 +52,13 @@ public class EditUserProfileActivity extends AppCompatActivity{
     String phone1;
     String phone2;
 
-    final static String SHARED_PREFS = "shared prefs";
-    final static String FIRST_NAME_KEY = "1st name";
-    final static String LAST_NAME_KEY = "last name";
-    final static String PHONE1_KEY = "phone 1";
-    final static String PHONE2_KEY = "phone 2";
-    final static String LOCATION_KEY = "location key";
-    final static String AGE_KEY = "age key";
+    public final static String FIRST_NAME_KEY = "1st name";
+    public final static String LAST_NAME_KEY = "last name";
+    public final static String PHONE1_KEY = "phone 1";
+    public final static String PHONE2_KEY = "phone 2";
+    public final static String LOCATION_KEY = "location key";
+    public final static String AGE_KEY = "age key";
+    public final static String BIRTHDAY_KEY = "bday key";
 
 
 
@@ -154,7 +155,7 @@ public class EditUserProfileActivity extends AppCompatActivity{
     }
 
     public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         fName = sharedPreferences.getString(FIRST_NAME_KEY,"");
         lName = sharedPreferences.getString(LAST_NAME_KEY,"");
         phone1 = sharedPreferences.getString(PHONE1_KEY,"");
@@ -165,7 +166,7 @@ public class EditUserProfileActivity extends AppCompatActivity{
     }
 
     public void saveEntry() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editors = sharedPreferences.edit();
 
         editors.clear();
@@ -175,6 +176,7 @@ public class EditUserProfileActivity extends AppCompatActivity{
         editors.putString(PHONE2_KEY,contact2.getText().toString());
         editors.putString(LOCATION_KEY,location.getText().toString());
         editors.putString(AGE_KEY,age.getText().toString());
+        editors.putString(BIRTHDAY_KEY,birthday.getText().toString());
 
         editors.commit();
 
