@@ -153,14 +153,15 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         phone.setText(framily.getPhoneNumber());
         try
         {
-            if (imageUri != null) {
-                FileInputStream fis = new FileInputStream(new File(fileName));
-                bitmap = BitmapFactory.decodeStream(fis);
-                roundedImage = new RoundImage(bitmap);
-                photo.setImageDrawable(roundedImage);
-                fis.close();
-            }
-        } catch (IOException e) {
+//            if (imageUri != null) {
+//                FileInputStream fis = new FileInputStream(new File(fileName));
+//                bitmap = BitmapFactory.decodeStream(fis);
+//                roundedImage = new RoundImage(bitmap);
+//                photo.setImageDrawable(roundedImage);
+//                fis.close();
+//            }
+            photo.setImageURI(Uri.parse(framily.getImage()));
+        } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
             roundedImage = new RoundImage(bitmap);
             photo.setImageDrawable(roundedImage);
@@ -233,9 +234,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             if (requestCode == CAMERA_REQUEST_CODE) {
                 try {
                     photo.setImageURI(imageUri);
-                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
-                    roundedImage = new RoundImage(bitmap);
-                    photo.setImageDrawable(roundedImage);
+//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
+//                    roundedImage = new RoundImage(bitmap);
+//                    photo.setImageDrawable(roundedImage);
                     String imagePath = pictureFile.getAbsolutePath();
                     framily.setImage(imagePath);
                 } catch (Exception e) {
@@ -245,15 +246,11 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             if (requestCode == GALLERY_REQUEST_CODE) {
                 try {
                     imageUri = data.getData();
+                    photo.setImageURI(imageUri);
                     String imagePath = imageUri.toString();
-                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
-                    roundedImage = new RoundImage(bitmap);
-                    photo.setImageDrawable(roundedImage);
-//                    FileInputStream fis = openFileInput(imagePath);
-//                    bitmap = BitmapFactory.decodeStream(fis);
+//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
 //                    roundedImage = new RoundImage(bitmap);
 //                    photo.setImageDrawable(roundedImage);
-//                    fis.close();
                     framily.setImage(imagePath);
                 } catch (Exception e) {
                     e.printStackTrace();

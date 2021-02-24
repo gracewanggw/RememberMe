@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -122,11 +123,11 @@ public class PeopleFragment extends Fragment {
             String name = fram.getNameFirst();
             String relationship = fram.getRelationship();
             if (image != null) {
-                File imgFile = new File(image);
-                Uri imageUri = FileProvider.getUriForFile(getContext(), "com.example.rememberme.ui.people", imgFile);
-                imageView.setImageURI(imageUri);
+                Log.d("rdudak", "profile photo set");
+                imageView.setImageURI(Uri.parse(image));
             }
             else {
+                Log.d("rdudak", "default photo set");
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
                 RoundImage roundedImage = new RoundImage(bitmap);
                 imageView.setImageDrawable(roundedImage);

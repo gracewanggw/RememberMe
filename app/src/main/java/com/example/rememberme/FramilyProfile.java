@@ -1,6 +1,7 @@
 package com.example.rememberme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +18,9 @@ import android.widget.TextView;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
@@ -26,6 +30,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     Long framilyId;
 
     ImageView photo;
+    Uri imageUri;
     RoundImage roundedImage;
     private MemoriesAdapter memoriesAdapter;
     GridView gridView;
@@ -51,18 +56,36 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framily_profile);
+        photo = (ImageView) findViewById(R.id.photo);
 
         dbSource = new RememberMeDbSource(this);
         dbSource.open();
+
         Intent intent = getIntent();
         framilyId = intent.getLongExtra(ID_KEY, -1);
         Log.d("rdudak", "ID = " + framilyId);
         if(framilyId >= 0) {
             framily = dbSource.fetchFramilyByIndex(framilyId);
             Log.d("rdudak", framily.toString());
+            photo.setImageURI(Uri.parse(framily.getImage()));
+//            try
+//            {
+//                FileInputStream fis = openFileInput(framily.getImage());
+//                Bitmap bmap = BitmapFactory.decodeStream(fis);
+//                roundedImage = new RoundImage(bmap);
+//                photo.setImageDrawable(roundedImage);
+//                fis.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
-        else
+        else {
             framily = new Framily();
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+            roundedImage = new RoundImage(bm);
+            photo.setImageDrawable(roundedImage);
+        }
+
 
         name = findViewById(R.id.name);
         name.setText(framily.getNameFirst() + " " + framily.getNameLast());
@@ -109,11 +132,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
             }
         });
-
-        photo = (ImageView) findViewById(R.id.photo);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
-        roundedImage = new RoundImage(bm);
-        photo.setImageDrawable(roundedImage);
     }
 
     public ArrayList<Memory> getMemories() {
