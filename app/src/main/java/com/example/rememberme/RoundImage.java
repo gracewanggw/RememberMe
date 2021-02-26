@@ -3,6 +3,7 @@ package com.example.rememberme;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -18,6 +19,9 @@ public class RoundImage extends Drawable {
     private final int mBitmapWidth;
     private final int mBitmapHeight;
 
+    //private final int borderWidth = 5;
+    //private final Paint paintBorder;
+
     public RoundImage(Bitmap bitmap) {
         mBitmap = bitmap;
         mRectF = new RectF();
@@ -29,10 +33,20 @@ public class RoundImage extends Drawable {
 
         mBitmapWidth = mBitmap.getWidth();
         mBitmapHeight = mBitmap.getHeight();
+
+//        paintBorder = new Paint();
+//        paintBorder.setColor(Color.GRAY);
+//        paintBorder.setAntiAlias(true);
+
+//        mBitmapWidth = mBitmap.getWidth() - (borderWidth*3);
+//        mBitmapHeight = mBitmap.getHeight() - (borderWidth*3);
     }
 
     @Override
     public void draw(Canvas canvas) {
+        int circleCenter = mBitmapWidth / 2;
+        //canvas.drawCircle(circleCenter + borderWidth, circleCenter + borderWidth, circleCenter+borderWidth,paintBorder);
+        //canvas.drawCircle(circleCenter + borderWidth, circleCenter + borderWidth, circleCenter, mPaint);
         canvas.drawOval(mRectF, mPaint);
     }
 
@@ -49,6 +63,8 @@ public class RoundImage extends Drawable {
             invalidateSelf();
         }
     }
+
+
 
     @Override
     public void setColorFilter(ColorFilter cf) {

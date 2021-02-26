@@ -198,7 +198,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:clickable="true"
-        android:background="@drawable/quiz_button2"
+        android:background="@drawable/save_button"
         android:textColor="@color/white"/>
 
 

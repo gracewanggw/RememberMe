@@ -9,8 +9,8 @@
 
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/photo_profile"
         android:layout_marginTop="80dp"
         android:layout_below="@+id/back"
@@ -33,18 +33,172 @@
         android:layout_marginRight="16dp"
         android:background="?attr/selectableItemBackground"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/name_age"
+        android:layout_below="@id/photo_profile"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
-        android:paddingTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/photo_profile"
-        android:text="Name"
-        android:textSize="30dp"
-        android:textColor="@color/black"/>
+        android:orientation="horizontal">
 
-    <TableLayout
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="Name"
+            android:textAlignment="textEnd"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+        <TextView
+            android:id="@+id/age"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="age"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/name_age">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/icons"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/location_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/location_icon" />
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/birthday_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/birthday_icon" />
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/phone_icon1"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/phone_icon" />
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/phone_icon2"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/phone_icon" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/location_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/blue1"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_marginTop="18dp"
+                    android:id="@+id/birthday_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Birthday"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Birthday"
+                    android:textColor="@color/blue1"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_marginTop="14dp"
+                    android:id="@+id/contact1_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Emergency Contact #1"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/emergency_contact_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="phone number"
+                    android:textColor="@color/blue1"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_marginTop="14dp"
+                    android:id="@+id/contact2_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Emergency Contact #2"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/emergency_contact_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="phone number"
+                    android:textColor="@color/blue1"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--<TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
@@ -61,25 +215,30 @@
             android:layout_height="wrap_content"
             android:paddingTop="20dp">
 
-            <TextView
-                android:id="@+id/age_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Age"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
 
-            <TextView
+                    android:id="@+id/age"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="Age number"
+                    android:textColor="@color/black"
+                    android:textSize="32dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/age_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Age"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:layout_gravity="right"/>
+            </LinearLayout>
 
         </TableRow>
 
@@ -96,7 +255,7 @@
                 android:text="Birthday"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <TextView
 
@@ -106,7 +265,7 @@
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
@@ -124,7 +283,7 @@
                 android:text="Location"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <TextView
 
@@ -134,7 +293,7 @@
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
@@ -152,7 +311,7 @@
                 android:text="Emergency Contact #1"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <TextView
 
@@ -162,7 +321,7 @@
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
@@ -180,7 +339,7 @@
                 android:text="Emergency Contact #2"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <TextView
 
@@ -190,10 +349,10 @@
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:layout_gravity="right"/>
 
         </TableRow>
 
-    </TableLayout>
+    </TableLayout> !-->
 </RelativeLayout>

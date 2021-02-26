@@ -28,7 +28,7 @@ public class QuizFragment extends Fragment {
     Button fill_in_blank;
     Button mult_choice;
 
-    boolean fib;
+    boolean fib = true;
 
     public static final String QUIZ_TYPE_KEY = "quiz type";
     public static final String FILL_IN_BLANK = "fill in blank";
@@ -50,8 +50,8 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fib = true;
-                mult_choice.setBackgroundResource(R.drawable.quiz_button1);
-                fill_in_blank.setBackgroundResource(R.drawable.quiz_button2);
+                mult_choice.setBackgroundColor(Color.TRANSPARENT);
+                fill_in_blank.setBackgroundResource(R.drawable.quiz_button1);
                 fill_in_blank.setTextColor(Color.WHITE);
                 mult_choice.setTextColor(Color.BLACK);
             }
@@ -61,8 +61,8 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fib = false;
-                mult_choice.setBackgroundResource(R.drawable.quiz_button2);
-                fill_in_blank.setBackgroundResource(R.drawable.quiz_button1);
+                mult_choice.setBackgroundResource(R.drawable.quiz_button1);
+                fill_in_blank.setBackgroundColor(Color.TRANSPARENT);
                 fill_in_blank.setTextColor(Color.BLACK);
                 mult_choice.setTextColor(Color.WHITE);
             }
