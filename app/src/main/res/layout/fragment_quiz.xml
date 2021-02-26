@@ -11,13 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Switch
+       <!-- <Switch
             android:id="@+id/fill_in_blank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Fill in the blank"
-            android:textSize="18dp"/>
+            android:textSize="18dp"/> -->
 
         <LinearLayout
             android:id="@+id/quiz_all"
@@ -26,7 +26,7 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/gradient">
+            android:background="@color/blue1">
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/gradient">
+            android:background="@color/blue2">
 
             <TextView
                 android:layout_width="match_parent"
@@ -90,7 +90,7 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/gradient">
+            android:background="@color/blue3">
 
             <TextView
                 android:layout_width="match_parent"
@@ -119,11 +119,10 @@
             android:id="@+id/quiz_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/gradient">
+            android:background="@color/blue4">
 
             <TextView
                 android:layout_width="match_parent"
@@ -144,7 +143,36 @@
                 android:text="Review frequently missed questions"
                 android:textAlignment="center"
                 android:textSize="24dp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginBottom="64dp"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/fill_in_blank"
+                android:layout_width="181dp"
+                android:layout_height="57dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/quiz_button1"
+                android:clickable="true"
+                android:text="Fill in the Blank" />
+
+            <Button
+                android:id="@+id/mc_button"
+                android:layout_width="181dp"
+                android:layout_height="57dp"
+                android:layout_marginLeft="10dp"
+                android:clickable="true"
+                android:background="@drawable/quiz_button1"
+                android:text="Multiple Choice" />
 
         </LinearLayout>
 

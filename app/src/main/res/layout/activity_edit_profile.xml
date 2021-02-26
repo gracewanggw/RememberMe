@@ -15,31 +15,25 @@
         android:text="@string/cancel"
         android:textColor="@color/white" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/save"
-        android:background="@android:color/transparent"
-        android:layout_toRightOf="@+id/back"
-        android:paddingLeft="150dp"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/white" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:id="@+id/photo"
+        android:layout_below="@id/cancel"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/save"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
         android:src="@drawable/_pic"/>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@+id/photo">
 
         <LinearLayout
@@ -53,22 +47,27 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
                     android:id="@+id/name_first"
                     android:hint="First Name"
-                    android:textSize="30dp"
+                    android:textSize="18dp"
+                    android:padding="10dp"
+                    android:layout_marginLeft="23dp"
                     android:textColor="@color/black"
-                    android:layout_weight="1"/>
+                    android:background="@drawable/input_box_name"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
                     android:id="@+id/name_last"
                     android:hint="Last Name"
-                    android:textSize="30dp"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18dp"
                     android:textColor="@color/black"
-                    android:layout_weight="1"/>
+
+                    android:background="@drawable/input_box_name"/>
 
             </LinearLayout>
 
@@ -89,15 +88,16 @@
                     android:text="@string/age"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14dp" />
+                    android:textSize="18dp" />
 
                 <EditText
                     android:id="@+id/age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="390dp"
+                    android:layout_height="40dp"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"/>
+                    android:textSize="18dp"
+                    android:padding="10dp"
+                    android:background="@drawable/input_box"/>
 
                 <TextView
                     android:id="@+id/birthday_label"
@@ -107,16 +107,17 @@
                     android:text="@string/birthday"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14dp" />
+                    android:textSize="18dp" />
 
                 <EditText
                     android:id="@+id/birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    android:hint="Click to Select Birthday"/>
+                    android:textSize="18dp"
+                    android:hint="Click to Select Birthday"
+                    android:padding="10dp"
+                    android:background="@drawable/input_box"/>
 
                 <TextView
                     android:id="@+id/location_label"
@@ -126,16 +127,17 @@
                     android:text="@string/location"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14dp" />
+                    android:textSize="18dp" />
 
                 <EditText
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:hint="i.e. Hanover, New Hampshire"
-                    android:textStyle="bold"/>
+                    android:padding="10dp"
+                    android:background="@drawable/input_box"/>
 
                 <TextView
                     android:id="@+id/contact_1"
@@ -145,18 +147,19 @@
                     android:text="Emergency Contact #1"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14dp" />
+                    android:textSize="18dp" />
 
                 <EditText
                     android:id="@+id/phone1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:inputType="phone"
                     android:digits="0123456789+"
                     android:hint="(123)-456-7890"
-                    android:textStyle="bold"/>
+                    android:padding="10dp"
+                    android:background="@drawable/input_box"/>
 
                 <TextView
                     android:id="@+id/contact_2"
@@ -166,21 +169,37 @@
                     android:text="Emergency Contact #2"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14dp" />
+                    android:textSize="18dp" />
 
                 <EditText
                     android:id="@+id/phone2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:inputType="phone"
                     android:digits="0123456789+"
                     android:hint="(123)-456-7890"
-                    android:textStyle="bold"/>
+                    android:padding="10dp"
+                    android:background="@drawable/input_box"/>
 
             </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
+
+    <Button
+        android:layout_marginTop="28dp"
+        android:layout_below="@id/scrollView"
+        android:layout_centerInParent="true"
+        android:text="@string/save"
+        android:id="@+id/save"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:background="@drawable/quiz_button2"
+        android:textColor="@color/white"/>
+
 
 </RelativeLayout>
