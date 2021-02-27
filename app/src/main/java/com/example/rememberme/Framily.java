@@ -17,7 +17,7 @@ public class Framily {
     public String location;
     public String phoneNumber;
     public ArrayList<Long> memories;
-    public String image;
+    public Bitmap image;
 
 
     public Framily() {
@@ -52,8 +52,8 @@ public class Framily {
     public ArrayList<Long> getMemories() {return memories;}
     public void addMemory(Long memory) {memories.add(memory);}
 
-    public void setImage(String image) {this.image = image;}
-    public String getImage() {return image;}
+    public void setImage(Bitmap image) {this.image = image;}
+    public Bitmap getImage() {return image;}
 
     public String toString() {
         return nameFirst + " " + nameLast + ", Relationship = " + relationship;

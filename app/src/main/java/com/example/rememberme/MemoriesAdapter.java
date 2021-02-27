@@ -1,6 +1,7 @@
 package com.example.rememberme;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,15 @@ public class MemoriesAdapter extends BaseAdapter {
 
         ImageView imageView = view.findViewById(R.id.images);
         title = view.findViewById(R.id.memory_title);
-      //  imageView.setImageResource(R.drawable.memory);
-     //   imageView.setImageResource(memories.get(position));
         title.setText(memories.get(position).getTitle());
+        if (memories.get(position).getImage() != null) {
+            imageView.setImageBitmap(null);
+            imageView.setImageBitmap(memories.get(position).getImage());
+        }
+        else {
+            imageView.setImageBitmap(null);
+            imageView.setImageResource(R.drawable.memory);
+        }
 
         return view;
     }

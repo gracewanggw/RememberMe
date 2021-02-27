@@ -37,14 +37,14 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
             BIRTHDAY + " TEXT, " +
             LOCATION + " TEXT, " +
             PHONE_NUMBER + " TEXT, " +
-            IMAGE_FRAMILY + " TEXT, " +
+            IMAGE_FRAMILY + " BLOB, " +
             MEMORIES + " BLOB);";
 
     private static final String CREATE_MEMORY_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_MEMORIES + "( " +
             ID_MEMORIES + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TITLE + " TEXT, " +
             TEXT + " TEXT, " +
-            IMAGE_MEMORY + " TEXT, " +
+            IMAGE_MEMORY + " BLOB, " +
             AUDIO + " BLOB);";
 
     // Constructor

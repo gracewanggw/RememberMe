@@ -1,6 +1,7 @@
 package com.example.rememberme.ui.people;
 
 import android.content.Intent;
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -33,6 +34,7 @@ import com.example.rememberme.RoundImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class PeopleFragment extends Fragment {
@@ -48,6 +50,14 @@ public class PeopleFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_people, container, false);
@@ -119,12 +129,13 @@ public class PeopleFragment extends Fragment {
             TextView relationView = v.findViewById(R.id.framily_Relationship);
 
             Framily fram = framilies.get(position);
-            String image = fram.getImage();
+            Bitmap image = fram.getImage();
             String name = fram.getNameFirst();
             String relationship = fram.getRelationship();
             if (image != null) {
                 Log.d("rdudak", "profile photo set");
-                imageView.setImageURI(Uri.parse(image));
+                RoundImage roundImage = new RoundImage(image);
+                imageView.setImageDrawable(roundImage);
             }
             else {
                 Log.d("rdudak", "default photo set");

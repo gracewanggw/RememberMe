@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import com.example.rememberme.DB.RememberMeDbSource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
@@ -58,6 +60,14 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_framily_profile);
         photo = (ImageView) findViewById(R.id.photo);
 
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+
         dbSource = new RememberMeDbSource(this);
         dbSource.open();
 
@@ -67,7 +77,12 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         if(framilyId >= 0) {
             framily = dbSource.fetchFramilyByIndex(framilyId);
             Log.d("rdudak", framily.toString());
-            photo.setImageURI(Uri.parse(framily.getImage()));
+            Bitmap image = framily.getImage();
+            if (image != null)
+                roundedImage = new RoundImage(framily.getImage());
+            else
+                roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
+            photo.setImageDrawable(roundedImage);
 //            try
 //            {
 //                FileInputStream fis = openFileInput(framily.getImage());

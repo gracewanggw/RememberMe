@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.amitshekhar.DebugDB;
@@ -13,10 +14,14 @@ import com.example.rememberme.AddEditMemoryActivity;
 import com.example.rememberme.Framily;
 import com.example.rememberme.Memory;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,7 @@ public class RememberMeDbSource {
             RememberMeDbHelper.MEMORIES, RememberMeDbHelper.IMAGE_FRAMILY};
 
     private String[] memoryColumns = { RememberMeDbHelper.ID_MEMORIES,RememberMeDbHelper.TITLE,
-            RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, /*RememberMeDbHelper.AUDIO*/};
+            RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, RememberMeDbHelper.AUDIO};
 
     private static final String TAG = "rdudak";
 
@@ -61,7 +66,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.BIRTHDAY, framily.getBirthday());
         values.put(RememberMeDbHelper.LOCATION, framily.getLocation());
         values.put(RememberMeDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
-        values.put(RememberMeDbHelper.IMAGE_FRAMILY, framily.getImage());
+        values.put(RememberMeDbHelper.IMAGE_FRAMILY, getBitmapAsByteArray(framily.getImage()));
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
         long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_FRAMILY, null, values);
@@ -81,8 +86,8 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.ID_MEMORIES, memory.getId());
         values.put(RememberMeDbHelper.TITLE, memory.getTitle());
         values.put(RememberMeDbHelper.TEXT, memory.getText());
-        values.put(RememberMeDbHelper.IMAGE_MEMORY, memory.getImage());
-        // values.put(MemoriesDbHelper.AUDIO, memory.getAudio());
+        values.put(RememberMeDbHelper.IMAGE_MEMORY, getBitmapAsByteArray(memory.getImage()));
+        values.put(RememberMeDbHelper.AUDIO, fileToByteArray(memory.getAudio()));
 
         long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_MEMORIES, null, values);
         Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_MEMORIES,
@@ -127,7 +132,7 @@ public class RememberMeDbSource {
             entry.setLocation(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.LOCATION)));
             entry.setPhoneNumber(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.PHONE_NUMBER)));
             entry.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.MEMORIES))));
-            entry.setImage(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_FRAMILY)));
+            entry.setImage(byteArrayToBitmap(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_FRAMILY))));
             cursor.close();
         }
         return entry;
@@ -144,8 +149,8 @@ public class RememberMeDbSource {
         entry.setId(cursor.getLong(cursor.getColumnIndex(RememberMeDbHelper.ID_MEMORIES)));
         entry.setTitle(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.TITLE)));
         entry.setText(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.TEXT)));
-        entry.setImage(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_MEMORY)));
-        // entry.setAudio(cursor.getInt(cursor.getColumnIndex(RememberMeDbHelper.AUDIO)));
+        entry.setImage(byteArrayToBitmap(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_MEMORY))));
+        entry.setAudio(byteArrayToFile(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.AUDIO))));
 
         cursor.close();
         return entry;
@@ -211,7 +216,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.BIRTHDAY, framily.getBirthday());
         values.put(RememberMeDbHelper.LOCATION, framily.getLocation());
         values.put(RememberMeDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
-        values.put(RememberMeDbHelper.IMAGE_FRAMILY, framily.getImage());
+        values.put(RememberMeDbHelper.IMAGE_FRAMILY, getBitmapAsByteArray(framily.getImage()));
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
         database.update(RememberMeDbHelper.TABLE_NAME_FRAMILY, values, RememberMeDbHelper.ID_FRAMILY + " = " + rowId, null);
@@ -223,8 +228,8 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.ID_MEMORIES, memory.getId());
         values.put(RememberMeDbHelper.TITLE, memory.getTitle());
         values.put(RememberMeDbHelper.TEXT, memory.getText());
-        values.put(RememberMeDbHelper.IMAGE_MEMORY, memory.getImage());
-        // values.put(RememberMeDbHelper.AUDIO, memory.getAudio());
+        values.put(RememberMeDbHelper.IMAGE_MEMORY, getBitmapAsByteArray(memory.getImage()));
+        values.put(RememberMeDbHelper.AUDIO, fileToByteArray(memory.getAudio()));
         database.update(RememberMeDbHelper.TABLE_NAME_MEMORIES, values, RememberMeDbHelper.ID_MEMORIES + " = " + rowId, null);
     }
 
@@ -238,7 +243,7 @@ public class RememberMeDbSource {
         framily.setBirthday(cursor.getString(5));
         framily.setLocation(cursor.getString(6));
         framily.setPhoneNumber(cursor.getString(7));
-        framily.setImage(cursor.getString(8));
+        framily.setImage(byteArrayToBitmap(cursor.getBlob(8)));
         if (cursor.getBlob(9) != null)
             framily.setMemories(byteArrayToArrayList(cursor.getBlob(9)));
         return framily;
@@ -249,10 +254,26 @@ public class RememberMeDbSource {
         memory.setId(cursor.getLong(0));
         memory.setTitle(cursor.getString(1));
         memory.setText(cursor.getString(2));
-        memory.setImage(cursor.getString(3));
-        // memory.setAudio(cursor.getInt(4));
+        memory.setImage(byteArrayToBitmap(cursor.getBlob(3)));
+        memory.setAudio(byteArrayToFile(cursor.getBlob(4)));
         return memory;
     }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        if (bitmap != null) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+            return outputStream.toByteArray();
+        }
+        else return null;
+    }
+
+    public Bitmap byteArrayToBitmap(byte[] array) {
+        if (array != null)
+            return BitmapFactory.decodeByteArray(array, 0, array.length);
+        else return null;
+    }
+
 
     public byte[] arrayListToByteArray(ArrayList<Long> memories) {
         if (memories.isEmpty()) return null;
@@ -287,10 +308,31 @@ public class RememberMeDbSource {
         return memories;
     }
 
-    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
+    public byte[] fileToByteArray(File file) {
+        try {
+            FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            for (int readNum; (readNum = fis.read(b)) != -1; ) {
+                bos.write(b, 0, readNum);
+            }
+            return bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
+    public File byteArrayToFile(byte[] fileBytes) {
+        File file = new File("audio_file.3gp");
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bos.write(fileBytes);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 }

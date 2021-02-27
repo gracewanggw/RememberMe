@@ -3,6 +3,8 @@ package com.example.rememberme;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +60,7 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         back.setText("< Back to " + framily.getNameFirst());
         title.setText(memory.getTitle());
         text.setText(memory.getText());
-       // image.setImageURI();
+        image.setImageBitmap(memory.getImage());
     }
 
     @Override
@@ -72,6 +74,7 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
             case R.id.edit:
                 intent = new Intent(this, AddEditMemoryActivity.class);
                 intent.putExtra(ID_MEMORY, memoryId);
+                intent.putExtra(FramilyProfile.ID_KEY, framilyId);
                 startActivity(intent);
                 break;
         }

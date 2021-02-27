@@ -28,7 +28,8 @@
             android:background="@drawable/memory"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/custom_blue"
-            android:id="@+id/memory_image"/>
+            android:id="@+id/memory_image"
+            android:onClick="changeImage"/>
 
         <EditText
             android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -34,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,9 +45,9 @@ import java.util.Locale;
 public class EditFramilyProfile extends AppCompatActivity implements View.OnClickListener{
     ImageView photo;
     RoundImage roundedImage;
-    String fileName;
-    File pictureFile;
-    Uri imageUri;
+//    String fileName;
+//    File pictureFile;
+//    Uri imageUri;
     Bitmap bitmap;
     Calendar myCalendar;
 
@@ -77,13 +79,21 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         checkPermissions();
         myCalendar = Calendar.getInstance();
 
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         dbSource = new RememberMeDbSource(this);
         dbSource.open();
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        fileName = "IMG_" + timeStamp + ".jpg";
-        pictureFile = new File(getExternalFilesDir(null), fileName);
-        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
+//        fileName = "IMG_" + timeStamp + ".jpg";
+//        pictureFile = new File(getExternalFilesDir(null), fileName);
+//        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
 
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
@@ -160,7 +170,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
 //                photo.setImageDrawable(roundedImage);
 //                fis.close();
 //            }
-            photo.setImageURI(Uri.parse(framily.getImage()));
+//            photo.setImageURI(Uri.parse(framily.getImage()));
+            roundedImage = new RoundImage(framily.getImage());
+            photo.setImageDrawable(roundedImage);
         } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
             roundedImage = new RoundImage(bitmap);
@@ -212,7 +224,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 if (options[which].equals("Open Camera")) {
                     Log.d("rdudak", "camera selected");
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                   // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, CAMERA_REQUEST_CODE);
                 }
                 else {
@@ -233,25 +245,25 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 try {
-                    photo.setImageURI(imageUri);
-//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
+//                    photo.setImageURI(imageUri);
+                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
 //                    roundedImage = new RoundImage(bitmap);
 //                    photo.setImageDrawable(roundedImage);
-                    String imagePath = pictureFile.getAbsolutePath();
-                    framily.setImage(imagePath);
+//                    String imagePath = pictureFile.getAbsolutePath();
+                    framily.setImage(bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             if (requestCode == GALLERY_REQUEST_CODE) {
                 try {
-                    imageUri = data.getData();
-                    photo.setImageURI(imageUri);
-                    String imagePath = imageUri.toString();
-//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
+//                    imageUri = data.getData();
+//                    photo.setImageURI(imageUri);
+//                    String imagePath = imageUri.toString();
+                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
 //                    roundedImage = new RoundImage(bitmap);
 //                    photo.setImageDrawable(roundedImage);
-                    framily.setImage(imagePath);
+                    framily.setImage(bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
