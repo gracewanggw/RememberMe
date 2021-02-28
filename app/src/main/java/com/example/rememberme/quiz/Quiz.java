@@ -77,7 +77,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         score = 0f;
         questionNum = 0;
 
-        if (type == 0) {
+        if (fillIn == false) {
             setContentView(R.layout.activity_quiz_mc);
 
             c1 = (Button) findViewById(R.id.op1);
@@ -89,10 +89,11 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
             c2.setOnClickListener(this);
             c3.setOnClickListener(this);
             c4.setOnClickListener(this);
-        }else if (type == 1){
+        }else if (fillIn == true){
 
             setContentView(R.layout.activity_quiz_fillin);
 
+            input = (EditText)findViewById(R.id.fillin_ans);
             submit = (Button) findViewById(R.id.submit_ans);
             submit.setOnClickListener(this);
 
@@ -134,7 +135,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         mQuestion.setText(questions.getQuestion(questionNum).question);
         answer = questions.getQuestion(questionNum).correct_answer;
 
-        if(type == 0) {
+        if(fillIn = false) {
             c1.setText(questions.getQuestion(questionNum).op1);
             c2.setText(questions.getQuestion(questionNum).op2);
             c3.setText(questions.getQuestion(questionNum).op3);
@@ -176,29 +177,30 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.submit_ans:
-                if(input.getText().toString().equals(answer)){
+                Log.d("correct", input.getText().toString());
+                if(input.getText().toString().toLowerCase().equals(answer.toLowerCase())){
                     correct = true;
                 }
+                input.getText().clear();
                 break;
-            case R.id.question_sec:
-                if (!mIsBackVisible) {
-                    mSetRightOut.setTarget(mCardFrontLayout);
-                    mSetLeftIn.setTarget(mCardBackLayout);
-                    mSetRightOut.start();
-                    mSetLeftIn.start();
-                    mIsBackVisible = true;
-                } else {
-                    mSetRightOut.setTarget(mCardBackLayout);
-                    mSetLeftIn.setTarget(mCardFrontLayout);
-                    mSetRightOut.start();
-                    mSetLeftIn.start();
-                    mIsBackVisible = false;
-                }
-                break;
+//            case R.id.question_sec:
+//                if (!mIsBackVisible) {
+//                    mSetRightOut.setTarget(mCardFrontLayout);
+//                    mSetLeftIn.setTarget(mCardBackLayout);
+//                    mSetRightOut.start();
+//                    mSetLeftIn.start();
+//                    mIsBackVisible = true;
+//                } else {
+//                    mSetRightOut.setTarget(mCardBackLayout);
+//                    mSetLeftIn.setTarget(mCardFrontLayout);
+//                    mSetRightOut.start();
+//                    mSetLeftIn.start();
+//                    mIsBackVisible = false;
+//                }
+               // break;
             }
 
         if (correct){
-
             correct_answers++;
             correct = false;
         }else{
