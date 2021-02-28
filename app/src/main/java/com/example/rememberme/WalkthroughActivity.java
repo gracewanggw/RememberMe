@@ -1,11 +1,14 @@
 package com.example.rememberme;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +18,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Map;
+import java.util.Set;
+
 public class WalkthroughActivity extends AppCompatActivity {
 
     ViewPager viewPager;
@@ -23,10 +29,24 @@ public class WalkthroughActivity extends AppCompatActivity {
     ImageView page2;
     ImageView page3;
 
+    public final static String SHARED_PREFS = "sharedPrefs";
+    public final static String OPENED_KEY = "opened";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(openedAlready()){
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+        }
+        else{
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+            SharedPreferences.Editor editors = sharedPreferences.edit();
+            editors.putBoolean(OPENED_KEY,true);
+            editors.commit();
+        }
         setContentView(R.layout.activity_walkthrough);
 
         page1 = findViewById(R.id.page1);
@@ -34,11 +54,27 @@ public class WalkthroughActivity extends AppCompatActivity {
         page3 = findViewById(R.id.page3);
         Button start = findViewById(R.id.button_get_started);
 
+        Context context = this;
+
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+
         viewPager = findViewById(R.id.view_pager);
         SlideViewAdapter adapter = new SlideViewAdapter(this);
         viewPager.setAdapter(adapter);
         System.out.println("here0");
 
+    }
+
+    public boolean openedAlready(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        return sharedPreferences.getBoolean(OPENED_KEY,false);
     }
 
     private class SlideViewAdapter extends PagerAdapter {
