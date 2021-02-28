@@ -3,6 +3,7 @@ package com.example.rememberme;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.CursorWindow;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rememberme.DB.RememberMeDbSource;
+
+import java.lang.reflect.Field;
 
 public class ViewMemory extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +38,14 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_memory);
+
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         dbSource = new RememberMeDbSource(this);
         dbSource.open();

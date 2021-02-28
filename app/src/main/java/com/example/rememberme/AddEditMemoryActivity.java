@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -28,6 +29,7 @@ import com.example.rememberme.DB.RememberMeDbSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class AddEditMemoryActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -61,6 +63,14 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_memory);
+
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         dbSource = new RememberMeDbSource(this);
         dbSource.open();
@@ -104,7 +114,6 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
             case R.id.add_audio:
                 if(!audioPlay) {
                     startAudio();
-                    audioPlay = true;
                 }
                 else {
                     saveAudio();
@@ -242,10 +251,12 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         recorder.setOutputFile(mFileName);
         try {
             recorder.prepare();
+            recorder.start();
+            audioPlay = true;
+            Log.d("rdudak", "prepare() success");
         } catch (IOException e) {
             Log.d("rdudak", "prepare() failed");
         }
-        recorder.start();
     }
 
     public void saveAudio() {
