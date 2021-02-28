@@ -8,6 +8,9 @@
     <string name="exit">Exit Quiz</string>
     <string name="submit">Submit Answer</string>
     <string name="enter_answer">your answer...</string>
+    <string name="see">See Answer</string>
+    <string name="next">Next Card</string>
+
 
 
     <string name="results_txt">Your Results: </string>

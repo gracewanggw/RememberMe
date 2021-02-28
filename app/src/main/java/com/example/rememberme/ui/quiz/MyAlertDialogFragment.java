@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.rememberme.R;
+import com.example.rememberme.quiz.Flashcard;
 import com.example.rememberme.quiz.Quiz;
 
 public class MyAlertDialogFragment extends DialogFragment implements DialogInterface.OnClickListener{
@@ -43,8 +44,8 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
     public void onClick(DialogInterface dialogInterface, int item){
 
         if(item == DialogInterface.BUTTON_POSITIVE){
-//            Intent intent = new Intent(getContext(), Flashcard.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getContext(), Flashcard.class);
+            startActivity(intent);
 
             //flash.onFlashClick();
         }  else if (item == DialogInterface.BUTTON_NEUTRAL){
