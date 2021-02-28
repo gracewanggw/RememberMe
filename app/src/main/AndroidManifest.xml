@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rememberme">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,22 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RememberMe">
+        <activity android:name=".WalkthroughActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".EditFramilyProfile" />
         <activity android:name=".FramilyProfile" />
         <activity android:name=".AddMemoryActivity" />
+<<<<<<< HEAD
         <activity android:name=".EditUserProfileActivity"/>
         <activity android:name=".quiz.Quiz" />
         <activity android:name=".quiz.QuizResult" />
+=======
+        <activity android:name=".EditUserProfileActivity" />
+>>>>>>> 9997d1c7750364530ad7e0a3e7bf152631057a9a
     </application>
 
 </manifest>

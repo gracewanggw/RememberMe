@@ -1,6 +1,8 @@
 package com.example.rememberme.ui.people;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
 import com.example.rememberme.FramilyProfile;
 import com.example.rememberme.R;
+import com.example.rememberme.RoundImage;
 
 import java.util.List;
 
@@ -113,7 +116,10 @@ public class PeopleFragment extends Fragment {
             String name = fram.getNameFirst();
             String relationship = fram.getRelationship();
 
-            imageView.setImageResource(image);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),image);
+            RoundImage roundedImage = new RoundImage(bm);
+            imageView.setImageDrawable(roundedImage);
+
             nameView.setText(name);
             relationView.setText(relationship);
 
