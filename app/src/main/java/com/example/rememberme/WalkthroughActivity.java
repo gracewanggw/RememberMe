@@ -6,6 +6,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class WalkthroughActivity extends AppCompatActivity {
+import com.example.rememberme.quiz.Quiz;
+
+public class WalkthroughActivity extends AppCompatActivity implements View.OnClickListener {
 
     ViewPager viewPager;
-
     ImageView page1;
     ImageView page2;
     ImageView page3;
@@ -34,11 +36,23 @@ public class WalkthroughActivity extends AppCompatActivity {
         page3 = findViewById(R.id.page3);
         Button start = findViewById(R.id.button_get_started);
 
+        start.setOnClickListener(this);
         viewPager = findViewById(R.id.view_pager);
         SlideViewAdapter adapter = new SlideViewAdapter(this);
         viewPager.setAdapter(adapter);
         System.out.println("here0");
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_get_started:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+
+        }
     }
 
     private class SlideViewAdapter extends PagerAdapter {
@@ -108,6 +122,8 @@ public class WalkthroughActivity extends AppCompatActivity {
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object){
             container.removeView((View)object);
         }
+
+
 
     }
 }
