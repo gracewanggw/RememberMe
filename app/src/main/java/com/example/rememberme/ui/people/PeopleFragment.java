@@ -1,10 +1,15 @@
 package com.example.rememberme.ui.people;
 
 import android.content.Intent;
+<<<<<<< HEAD
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+=======
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+>>>>>>> 9997d1c7750364530ad7e0a3e7bf152631057a9a
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -132,6 +137,7 @@ public class PeopleFragment extends Fragment {
             Bitmap image = fram.getImage();
             String name = fram.getNameFirst();
             String relationship = fram.getRelationship();
+<<<<<<< HEAD
             if (image != null) {
                 Log.d("rdudak", "profile photo set");
                 RoundImage roundImage = new RoundImage(image);
@@ -143,6 +149,13 @@ public class PeopleFragment extends Fragment {
                 RoundImage roundedImage = new RoundImage(bitmap);
                 imageView.setImageDrawable(roundedImage);
             }
+=======
+
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),image);
+            RoundImage roundedImage = new RoundImage(bm);
+            imageView.setImageDrawable(roundedImage);
+
+>>>>>>> 9997d1c7750364530ad7e0a3e7bf152631057a9a
             nameView.setText(name);
             relationView.setText(relationship);
 

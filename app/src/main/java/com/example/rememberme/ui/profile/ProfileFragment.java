@@ -1,6 +1,7 @@
 package com.example.rememberme.ui.profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.EditUserProfileActivity;
@@ -27,6 +29,12 @@ public class ProfileFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
     TextView edit;
+    TextView age;
+    TextView birthday;
+    TextView location;
+    TextView contact1;
+    TextView contact2;
+    TextView name;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
@@ -38,6 +46,15 @@ public class ProfileFragment extends Fragment {
         roundedImage = new RoundImage(bm);
         photo.setImageDrawable(roundedImage);
 
+        age = root.findViewById(R.id.age);
+        birthday = root.findViewById(R.id.birthday);
+        location = root.findViewById(R.id.location);
+        contact1 = root.findViewById(R.id.emergency_contact_1);
+        contact2 = root.findViewById(R.id.emergency_contact_2);
+        name = root.findViewById(R.id.name);
+
+        updateView();
+
         edit = root.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,5 +64,23 @@ public class ProfileFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        updateView();
+        super.onStart();
+    }
+
+    public void updateView(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        age.setText(sharedPreferences.getString(EditUserProfileActivity.AGE_KEY,""));
+        birthday.setText(sharedPreferences.getString(EditUserProfileActivity.BIRTHDAY_KEY,""));
+        location.setText(sharedPreferences.getString(EditUserProfileActivity.LOCATION_KEY,""));
+        contact1.setText(sharedPreferences.getString(EditUserProfileActivity.PHONE1_KEY,""));
+        contact2.setText(sharedPreferences.getString(EditUserProfileActivity.PHONE2_KEY,""));
+        String nameStr = sharedPreferences.getString(EditUserProfileActivity.FIRST_NAME_KEY, "") +
+                " " + sharedPreferences.getString(EditUserProfileActivity.LAST_NAME_KEY,"");
+        name.setText(nameStr);
     }
 }
