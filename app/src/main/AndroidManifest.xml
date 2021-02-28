@@ -24,13 +24,9 @@
         <activity android:name=".EditFramilyProfile" />
         <activity android:name=".FramilyProfile" />
         <activity android:name=".AddMemoryActivity" />
-<<<<<<< HEAD
         <activity android:name=".EditUserProfileActivity"/>
         <activity android:name=".quiz.Quiz" />
         <activity android:name=".quiz.QuizResult" />
-=======
-        <activity android:name=".EditUserProfileActivity" />
->>>>>>> 9997d1c7750364530ad7e0a3e7bf152631057a9a
     </application>
 
 </manifest>

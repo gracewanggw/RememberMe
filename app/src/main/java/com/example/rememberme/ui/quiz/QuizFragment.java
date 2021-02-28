@@ -75,6 +75,7 @@ public class QuizFragment extends Fragment {
         });
 
         quizAll.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -85,9 +86,10 @@ public class QuizFragment extends Fragment {
                     case MotionEvent.ACTION_UP:
                         v.performClick();
                         quizAll.setAlpha((float)1);
-//                Intent intent = new Intent(getContext(),QuizActivity.class);
-//                intent.putExtra(FILL_IN_BLANK,fib);
-//                intent.putExtra(QUIZ_TYPE_KEY,"all");
+                        Intent intent = new Intent(getContext(), Quiz.class);
+                        intent.putExtra(FILL_IN_BLANK, fib);
+                        intent.putExtra(QUIZ_TYPE_KEY, QUIZ_TYPE_ALL_KEY);
+                        startActivityForResult(intent, 0);
                         break;
                     default:
                         break;
@@ -95,16 +97,7 @@ public class QuizFragment extends Fragment {
                 return true;
             }
 
-            @Override 
-            public boolean performClick(){
-                super.performClick()
-                Intent intent = new Intent(getContext(), Quiz.class);
-                intent.putExtra(FILL_IN_BLANK, fill_in_blank.isSelected());
-                intent.putExtra(QUIZ_TYPE_KEY, QUIZ_TYPE_ALL_KEY);
-                startActivityForResult(intent, 0);
 
-                return true
-            }
 
         });
 
