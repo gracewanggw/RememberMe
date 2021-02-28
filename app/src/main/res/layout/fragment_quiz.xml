@@ -11,87 +11,195 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Switch
+       <!-- <Switch
             android:id="@+id/fill_in_blank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Fill in the blank"
-            android:textSize="18dp"/>
+            android:textSize="18dp"/> -->
 
-        <Button
-            android:id="@+id/quiz_all_button"
+        <LinearLayout
+            android:id="@+id/quiz_all"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="All"
-            android:textSize="32dp"/>
+            android:clickable="true"
+            android:background="@color/blue1">
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="ALL"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="28dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Go over everything about everyone"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/all_icon"
+                app:tint="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/name_to_face"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Go over everything about everyone"
-            android:textAlignment="center"
-            android:textSize="24dp"/>
-
-
-        <Button
-            android:id="@+id/name_to_face_button"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:background="@color/blue2">
 
-            android:text="Name to Face"
-            android:textSize="32dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NAME TO FACE"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="28dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Match names to faces"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/face_icon"
+                app:tint="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quiz_birthdays"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Match names to faces"
-            android:textAlignment="center"
-            android:textSize="24dp"/>
-
-        <Button
-            android:id="@+id/quiz_birthday_button"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Birthdays"
-            android:textSize="32dp"/>
+            android:clickable="true"
+            android:background="@color/blue3">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Go over birthdays"
-            android:textAlignment="center"
-            android:textSize="24dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BIRTHDAYS"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="28dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/quiz_review_button"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Go over birthdays"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/birthday_icon"
+                app:tint="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quiz_review"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Review"
-            android:textSize="32dp"/>
+            android:clickable="true"
+            android:background="@color/blue4">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:text="Review frequently missed questions"
-            android:textAlignment="center"
-            android:textSize="24dp"
-            android:layout_marginBottom="64dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="REVIEW"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="28dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review frequently missed questions"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/review_icon"
+                app:tint="@android:color/white" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="56dp"
+            android:layout_marginRight="56dp"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginBottom="64dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/default_quiz_button">
+
+            <Button
+                android:id="@+id/fill_in_blank"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/quiz_button1"
+                android:clickable="true"
+                android:textColor="@color/white"
+                android:text="Fill in the Blank" />
+
+            <Button
+                android:id="@+id/mc_button"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:background="@android:color/transparent"
+                android:text="Multiple Choice" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

@@ -28,8 +28,8 @@
         android:textColor="@color/white" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:id="@+id/photo"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/save"
