@@ -132,6 +132,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private void updateQuestion(){
 
         mQuestion.setText(questions.getQuestion(questionNum).question);
+        answer = questions.getQuestion(questionNum).correct_answer;
 
         if(type == 0) {
             c1.setText(questions.getQuestion(questionNum).op1);
@@ -197,12 +198,12 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
             }
 
         if (correct){
+
             correct_answers++;
             correct = false;
         }else{
             wrong_answers++;
         }
-
 
         questionNum ++;
         if (questionNum < questions.getSize()){
@@ -215,7 +216,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void endQuiz(){
-        score = (float)correct_answers/(float)questions.getSize();
+        score = 100.0f * ((float)correct_answers/(float)questions.getSize());
 
         Intent intent = new Intent( this, QuizResult.class);
         Bundle bundle = new Bundle();

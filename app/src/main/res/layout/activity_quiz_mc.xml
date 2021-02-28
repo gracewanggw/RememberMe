@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -13,11 +14,13 @@
         <TextView
             android:id = "@+id/question"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_margin="20dp"
             android:background="@drawable/card"
             android:textSize="40dp"
             android:gravity="center"
+            app:autoSizeTextType="uniform"
+            app:autoSizePresetSizes="@array/autosize_text_sizes"
             >
 
         </TextView>
@@ -37,9 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/button"
+            android:background="@color/blue1"
             android:layout_weight="0"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             />
 
         <Button
@@ -47,18 +51,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/button"
+            android:background="@color/blue2"
             android:layout_weight="0"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             />
         <Button
             android:id="@+id/op3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/button"
+            android:background="@color/blue3"
             android:layout_weight="0"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             />
 
         <Button
@@ -66,9 +72,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/button"
             android:layout_weight="0"
             android:textAllCaps="false"
+            android:background="@color/blue4"
+            android:textColor="@color/white"
             />
 
 
@@ -79,10 +86,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/exit"
+        android:textColor="@color/white"
         android:gravity="center"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:background="@color/custom_blue"
+        android:background="@drawable/button"
         />
 
 </FrameLayout>

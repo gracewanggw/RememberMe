@@ -28,8 +28,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:textColor = "#000000"
-        android:textSize = "30sp"
-        android:text = "100"/>
+        android:textSize = "30sp"/>
 
     <TextView
         android:layout_width="wrap_content"

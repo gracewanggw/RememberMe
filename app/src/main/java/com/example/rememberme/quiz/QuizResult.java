@@ -26,9 +26,9 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     public static final int REVIEW = 1;
     public static final String QUIZ_KEY = "quiz type";
 
-    public static final String CORRECT_KEY = "type of quiz";
-    public static final String WRONG_KEY = "type of quiz";
-    public static final String PERCENT_KEY = "type of quiz";
+    public static final String CORRECT_KEY = "correct";
+    public static final String WRONG_KEY = "wrong";
+    public static final String PERCENT_KEY = "percent";
 
 
 //    public static int MODE = Context.MODE_PRIVATE;
@@ -38,7 +38,7 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     private int type;
     private int correctans;
     private int wrongans;
-    private int percentans;
+    private float percentans;
 
     private TextView correctCt;
     private TextView wrongCt;
@@ -53,25 +53,21 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         Intent myintent = getIntent();
         Bundle bundle = myintent.getExtras();
         //uses the key to know what message to get
-        type = bundle.getInt(QUIZ_KEY, 0);
-        correctans = bundle.getInt(CORRECT_KEY, 0);
-        wrongans = bundle.getInt(WRONG_KEY, 0);
-        percentans = bundle.getInt(PERCENT_KEY, 0);
+        type = bundle.getInt(QUIZ_KEY, -1);
+        correctans = bundle.getInt(CORRECT_KEY, -1);
+        wrongans = bundle.getInt(WRONG_KEY, -1);
+        percentans = bundle.getFloat(PERCENT_KEY, -10f);
         //preferences = getActivity().getSharedPreferences("MySharedPref", MODE);
-
-        Log.d("fjx", "c"+correctans);
-        Log.d("fjx", "w"+wrongans);
-        Log.d("fjx", "p"+percentans);
-
 
         correctCt = (TextView)findViewById(R.id.numCorrect);
         wrongCt = (TextView)findViewById(R.id.numWrong);
         percent = (TextView)findViewById(R.id.percentage);
         Button button = (Button)findViewById(R.id.btnSave);
 
-//        correctCt.setText(correctans);
-//        wrongCt.setText(wrongans);
-//        percent.setText(percentans);
+        correctCt.setText(correctans+"");
+        wrongCt.setText(wrongans+"");
+        String noDec = ""+ (int)percentans;
+        percent.setText(noDec);
         button.setOnClickListener(this);
     }
 
