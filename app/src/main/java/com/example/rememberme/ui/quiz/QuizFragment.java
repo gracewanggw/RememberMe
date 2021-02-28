@@ -1,9 +1,15 @@
 package com.example.rememberme.ui.quiz;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,13 +18,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.R;
 import com.example.rememberme.quiz.Quiz;
 
-public class QuizFragment extends Fragment {
+public class QuizFragment extends Fragment{
 
     private DashboardViewModel dashboardViewModel;
 
@@ -141,13 +149,36 @@ public class QuizFragment extends Fragment {
                 v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 review.setAlpha((float)1);
-//                Intent intent = new Intent(getContext(),QuizActivity.class);
-//                intent.putExtra(FILL_IN_BLANK,fib);
-//                intent.putExtra(QUIZ_TYPE_KEY,"review");
+                MyAlertDialogFragment myDialog = new MyAlertDialogFragment();;
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("fib", fib);
+                bundle.putInt("quizType", QUIZ_TYPE_REVIEW_KEY);
+                bundle.putString("title", "Review Mode");
+                myDialog.setArguments(bundle);
+                myDialog.show(getFragmentManager(), "dialog");
             }
             return true;
-        }
-    });
+            }
+        });
+
         return root;
 }
+
+//    @Override
+//    public void onFlashClick(){
+////        Intent intent = new Intent(getContext(), Flashcard.class);
+////        startActivity(intent);
+//        Log.d("click", "on flashclick");
+//
+//    }
+//
+//    @Override
+//    public void onQuizClick() {
+//        Intent intent = new Intent(getContext(), Quiz.class);
+//        intent.putExtra(FILL_IN_BLANK, fib);
+//        intent.putExtra(QUIZ_TYPE_KEY, QUIZ_TYPE_REVIEW_KEY);
+//        startActivity(intent);
+//    }
+
+
 }
