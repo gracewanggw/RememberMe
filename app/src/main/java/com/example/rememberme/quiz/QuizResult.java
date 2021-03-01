@@ -1,25 +1,17 @@
 package com.example.rememberme.quiz;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.rememberme.R;
-import com.example.rememberme.ui.quiz.QuizFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.preference.PreferenceManager;
+
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,10 +26,8 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     public static final String WRONG_KEY = "wrong";
     public static final String PERCENT_KEY = "percent";
 
-
-//    public static int MODE = Context.MODE_PRIVATE;
-//    public SharedPreferences preferences;
-//    public static final String PREFERENCE_NAME = "saved info";
+    private QuizQuestions questions = new QuizQuestions();
+    ArrayList<String> toReview = new ArrayList<String>();
 
     private int type;
     private int correctans;
@@ -83,7 +73,6 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
 
     public void renderQuestions(ArrayList<String> answers){
         ArrayList<ArrayList<String>> toPass = new ArrayList<ArrayList<String>> ();
-        QuizQuestions questions = new QuizQuestions();
         for (int j = 0; j < answers.size(); j++){
             ArrayList<String> thisQues = new ArrayList<String>();
             thisQues.add(questions.getQuestion(j).question);
@@ -102,7 +91,13 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSave:
-                Log.d("fjx", "clicked");
+                QuestionAdapter v = (QuestionAdapter)responses.getAdapter();
+                ArrayList<Boolean> checked = v.mChecked;
+                for (int i = 0; i < responses.getCount(); i++) {
+                    if(checked.get(i)) {
+                        toReview.add(questions.getQuestion(i).question);
+                    }
+                }
                 updateReviewSet();
                 finish();
                 break;
@@ -111,6 +106,7 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
 
     public void updateReviewSet(){
         //do lofix for updating the set here
+        Log.d("fjx", ""+ toReview);
     }
 
 }
