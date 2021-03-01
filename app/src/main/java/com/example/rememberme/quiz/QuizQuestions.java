@@ -1,5 +1,7 @@
 package com.example.rememberme.quiz;
 
+import java.util.ArrayList;
+
 public class QuizQuestions {
 
     private int totalQuestions = 4;
@@ -31,6 +33,23 @@ public class QuizQuestions {
 
     public int getSize(){
         return testQuestions.length;
+    }
+
+    public ArrayList<String> getAllQuestions() {
+        ArrayList<String> ret = new ArrayList<String>();
+        for (String text : testQuestions) {
+            ret.add(text);
+        }
+        return ret;
+    }
+    public ArrayList<String> getAnswers(){
+        ArrayList<String> ret = new ArrayList<String>();
+        int i = 0;
+        for (int ans : correctAns) {
+            ret.add(choices[i][ans]);
+            i++;
+        }
+        return ret;
     }
 
     public QuizQuestions getQuestion(int num){

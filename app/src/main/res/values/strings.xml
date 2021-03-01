@@ -14,7 +14,7 @@
 
 
     <string name="results_txt">Your Results: </string>
-    <string name="wrong_ans">Wrong Answers</string>
+    <string name="wrong_ans">Your Answers</string>
     <string name="wrong">Wrong</string>
     <string name="right">Correct</string>
     <string name="done_button">Finish</string>

@@ -18,6 +18,8 @@ import com.example.rememberme.ui.quiz.QuizFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 //Quiz Activity
 public class Quiz extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,6 +54,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     public int quiz_type;
 
     private boolean correct = false;
+    ArrayList<String> responses = new  ArrayList<String>();
 
 
     @Override
@@ -135,7 +138,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         mQuestion.setText(questions.getQuestion(questionNum).question);
         answer = questions.getQuestion(questionNum).correct_answer;
 
-        if(fillIn = false) {
+        if(fillIn == false) {
             c1.setText(questions.getQuestion(questionNum).op1);
             c2.setText(questions.getQuestion(questionNum).op2);
             c3.setText(questions.getQuestion(questionNum).op3);
@@ -143,41 +146,43 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         }else{
             Log.d("debug", "invalid quiz type");
         }
-
     }
 
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.exit:
                 finish();
                 break;
             case R.id.op1:
+                responses.add(c1.getText().toString());
                 if(c1.getText().toString().equals(answer)) {
                     c1.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.op2:
+                responses.add(c2.getText().toString());
                 if(c2.getText().toString().equals(answer)){
                     c2.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.op3:
+                responses.add(c3.getText().toString());
                 if(c3.getText().toString().equals(answer)) {
                     c3.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.op4:
+                responses.add(c4.getText().toString());
                 if(c4.getText().toString().equals(answer)){
                     c4.setElevation(10);
                     correct = true;
                 }
                 break;
             case R.id.submit_ans:
-                Log.d("correct", input.getText().toString());
+                responses.add(input.getText().toString());
                 if(input.getText().toString().toLowerCase().equals(answer.toLowerCase())){
                     correct = true;
                 }
@@ -227,6 +232,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         bundle.putInt(QuizResult.CORRECT_KEY, correct_answers);
         bundle.putInt(QuizResult.WRONG_KEY, wrong_answers);
         bundle.putFloat(QuizResult.PERCENT_KEY, score);
+        bundle.putStringArrayList("response", responses);
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
