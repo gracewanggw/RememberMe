@@ -26,8 +26,9 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     public static final String WRONG_KEY = "wrong";
     public static final String PERCENT_KEY = "percent";
 
-    private QuizQuestions questions = new QuizQuestions();
-    ArrayList<String> toReview = new ArrayList<String>();
+    private QuizQuestions questions;
+    private ArrayList<Question> quiz;
+    private ArrayList<Question> toReview = new ArrayList<Question>();
 
     private int type;
     private int correctans;
@@ -54,6 +55,8 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         wrongans = bundle.getInt(WRONG_KEY, -1);
         percentans = bundle.getFloat(PERCENT_KEY, -10f);
         ans = bundle.getStringArrayList("response");
+        quiz = bundle.getParcelableArrayList("quiz");
+        questions = new QuizQuestions(quiz);
         //preferences = getActivity().getSharedPreferences("MySharedPref", MODE);
 
         correctCt = (TextView)findViewById(R.id.numCorrect);
@@ -95,7 +98,7 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
                 ArrayList<Boolean> checked = v.mChecked;
                 for (int i = 0; i < responses.getCount(); i++) {
                     if(checked.get(i)) {
-                        toReview.add(questions.getQuestion(i).question);
+                        toReview.add(quiz.get(i));
                     }
                 }
                 updateReviewSet();

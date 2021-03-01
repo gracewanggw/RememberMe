@@ -23,12 +23,23 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.QuizDbSource;
+import com.example.rememberme.Framily;
 import com.example.rememberme.R;
+import com.example.rememberme.quiz.Question;
 import com.example.rememberme.quiz.Quiz;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class QuizFragment extends Fragment{
 
     private DashboardViewModel dashboardViewModel;
+    FramilyDbSource dataSource;
+    QuizDbSource quizDbSource;
+
 
     LinearLayout quizAll;
     LinearLayout nameFace;
@@ -40,13 +51,17 @@ public class QuizFragment extends Fragment{
 
     boolean fib = true;
 
-    public static final String QUIZ_TYPE_KEY = "quiz type";
+    public static final String QUIZ_KEY = "quiz given";
     public static final int QUIZ_TYPE_ALL_KEY = 0;
-    public static final int QUIZ_TYPE_PERSON_KEY = 1;
+    public static final int QUIZ_TYPE_BIRTHDAY_KEY = 1;
     public static final int QUIZ_TYPE_REVIEW_KEY = 2;
+
+    public int quizType;
+    public ArrayList<Question> quiz;
 
     public static final String FILL_IN_BLANK = "fill in blank";
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -59,6 +74,7 @@ public class QuizFragment extends Fragment{
         review = root.findViewById(R.id.quiz_review);
         fill_in_blank = root.findViewById(R.id.fill_in_blank);
         mult_choice = root.findViewById(R.id.mc_button);
+        //updateMasterLists();
 
         fill_in_blank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,9 +110,11 @@ public class QuizFragment extends Fragment{
                     case MotionEvent.ACTION_UP:
                         v.performClick();
                         quizAll.setAlpha((float)1);
+                        quizType = QUIZ_TYPE_ALL_KEY;
+                        quiz = createQuiz();
                         Intent intent = new Intent(getContext(), Quiz.class);
                         intent.putExtra(FILL_IN_BLANK, fib);
-                        intent.putExtra(QUIZ_TYPE_KEY, QUIZ_TYPE_ALL_KEY);
+                        intent.putExtra(QUIZ_KEY, quiz);
                         startActivityForResult(intent, 0);
                         break;
                     default:
@@ -133,9 +151,12 @@ public class QuizFragment extends Fragment{
                     v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     birthdays.setAlpha((float)1);
-//                Intent intent = new Intent(getContext(),QuizActivity.class);
-//                intent.putExtra(FILL_IN_BLANK,fib);
-//                intent.putExtra(QUIZ_TYPE_KEY,"birthdays");
+                    quizType = QUIZ_TYPE_BIRTHDAY_KEY;
+                    quiz = createQuiz();
+                    Intent intent = new Intent(getContext(), Quiz.class);
+                    intent.putExtra(FILL_IN_BLANK, fib);
+                    intent.putExtra(QUIZ_KEY, quiz);
+                    startActivityForResult(intent, 0);
                 }
                 return true;
             }
@@ -149,10 +170,12 @@ public class QuizFragment extends Fragment{
                 v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 review.setAlpha((float)1);
+                quizType = QUIZ_TYPE_REVIEW_KEY;
+                quiz = createQuiz();
                 MyAlertDialogFragment myDialog = new MyAlertDialogFragment();;
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("fib", fib);
-                bundle.putInt("quizType", QUIZ_TYPE_REVIEW_KEY);
+                bundle.putParcelableArrayList("givenquiz", quiz);
                 bundle.putString("title", "Review Mode");
                 myDialog.setArguments(bundle);
                 myDialog.show(getFragmentManager(), "dialog");
@@ -162,23 +185,100 @@ public class QuizFragment extends Fragment{
         });
 
         return root;
-}
+    }
 
-//    @Override
-//    public void onFlashClick(){
-////        Intent intent = new Intent(getContext(), Flashcard.class);
-////        startActivity(intent);
-//        Log.d("click", "on flashclick");
+    public ArrayList<Question> createQuiz() {
+        ArrayList<Question> quizQuestionList = new ArrayList<Question>();
+        int quizLength = 10;
+
+        dataSource = new FramilyDbSource(getActivity().getApplicationContext());
+        dataSource.open();
+
+        String[] infoChoice = {"relationship", "age", "birthday", "location"};
+
+        List<Framily> people = dataSource.fetchEntries();
+
+        switch (quizType) {
+            case QUIZ_TYPE_ALL_KEY:
+                for (int i = 0; i < quizLength; i++) {
+                    int random = (int) (Math.random() * people.size());
+                    Framily chosen = people.get(random);
+                    String fact = infoChoice[new Random().nextInt(infoChoice.length)];
+                    quizQuestionList.add(createQuestion(chosen, fact));
+                }
+                break;
+            case QUIZ_TYPE_BIRTHDAY_KEY:
+                for (int i = 0; i < quizLength; i++) {
+                    int random = (int) (Math.random() * people.size());
+                    Framily chosen = people.get(random);
+                    String fact = "birthday";
+                    quizQuestionList.add(createQuestion(chosen, fact));
+                }
+                break;
+            case QUIZ_TYPE_REVIEW_KEY:
+                for (int i = 0; i < quizLength; i++) {
+                    quizQuestionList = (ArrayList) quizDbSource.fetchEntries();
+                }
+                break;
+                }
+
+        return quizQuestionList;
+
+    }
+
+
+    public Question createQuestion(Framily person, String fact){
+        Question mQuestion = new Question();
+        mQuestion.setPerson(person.getNameFirst()+person.getNameLast());
+        mQuestion.setQType(fact);
+        mQuestion.setQDataType("String");
+        mQuestion.setReview(false);
+
+        switch (fact) {
+            case "relationship":
+                mQuestion.setmQuestion("What is your relationship with "+ person.getNameFirst() + " " + person.getNameLast()+"?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getRelationship());
+
+                break;
+            case "age":
+                mQuestion.setmQuestion("How old is "+ person.getNameFirst() + " " + person.getNameLast()+"?");
+                mQuestion.setADataType("int");
+                mQuestion.setAnswer(""+person.getAge());
+                break;
+            case "birthday":
+                mQuestion.setmQuestion("When is "+ person.getNameFirst() + " " + person.getNameLast()+"'s birthday?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getBirthday());
+                break;
+            case "location":
+                mQuestion.setmQuestion("Where is "+ person.getNameFirst() + " " + person.getNameLast()+" living right now?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getLocation());
+                break;
+        }
+        return mQuestion;
+    }
+
+//
+//    public int getSize(String whichArray){
+//        switch (whichArray) {
+//            case "relationship":
+//                return allRelationships.size();
+//                break;
+//            case "age":
+//                return allAge.size();
+//                break;
+//            case "birthday":
+//                return allBirthday.size();
+//                break;
+//            case "location":
+//               return allLocation.size();
+//                break;
+//        }
 //
 //    }
-//
-//    @Override
-//    public void onQuizClick() {
-//        Intent intent = new Intent(getContext(), Quiz.class);
-//        intent.putExtra(FILL_IN_BLANK, fib);
-//        intent.putExtra(QUIZ_TYPE_KEY, QUIZ_TYPE_REVIEW_KEY);
-//        startActivity(intent);
-//    }
+
 
 
 }

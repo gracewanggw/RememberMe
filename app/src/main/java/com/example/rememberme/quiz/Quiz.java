@@ -51,30 +51,21 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private View mCardBackLayout;
 
     public boolean fillIn = false;
-    public int quiz_type;
-
+    public ArrayList<Question> quiz;
+    public ArrayList<String> responses = new  ArrayList<String>();
     private boolean correct = false;
-    ArrayList<String> responses = new  ArrayList<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         Intent myintent = getIntent();
         //uses the key to know what message to get
         fillIn = myintent.getBooleanExtra(QuizFragment.FILL_IN_BLANK, false);
-        quiz_type = myintent.getIntExtra(QuizFragment.QUIZ_TYPE_KEY, -1);
-        if (quiz_type == 0) {
-            type = 0;
-        } else if (quiz_type == 1) {
-            type = 1;
-        }else{
-            Log.d("DEBUG", "not valid quiz type");
-        }
+        quiz = myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY);
 
-        questions = new QuizQuestions();
+        questions = new QuizQuestions(quiz);
         correct_answers = 0;
         wrong_answers = 0;
         score = 0f;
@@ -233,6 +224,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         bundle.putInt(QuizResult.WRONG_KEY, wrong_answers);
         bundle.putFloat(QuizResult.PERCENT_KEY, score);
         bundle.putStringArrayList("response", responses);
+        bundle.putParcelableArrayList("quiz", quiz);
         intent.putExtras(bundle);
         startActivity(intent);
         finish();

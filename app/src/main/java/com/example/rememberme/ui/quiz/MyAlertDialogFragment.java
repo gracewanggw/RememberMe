@@ -14,10 +14,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.rememberme.R;
 import com.example.rememberme.quiz.Flashcard;
+import com.example.rememberme.quiz.Question;
 import com.example.rememberme.quiz.Quiz;
 
+import java.util.ArrayList;
+
 public class MyAlertDialogFragment extends DialogFragment implements DialogInterface.OnClickListener{
-    int type;
+    ArrayList<Question> quiz;
     boolean fib;
 
     @Override
@@ -25,7 +28,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
         View content;
         Bundle bundle = getArguments();
         String title = bundle.getString("title");
-        type = bundle.getInt("quizType");
+        quiz = bundle.getParcelableArrayList("givenquiz");
         fib = bundle.getBoolean("fib");
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -51,7 +54,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
         }  else if (item == DialogInterface.BUTTON_NEUTRAL){
             Intent intent = new Intent(getContext(), Quiz.class);
             intent.putExtra(QuizFragment.FILL_IN_BLANK, fib);
-            intent.putExtra(QuizFragment.QUIZ_TYPE_KEY, type);
+            intent.putExtra(QuizFragment.QUIZ_KEY, quiz);
             startActivity(intent);
         }
 

@@ -113,6 +113,19 @@ public class FramilyDbSource {
         return framily;
     }
 
+    //Fetches the most recent entry
+    public ArrayList<String> fetchColumn(String colName) {
+        ArrayList<String> columnVals = new ArrayList<>();
+        String[] columns = {colName};
+        Cursor cursor = database.query(FramilyDbHelper.TABLE_NAME, columns, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            columnVals.add(cursor.getString(cursor.getColumnIndex(colName)));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return columnVals;
+    }
+
     // Query the entire table, return all rows
     public List<Framily> fetchEntries() {
         List<Framily> entries = new ArrayList<Framily>();
