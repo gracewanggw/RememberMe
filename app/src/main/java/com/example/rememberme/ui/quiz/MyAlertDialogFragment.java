@@ -48,6 +48,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
 
         if(item == DialogInterface.BUTTON_POSITIVE){
             Intent intent = new Intent(getContext(), Flashcard.class);
+            intent.putExtra(QuizFragment.QUIZ_KEY, quiz);
             startActivity(intent);
 
             //flash.onFlashClick();

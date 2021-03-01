@@ -42,7 +42,9 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_flashcard);
         setTitle("Review");
 
-        questions = new QuizQuestions();
+        Intent myintent = getIntent();
+
+        questions = new QuizQuestions(myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY));
         questionNum = 0;
 
         exit = (Button)findViewById(R.id.exit);

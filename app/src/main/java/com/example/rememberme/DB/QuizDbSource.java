@@ -120,7 +120,7 @@ public class QuizDbSource {
 
     private Question cursorToQuestion(Cursor cursor) {
         Question question = new Question();
-        question.setId(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.ID)));
+        question.setId(cursor.getInt(cursor.getColumnIndex(QuizDbHelper.ID)));
         question.setPerson(cursor.getString(cursor.getColumnIndex(QuizDbHelper.PERSON)));
         question.setQType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION_TYPE)));
         question.setQDataType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.DATA_TYPE_QUESTION)));

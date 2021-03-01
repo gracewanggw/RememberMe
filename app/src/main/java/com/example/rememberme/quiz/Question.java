@@ -20,18 +20,21 @@ public class Question implements Parcelable {
     public Question() {
     }
 
-    protected Question(Parcel in) {
-        id = in.readInt();
-        person = in.readString();
-        qType = in.readString();
-        qDataType = in.readString();
-        qStructure = in.readString();
-        mQuestion = in.readString();
-        aDataType = in.readString();
-        aStructure = in.readString();
-        answer = in.readString();
+    public Question(Parcel in) {
+        String[] data = new String[10];
+        in.readStringArray(data);
+
+        id = Integer.parseInt(data[0]);
+        person = data[1];
+        qType = data[2];
+        qDataType = data[3];
+        qStructure = data[4];
+        mQuestion = data[5];
+        aDataType = data[6];
+        aStructure = data[7];
+        answer = data[8];
         byte tmpReview = in.readByte();
-        review = tmpReview == 0 ? null : tmpReview == 1;
+        review = Boolean.parseBoolean(data[9]);;
     }
 
     public static final Creator<Question> CREATOR = new Creator<Question>() {
@@ -85,7 +88,7 @@ public class Question implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[] {
-                ""+this.id,
+                Integer.toString(this.id),
                 this.person,
                 this.qType,
                 this.qDataType,
@@ -94,6 +97,8 @@ public class Question implements Parcelable {
                 this.aDataType,
                 this.aStructure,
                 this.answer,
-                ""+this.review});
+                String.valueOf(this.review)});
     }
+
+
 }

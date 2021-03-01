@@ -171,7 +171,10 @@ public class QuizFragment extends Fragment{
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 review.setAlpha((float)1);
                 quizType = QUIZ_TYPE_REVIEW_KEY;
+                quizDbSource = new QuizDbSource(getActivity().getApplicationContext());
+                quizDbSource.open();
                 quiz = createQuiz();
+                quizDbSource.close();
                 MyAlertDialogFragment myDialog = new MyAlertDialogFragment();;
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("fib", fib);
@@ -216,9 +219,8 @@ public class QuizFragment extends Fragment{
                 }
                 break;
             case QUIZ_TYPE_REVIEW_KEY:
-                for (int i = 0; i < quizLength; i++) {
-                    quizQuestionList = (ArrayList) quizDbSource.fetchEntries();
-                }
+
+                quizQuestionList = (ArrayList) quizDbSource.fetchEntries();
                 break;
                 }
 
