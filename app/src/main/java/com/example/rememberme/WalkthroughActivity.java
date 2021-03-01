@@ -1,7 +1,6 @@
 package com.example.rememberme;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -17,9 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Map;
-import java.util.Set;
 
 public class WalkthroughActivity extends AppCompatActivity {
 
@@ -68,7 +64,7 @@ public class WalkthroughActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         SlideViewAdapter adapter = new SlideViewAdapter(this);
         viewPager.setAdapter(adapter);
-        System.out.println("here0");
+        Log.d("gwang", "here");
 
     }
 
@@ -116,21 +112,21 @@ public class WalkthroughActivity extends AppCompatActivity {
                     break;
 
                 case 1:
-                    imageView.setImageResource(R.drawable.start_graphic2);
-                    page2.setImageResource(R.drawable.selected_slide);
+                    imageView.setImageResource(R.drawable.start_graphic_2);
                     page1.setImageResource(R.drawable.unselected_slide);
+                    page2.setImageResource(R.drawable.selected_slide);
                     page3.setImageResource(R.drawable.unselected_slide);
-                    title.setText("Welcome to RememberMe");
-                    description.setText("An app made to help you remember your friends and family");
+                    title.setText("Quiz");
+                    description.setText("You can quiz yourself on information about your friends and family");
                     break;
 
                 case 2:
-                    imageView.setImageResource(R.drawable.start_graphic2);
-                    page3.setImageResource(R.drawable.selected_slide);
-                    page2.setImageResource(R.drawable.unselected_slide);
+                    imageView.setImageResource(R.drawable.start_graphic_3);
                     page1.setImageResource(R.drawable.unselected_slide);
-                    title.setText("Welcome to RememberMe");
-                    description.setText("An app made to help you remember your friends and family");
+                    page2.setImageResource(R.drawable.unselected_slide);
+                    page3.setImageResource(R.drawable.selected_slide);
+                    title.setText("Memories");
+                    description.setText("You can look through old memories you had with your friends and family");
                     break;
 
             }
