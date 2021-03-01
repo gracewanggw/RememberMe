@@ -6,6 +6,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +25,24 @@ public class WalkthroughActivity extends AppCompatActivity {
     ImageView page2;
     ImageView page3;
 
+    public final static String SHARED_PREFS = "sharedPrefs";
+    public final static String OPENED_KEY = "opened";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(openedAlready()){
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+        }
+        else{
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+            SharedPreferences.Editor editors = sharedPreferences.edit();
+            editors.putBoolean(OPENED_KEY,true);
+            editors.commit();
+        }
         setContentView(R.layout.activity_walkthrough);
 
         page1 = findViewById(R.id.page1);
@@ -34,11 +50,27 @@ public class WalkthroughActivity extends AppCompatActivity {
         page3 = findViewById(R.id.page3);
         Button start = findViewById(R.id.button_get_started);
 
+        Context context = this;
+
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+
         viewPager = findViewById(R.id.view_pager);
         SlideViewAdapter adapter = new SlideViewAdapter(this);
         viewPager.setAdapter(adapter);
-        System.out.println("here0");
+        Log.d("gwang", "here");
 
+    }
+
+    public boolean openedAlready(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        return sharedPreferences.getBoolean(OPENED_KEY,false);
     }
 
     private class SlideViewAdapter extends PagerAdapter {
@@ -80,21 +112,21 @@ public class WalkthroughActivity extends AppCompatActivity {
                     break;
 
                 case 1:
-                    imageView.setImageResource(R.drawable.start_graphic2);
-                    page2.setImageResource(R.drawable.selected_slide);
+                    imageView.setImageResource(R.drawable.start_graphic_2);
                     page1.setImageResource(R.drawable.unselected_slide);
+                    page2.setImageResource(R.drawable.selected_slide);
                     page3.setImageResource(R.drawable.unselected_slide);
-                    title.setText("Welcome to RememberMe");
-                    description.setText("An app made to help you remember your friends and family");
+                    title.setText("Quiz");
+                    description.setText("You can quiz yourself on information about your friends and family");
                     break;
 
                 case 2:
-                    imageView.setImageResource(R.drawable.start_graphic2);
-                    page3.setImageResource(R.drawable.selected_slide);
-                    page2.setImageResource(R.drawable.unselected_slide);
+                    imageView.setImageResource(R.drawable.start_graphic_3);
                     page1.setImageResource(R.drawable.unselected_slide);
-                    title.setText("Welcome to RememberMe");
-                    description.setText("An app made to help you remember your friends and family");
+                    page2.setImageResource(R.drawable.unselected_slide);
+                    page3.setImageResource(R.drawable.selected_slide);
+                    title.setText("Memories");
+                    description.setText("You can look through old memories you had with your friends and family");
                     break;
 
             }
