@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.amitshekhar.DebugDB;
+import com.example.rememberme.quiz.Question;
 import com.example.rememberme.quiz.QuizQuestions;
 
 import java.io.ByteArrayInputStream;
@@ -26,12 +27,10 @@ public class QuizDbSource {
     private SQLiteDatabase database;
     private QuizDbHelper dbHelper;
 
-
     private String[] allColumns = { QuizDbHelper.ID, QuizDbHelper.PERSON,
             QuizDbHelper.QUESTION_TYPE, QuizDbHelper.DATA_TYPE_QUESTION, QuizDbHelper.QUESTION_STRUCTURE, QuizDbHelper.QUESTION,
             QuizDbHelper.DATA_TYPE_ANSWER, QuizDbHelper.ANSWER_STRUCTURE, QuizDbHelper.CORRECT_ANSWER, QuizDbHelper.REVIEW};
 
-    //private static final String TAG = "d";
 
     public QuizDbSource(Context context) {
         dbHelper = new QuizDbHelper(context);
@@ -49,78 +48,67 @@ public class QuizDbSource {
         dbHelper.close();
     }
 
-    public long insertQuestion(QuizQuestions question) {
+    public long insertQuestion(Question question) {
         ContentValues values = new ContentValues();
-        values.put(FramilyDbHelper.ID, framily.getId());
-        values.put(FramilyDbHelper.NAME_FIRST, framily.getNameFirst());
-        values.put(FramilyDbHelper.NAME_LAST, framily.getNameLast());
-        values.put(FramilyDbHelper.RELATIONSHIP, framily.getRelationship());
-        values.put(FramilyDbHelper.AGE, framily.getAge());
-        values.put(FramilyDbHelper.BIRTHDAY, framily.getBirthday());
-        values.put(FramilyDbHelper.LOCATION, framily.getLocation());
-        values.put(FramilyDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
-        if (!framily.getMemories().isEmpty())
-            values.put(FramilyDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
-//        if (framily.getImage() != null)
-//            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
-        long insertId = database.insert(FramilyDbHelper.TABLE_NAME, null, values);
-        Cursor cursor = database.query(FramilyDbHelper.TABLE_NAME,
+        values.put(QuizDbHelper.ID, question.getId());
+        values.put(QuizDbHelper.PERSON, question.getPerson());
+        values.put(QuizDbHelper.QUESTION_TYPE, question.getQType());
+        values.put(QuizDbHelper.DATA_TYPE_QUESTION, question.getQDataTypen());
+        values.put(QuizDbHelper.QUESTION_STRUCTURE, question.getQStructure());
+        values.put(QuizDbHelper.QUESTION, question.getmQuestion());
+        values.put(QuizDbHelper.DATA_TYPE_ANSWER, question.getADataTypen());
+        values.put(QuizDbHelper.ANSWER_STRUCTURE, question.getAStructure());
+        values.put(QuizDbHelper.CORRECT_ANSWER, question.getAnswer());
+        values.put(QuizDbHelper.REVIEW, question.getReview());
+
+        long insertId = database.insert(QuizDbHelper.TABLE_NAME, null, values);
+        Cursor cursor = database.query(QuizDbHelper.TABLE_NAME,
                 allColumns,
-                FramilyDbHelper.ID + " = " + insertId,
+                QuizDbHelper.ID + " = " + insertId,
                 null,null, null, null);
         cursor.moveToFirst();//now the cursor has only one element but the index is -1, so we need to do cursor.moveToFirst()
-        Framily newEntry = cursorToFramily(cursor);
-        Log.d(TAG, "Name = " + newEntry.getNameFirst() + " " + newEntry.getNameLast() + " insert ID = " + newEntry.getId());
+        Question mQuestion = cursorToQuestion(cursor);
+        Log.d("test", "Name = " + mQuestion.getmQuestion() +  " insert ID = " + mQuestion.getId());
         cursor.close();
         return insertId;
     }
 
     // Remove an entry by giving its index
-    public void removeEntry(long rowIndex) {
-        // Log.d("rdudak", DebugDB.getAddressLog());
-        database.delete(FramilyDbHelper.TABLE_NAME, FramilyDbHelper.ID
-                + " = " + rowIndex, null);
+    public void removeEntry(long rowId) {
+        database.delete(QuizDbHelper.TABLE_NAME, QuizDbHelper.ID
+                + " = " + rowId, null);
     }
 
     // Query a specific entry by its index.
-    public Framily fetchEntryByIndex(int rowId) {
-        //Log.d("rdudak", DebugDB.getAddressLog());
-        Cursor cursor = database.query(FramilyDbHelper.TABLE_NAME, allColumns,
-                FramilyDbHelper.ID + " = " + rowId, null,
+    public Question fetchEntryByIndex(int rowId) {
+        Cursor cursor = database.query(QuizDbHelper.TABLE_NAME, allColumns,
+                QuizDbHelper.ID + " = " + rowId, null,
                 null, null, null);
         cursor.moveToFirst();
-        Framily entry = new Framily();
-        entry.setId(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.ID)));
-        entry.setNameFirst(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_FIRST)));
-        entry.setNameLast(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_LAST)));
-        entry.setRelationship(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.RELATIONSHIP)));
-        entry.setAge(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.AGE)));
-        entry.setBirthday(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.BIRTHDAY)));
-        entry.setLocation(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.LOCATION)));
-        entry.setPhoneNumber(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.PHONE_NUMBER)));
-        entry.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES))));
-        //entry.setImage(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.IMAGE)));
+        Question entry = new Question();
+        entry.setId(cursor.getInt(cursor.getColumnIndex(QuizDbHelper.ID)));
+        entry.setPerson(cursor.getString(cursor.getColumnIndex(QuizDbHelper.PERSON)));
+        entry.setQType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION_TYPE)));
+        entry.setQDataType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.DATA_TYPE_QUESTION)));
+        entry.setQStructure(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION_STRUCTURE)));
+        entry.setmQuestion(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION)));
+        entry.setADataType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.DATA_TYPE_ANSWER)));
+        entry.setAStructure(cursor.getString(cursor.getColumnIndex(QuizDbHelper.ANSWER_STRUCTURE)));
+        entry.setAnswer(cursor.getString(cursor.getColumnIndex(QuizDbHelper.CORRECT_ANSWER)));
+        entry.setReview(cursor.getInt(cursor.getColumnIndex(QuizDbHelper.REVIEW)) > 0);
         cursor.close();
         return entry;
     }
 
-    //Fetches the most recent entry
-    public Framily fetchLastEntry() {
-        String selectQuery = "SELECT  * FROM " + "sqlite_sequence";
-        Cursor cursor = database.rawQuery(selectQuery, null);
-        cursor.moveToLast();
-        Framily framily = cursorToFramily(cursor);
-        return framily;
-    }
 
     // Query the entire table, return all rows
-    public List<Framily> fetchEntries() {
-        List<Framily> entries = new ArrayList<Framily>();
-        Cursor cursor = database.query(FramilyDbHelper.TABLE_NAME,
+    public List<Question> fetchEntries() {
+        List<Question> entries = new ArrayList<Question>();
+        Cursor cursor = database.query(QuizDbHelper.TABLE_NAME,
                 allColumns, null, null, null, null, null);
         cursor.moveToFirst(); //Move the cursor to the first row.
         while (!cursor.isAfterLast()) {//Returns whether the cursor is pointing to the position after the last row.
-            Framily entry = cursorToFramily(cursor);
+            Question entry = cursorToQuestion(cursor);
             entries.add(entry);
             cursor.moveToNext();
         }
@@ -129,76 +117,21 @@ public class QuizDbSource {
         return entries;
     }
 
-    public void updateEntry(int rowId) {
-        ContentValues values = new ContentValues();
-        Framily framily = EditFramilyProfile.framily;
-        values.put(FramilyDbHelper.ID, framily.getId());
-        values.put(FramilyDbHelper.NAME_FIRST, framily.getNameFirst());
-        values.put(FramilyDbHelper.NAME_LAST, framily.getNameLast());
-        values.put(FramilyDbHelper.RELATIONSHIP, framily.getRelationship());
-        values.put(FramilyDbHelper.AGE, framily.getAge());
-        values.put(FramilyDbHelper.BIRTHDAY, framily.getBirthday());
-        values.put(FramilyDbHelper.LOCATION, framily.getLocation());
-        values.put(FramilyDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
-        if (!framily.getMemories().isEmpty())
-            values.put(FramilyDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
-//        if (framily.getImage() != null)
-//            values.put(FramilyDbHelper.IMAGE, getBitmapAsByteArray(framily.getImage()));
-        database.update(FramilyDbHelper.TABLE_NAME, values, FramilyDbHelper.ID + " = " + rowId, null);
+
+    private Question cursorToQuestion(Cursor cursor) {
+        Question question = new Question();
+        question.setId(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.ID)));
+        question.setPerson(cursor.getString(cursor.getColumnIndex(QuizDbHelper.PERSON)));
+        question.setQType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION_TYPE)));
+        question.setQDataType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.DATA_TYPE_QUESTION)));
+        question.setQStructure(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION_STRUCTURE)));
+        question.setmQuestion(cursor.getString(cursor.getColumnIndex(QuizDbHelper.QUESTION)));
+        question.setADataType(cursor.getString(cursor.getColumnIndex(QuizDbHelper.DATA_TYPE_ANSWER)));
+        question.setAStructure(cursor.getString(cursor.getColumnIndex(QuizDbHelper.ANSWER_STRUCTURE)));
+        question.setAnswer(cursor.getString(cursor.getColumnIndex(QuizDbHelper.CORRECT_ANSWER)));
+        question.setReview(cursor.getInt(cursor.getColumnIndex(QuizDbHelper.REVIEW)) > 0);
+        return question;
     }
 
-    private QuizQuestion cursorToQuestion(Cursor cursor) {
-        Framily framily = new Framily();
-        framily.setId(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.ID)));
-        framily.setNameFirst(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_FIRST)));
-        framily.setNameLast(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.NAME_LAST)));
-        framily.setRelationship(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.RELATIONSHIP)));
-        framily.setAge(cursor.getInt(cursor.getColumnIndex(FramilyDbHelper.AGE)));
-        framily.setBirthday(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.BIRTHDAY)));
-        framily.setLocation(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.LOCATION)));
-        framily.setPhoneNumber(cursor.getString(cursor.getColumnIndex(FramilyDbHelper.PHONE_NUMBER)));
-        if (cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES)) != null)
-            framily.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(FramilyDbHelper.MEMORIES))));
-        return framily;
-    }
-
-    public byte[] arrayListToByteArray(ArrayList<Integer> memories) {
-        if (memories.isEmpty()) return null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(baos);
-        byte[] bytes = new byte[memories.size()];
-        try {
-            for (Integer element : memories) {
-                out.writeUTF(element.toString());
-            }
-            bytes = baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bytes;
-    }
-
-    public ArrayList<Integer> byteArrayToArrayList(byte[] memoryBytes) {
-        ArrayList<Integer> memories = new ArrayList<Integer>();
-        if (memoryBytes != null) {
-            ByteArrayInputStream bais = new ByteArrayInputStream(memoryBytes);
-            DataInputStream in = new DataInputStream(bais);
-            try {
-                while (in.available() > 0) {
-                    String memory = in.readUTF();
-                    memories.add(Integer.parseInt(memory));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return memories;
-    }
-
-    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
-    }
 
 }
