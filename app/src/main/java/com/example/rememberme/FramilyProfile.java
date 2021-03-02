@@ -43,6 +43,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     TextView age;
     TextView birthday;
     TextView location;
+    TextView phone;
 
     Button call;
     Button back;
@@ -112,6 +113,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         birthday.setText(framily.getBirthday());
         location = findViewById(R.id.location);
         location.setText(framily.getLocation());
+        phone = findViewById(R.id.phone_number);
+        phone.setText(framily.getPhoneNumber());
 
         call = findViewById(R.id.call);
         call.setOnClickListener(this);

@@ -87,7 +87,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.TITLE, memory.getTitle());
         values.put(RememberMeDbHelper.TEXT, memory.getText());
         values.put(RememberMeDbHelper.IMAGE_MEMORY, getBitmapAsByteArray(memory.getImage()));
-        values.put(RememberMeDbHelper.AUDIO, fileToByteArray(memory.getAudio()));
+        values.put(RememberMeDbHelper.AUDIO, memory.getAudio());
 
         long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_MEMORIES, null, values);
         Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_MEMORIES,
@@ -150,7 +150,7 @@ public class RememberMeDbSource {
         entry.setTitle(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.TITLE)));
         entry.setText(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.TEXT)));
         entry.setImage(byteArrayToBitmap(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_MEMORY))));
-        entry.setAudio(byteArrayToFile(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.AUDIO))));
+        entry.setAudio(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.AUDIO)));
 
         cursor.close();
         return entry;
@@ -229,7 +229,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.TITLE, memory.getTitle());
         values.put(RememberMeDbHelper.TEXT, memory.getText());
         values.put(RememberMeDbHelper.IMAGE_MEMORY, getBitmapAsByteArray(memory.getImage()));
-        values.put(RememberMeDbHelper.AUDIO, fileToByteArray(memory.getAudio()));
+        values.put(RememberMeDbHelper.AUDIO, memory.getAudio());
         database.update(RememberMeDbHelper.TABLE_NAME_MEMORIES, values, RememberMeDbHelper.ID_MEMORIES + " = " + rowId, null);
     }
 
@@ -255,7 +255,7 @@ public class RememberMeDbSource {
         memory.setTitle(cursor.getString(1));
         memory.setText(cursor.getString(2));
         memory.setImage(byteArrayToBitmap(cursor.getBlob(3)));
-        memory.setAudio(byteArrayToFile(cursor.getBlob(4)));
+        memory.setAudio(cursor.getString(4));
         return memory;
     }
 

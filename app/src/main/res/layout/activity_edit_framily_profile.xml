@@ -14,13 +14,14 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:text="@string/cancel"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
-        android:id="@+id/save"
+        android:id="@+id/save_changes"
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/back"
         android:paddingLeft="140dp"
@@ -32,13 +33,268 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:id="@+id/photo"
+        android:layout_below="@id/cancel"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/save"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
         android:src="@drawable/_pic"
         android:onClick="profileImageChange"/>
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="@string/remove"
+        android:textColor="@color/white"
+        android:layout_below="@id/cancel"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="55dp"
+        android:textSize="18dp"
+        android:layout_marginLeft="8dp"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/photo">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/name_first"
+                    android:hint="First Name"
+                    android:textSize="18dp"
+                    android:padding="10dp"
+                    android:layout_marginLeft="23dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/input_box_name"/>
+
+                <EditText
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/name_last"
+                    android:hint="Last Name"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/input_box_name"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/name_first"
+                android:id="@+id/info_layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/age_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/age"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/birthday_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/birthday"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_box"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/input_box"
+                        android:hint="Click to Select"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+        <TextView
+        android:id="@+id/relationship_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/relationship"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp" />
+
+    <EditText
+        android:id="@+id/relationship"
+        android:layout_width="390dp"
+        android:layout_height="40dp"
+        android:hint="i.e. Best Friend"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:padding="10dp"
+        android:background="@drawable/input_box"/>
+
+    <TextView
+        android:id="@+id/location_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/location"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp" />
+
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:hint="i.e. Hanover, New Hampshire"
+        android:padding="10dp"
+        android:background="@drawable/input_box"/>
+
+    <TextView
+        android:id="@+id/phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/phone"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:hint="123 456 789"
+        android:padding="10dp"
+        android:background="@drawable/input_box"/>
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/memories"
+                    android:text="@string/memories"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:layout_below="@id/info_layout"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_memory"
+                    android:text="@string/add_memory"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/info_layout"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:paddingTop="18dp"
+                    android:paddingRight="5dp"
+                    android:clickable="true"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:columnWidth="100dp"
+                android:numColumns="3"
+                android:horizontalSpacing="0dp"
+                android:verticalSpacing="0dp"
+                android:layout_below="@id/memories"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <Button
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/scrollView"
+        android:layout_centerInParent="true"
+        android:text="Save Changes"
+        android:textAllCaps="false"
+        android:id="@+id/save"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:background="@drawable/save_button"
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
+
+    <!--
+
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -55,23 +311,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:id="@+id/name_first"
-                    android:hint="First Name"
-                    android:textSize="30dp"
-                    android:textColor="@color/black"
-                    android:layout_weight="1"/>
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:id="@+id/name_last"
-                    android:hint="Last Name"
-                    android:textSize="30dp"
-                    android:textColor="@color/black"
-                    android:layout_weight="1"/>
+
+
 
             </LinearLayout>
 
@@ -84,100 +326,12 @@
                 android:layout_below="@+id/name_first"
                 android:id="@+id/info_layout">
 
-                <TextView
-                    android:id="@+id/relationship_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/relationship"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
 
-                <EditText
-                    android:id="@+id/relationship"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="i.e. Best Friend"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/age_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/age"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
 
-                <EditText
-                    android:id="@+id/age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/birthday_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/birthday"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
 
-                <EditText
-                    android:id="@+id/birthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    android:hint="Click to Select Birthday"/>
 
-                <TextView
-                    android:id="@+id/location_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/location"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:hint="i.e. Hanover, New Hampshire"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/phone_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/phone"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:inputType="phone"
-                    android:digits="0123456789+"
-                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -241,6 +395,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView> !-->
 
 </RelativeLayout>

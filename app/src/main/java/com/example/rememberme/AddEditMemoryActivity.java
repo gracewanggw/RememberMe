@@ -87,7 +87,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         cancelMemory.setOnClickListener(this);
         removeMemory.setOnClickListener(this);
 
-        mFileName = "audio_file.3gp";
+        mFileName = getExternalFilesDir(null).getAbsolutePath() + "audio_file.3gp";
 
         Intent intent = getIntent();
         framilyId = intent.getLongExtra(FramilyProfile.ID_KEY, -1);
@@ -141,7 +141,6 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     public void saveMemoryData() {
         memory.setTitle(title.getText().toString());
         memory.setText(text.getText().toString());
-       // memory.setImage();
         if (memoryId >= 0) {
             dbSource.updateMemoryEntry(memoryId);
             Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
@@ -158,7 +157,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     }
 
     public void loadData() {
-        title.setText(memory.getText());
+        title.setText(memory.getTitle());
         text.setText(memory.getText());
         image.setImageBitmap(memory.getImage());
     }
@@ -226,6 +225,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
                     Bitmap bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
                     image.setImageBitmap(bitmap);
                     memory.setImage(bitmap);
+                    Log.d("rdudak", "memory image set");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -235,6 +235,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
                     Bitmap bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
                     image.setImageBitmap(bitmap);
                     memory.setImage(bitmap);
+                    Log.d("rdudak", "memory image set");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -265,7 +266,8 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         recorder.release();
         recorder = null;
         File audioFile = new File(getExternalFilesDir(null), mFileName);
-        memory.setAudio(audioFile);
+        memory.setAudio(mFileName);
+        Log.d("rdudak", "memory audio set");
         Toast.makeText(this, "Audio recording saved", Toast.LENGTH_SHORT).show();
     }
 }

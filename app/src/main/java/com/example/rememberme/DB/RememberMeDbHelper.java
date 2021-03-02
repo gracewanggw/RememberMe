@@ -45,7 +45,7 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
             TITLE + " TEXT, " +
             TEXT + " TEXT, " +
             IMAGE_MEMORY + " BLOB, " +
-            AUDIO + " BLOB);";
+            AUDIO + " TEXT);";
 
     // Constructor
     public RememberMeDbHelper(Context context) {

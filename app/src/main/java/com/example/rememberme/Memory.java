@@ -9,7 +9,7 @@ public class Memory {
     String title;
     String text;
     Bitmap image;
-    File audio;
+    String audio;
 
     public void setId(Long id){this.id = id;}
     public Long getId() {return id;}
@@ -23,8 +23,8 @@ public class Memory {
     public void setImage(Bitmap image) {this.image = image;}
     public Bitmap getImage() {return image;}
 
-    public void setAudio(File audio) {this.audio = audio;}
-    public File getAudio() {return audio;}
+    public void setAudio(String audio) {this.audio = audio;}
+    public String getAudio() {return audio;}
 
 }
 

@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.CursorWindow;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class ViewMemory extends AppCompatActivity implements View.OnClickListener {
@@ -24,6 +27,7 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
 
     Button back;
     Button edit;
+    Button speaker;
     TextView title;
     TextView text;
     ImageView image;
@@ -33,6 +37,8 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
 
     Framily framily;
     Memory memory;
+
+    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,8 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         back.setOnClickListener(this);
         edit = findViewById(R.id.edit);
         edit.setOnClickListener(this);
+        speaker = findViewById(R.id.speaker);
+        speaker.setOnClickListener(this);
         title = findViewById(R.id.title_memory);
         text = findViewById(R.id.text);
         image = findViewById(R.id.photo);
@@ -88,6 +96,17 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
                 intent.putExtra(FramilyProfile.ID_KEY, framilyId);
                 startActivity(intent);
                 break;
+
+            case R.id.speaker:
+                try {
+                    player = new MediaPlayer();
+                    Log.d("rdudak", memory.getAudio());
+                    player.setDataSource(memory.getAudio());
+                    player.prepare();
+                    player.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 }
