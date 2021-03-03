@@ -78,12 +78,12 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         if(framilyId >= 0) {
             framily = dbSource.fetchFramilyByIndex(framilyId);
             Log.d("rdudak", framily.toString());
-            Bitmap image = framily.getImage();
-            if (image != null)
-                roundedImage = new RoundImage(framily.getImage());
-            else
+            if (framily.getImage() != null)
+                updateImageView(framily.getImage());
+            else {
                 roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
-            photo.setImageDrawable(roundedImage);
+                photo.setImageDrawable(roundedImage);
+            }
 //            try
 //            {
 //                FileInputStream fis = openFileInput(framily.getImage());
@@ -173,6 +173,13 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     public void onPause() {
         super.onPause();
         dbSource.close();
+    }
+
+    public void updateImageView(byte[] image) {
+        Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+//        roundedImage = new RoundImage(bmp);
+//        photo.setImageDrawable(roundedImage);
+        photo.setImageBitmap(bmp);
     }
 
     @Override

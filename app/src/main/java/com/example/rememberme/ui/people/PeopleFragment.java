@@ -131,14 +131,16 @@ public class PeopleFragment extends Fragment {
             TextView relationView = v.findViewById(R.id.framily_Relationship);
 
             Framily fram = framilies.get(position);
-            Bitmap image = fram.getImage();
+            byte[] image = fram.getImage();
             String name = fram.getNameFirst();
             String relationship = fram.getRelationship();
-
             if (image != null) {
+                Log.d("rdudak", "Bitmap for " + name + ": " + image.toString());
                 Log.d("rdudak", "profile photo set");
-                RoundImage roundImage = new RoundImage(image);
-                imageView.setImageDrawable(roundImage);
+                Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+//                RoundImage roundedImage = new RoundImage(bmp);
+//                imageView.setImageDrawable(roundedImage);
+                imageView.setImageBitmap(bmp);
             }
             else {
                 Log.d("rdudak", "default photo set");
@@ -146,7 +148,7 @@ public class PeopleFragment extends Fragment {
                 RoundImage roundedImage = new RoundImage(bitmap);
                 imageView.setImageDrawable(roundedImage);
             }
-//
+
 //            Bitmap bm = BitmapFactory.decodeResource(getResources(),image);
 //            RoundImage roundedImage = new RoundImage(bm);
 //            imageView.setImageDrawable(roundedImage);

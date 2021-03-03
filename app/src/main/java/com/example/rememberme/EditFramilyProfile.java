@@ -19,22 +19,27 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,9 +50,9 @@ import java.util.Locale;
 public class EditFramilyProfile extends AppCompatActivity implements View.OnClickListener{
     ImageView photo;
     RoundImage roundedImage;
-//    String fileName;
-//    File pictureFile;
-//    Uri imageUri;
+    String fileName = "framily_img.jpg";
+    File pictureFile;
+    Uri imageUri;
     Bitmap bitmap;
     Calendar myCalendar;
 
@@ -55,6 +60,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     Button saveBtn;
     Button remove;
     TextView addMemory;
+
+    private MemoriesAdapter memoriesAdapter;
+    GridView gridView;
 
     RememberMeDbSource dbSource;
     public static Framily framily;
@@ -79,6 +87,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         checkPermissions();
         myCalendar = Calendar.getInstance();
 
+        pictureFile = new File(getExternalFilesDir(null), fileName);
+        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
+
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
             field.setAccessible(true);
@@ -91,9 +102,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         dbSource.open();
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-//        fileName = "IMG_" + timeStamp + ".jpg";
-//        pictureFile = new File(getExternalFilesDir(null), fileName);
-//        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
+        fileName = "IMG_" + timeStamp + ".jpg";
+        pictureFile = new File(getExternalFilesDir(null), fileName);
+        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
 
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
@@ -131,6 +142,10 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             loadData();
         }
 
+        memoriesAdapter = new MemoriesAdapter(this, getMemories());
+        gridView = (GridView)findViewById(R.id.gridview);
+        gridView.setAdapter(memoriesAdapter);
+
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -151,6 +166,33 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            //opens the GridItemActivity when a picture is clicked
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ViewMemory.class);
+                intent.putExtra(ViewMemory.ID_MEMORY, memories.get(position));
+                intent.putExtra(FramilyProfile.POSITION_KEY, position);
+                intent.putExtra(FramilyProfile.ID_KEY, id);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dbSource.open();
+        memoriesAdapter = new MemoriesAdapter(this, getMemories());
+        gridView.setAdapter(memoriesAdapter);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dbSource.close();
     }
 
     public void loadData() {
@@ -161,18 +203,8 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         birthday.setText(framily.getBirthday());
         location.setText(framily.getLocation());
         phone.setText(framily.getPhoneNumber());
-        try
-        {
-//            if (imageUri != null) {
-//                FileInputStream fis = new FileInputStream(new File(fileName));
-//                bitmap = BitmapFactory.decodeStream(fis);
-//                roundedImage = new RoundImage(bitmap);
-//                photo.setImageDrawable(roundedImage);
-//                fis.close();
-//            }
-//            photo.setImageURI(Uri.parse(framily.getImage()));
-            roundedImage = new RoundImage(framily.getImage());
-            photo.setImageDrawable(roundedImage);
+        try {
+        updateImageView(framily.getImage());
         } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
             roundedImage = new RoundImage(bitmap);
@@ -184,6 +216,14 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         String myFormat = "MMMM dd yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         birthday.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public ArrayList<Memory> getMemories() {
+        ArrayList<Memory> memoryItems = new ArrayList<Memory>();
+        for (Long id: memories) {
+            memoryItems.add(dbSource.fetchMemoryByIndex(id));
+        }
+        return memoryItems;
     }
 
     @Override
@@ -224,7 +264,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 if (options[which].equals("Open Camera")) {
                     Log.d("rdudak", "camera selected");
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                   // intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, CAMERA_REQUEST_CODE);
                 }
                 else {
@@ -245,33 +285,59 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 try {
-//                    photo.setImageURI(imageUri);
-                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
+//                    FileProvider.getUriForFile(this, "com.example.rememberme", folder);
+//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
 //                    roundedImage = new RoundImage(bitmap);
 //                    photo.setImageDrawable(roundedImage);
-//                    String imagePath = pictureFile.getAbsolutePath();
-                    framily.setImage(bitmap);
+//                    FileInputStream fis = new FileInputStream(folder);
+//                    byte[] image = new byte[fis.available()];
+                    InputStream iStream = getContentResolver().openInputStream(imageUri);
+                    byte[] image = getBytes(iStream);
+                    framily.setImage(image);
+                    updateImageView(image);
+                    Log.d("rdudak", "camera bitmap saved: " + framily.getImage().toString());
                 } catch (Exception e) {
+                    Log.d("rdudak", "camera save failed");
                     e.printStackTrace();
                 }
             }
             if (requestCode == GALLERY_REQUEST_CODE) {
                 try {
-//                    imageUri = data.getData();
-//                    photo.setImageURI(imageUri);
-//                    String imagePath = imageUri.toString();
-                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
+                    imageUri = data.getData();
+                    InputStream iStream = getContentResolver().openInputStream(imageUri);
+                    byte[] image = getBytes(iStream);
+//                    File folder = new File(imageUri.getPath());
+//                    FileProvider.getUriForFile(this, "com.example.rememberme", folder);
+//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
 //                    roundedImage = new RoundImage(bitmap);
 //                    photo.setImageDrawable(roundedImage);
-                    framily.setImage(bitmap);
+//                    FileInputStream fis = new FileInputStream(folder);
+//                    byte[] image = new byte[fis.available()];
+                    framily.setImage(image);
+                    updateImageView(image);
+                    Log.d("rdudak", "gallery bitmap saved: " + framily.getImage().toString());
                 } catch (Exception e) {
+                    Log.d("rdudak", "gallery save failed");
                     e.printStackTrace();
                 }
             }
         }
     }
 
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
     public void saveEntry() {
+        dbSource.open();
         framily.setNameFirst(nameFirst.getText().toString());
         framily.setNameLast(nameLast.getText().toString());
         framily.setRelationship(relationship.getText().toString());
@@ -292,6 +358,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             Toast.makeText(this, "New Framily Member Saved", Toast.LENGTH_SHORT).show();
             id = dbSource.fetchLastFramilyEntry().getId();
         }
+        dbSource.close();
     }
 
     public void askRemove(Context context) {
@@ -309,6 +376,14 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 .setNegativeButton("No, go back!", null)
                 .create();
         dialog.show();
+    }
+
+    public void updateImageView(byte[] image) {
+        Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+//        roundedImage = new RoundImage(bmp);
+//        photo.setImageDrawable(roundedImage);
+        photo.setImageBitmap(bmp);
+
     }
 
     private void checkPermissions()
