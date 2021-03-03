@@ -8,7 +8,7 @@
         android:id="@+id/images"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/memory"
+        android:src="@drawable/memory"
         android:backgroundTint="@color/custom_blue"/>
 
     <TextView

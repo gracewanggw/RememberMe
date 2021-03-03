@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.CursorWindow;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -79,7 +80,8 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         back.setText("< Back to " + framily.getNameFirst());
         title.setText(memory.getTitle());
         text.setText(memory.getText());
-        image.setImageBitmap(memory.getImage());
+        Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
+        image.setImageBitmap(bmp);
     }
 
     @Override

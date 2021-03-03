@@ -2,6 +2,7 @@ package com.example.rememberme;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -27,9 +29,14 @@ import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddEditMemoryActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,9 +46,10 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     long framilyId;
     long memoryId;
 
-    String fileName;
+    String fileName = "memory_img.jpg";
     File pictureFile;
     Uri imageUri;
+
     public static final int CAMERA_REQUEST_CODE =  1;
     public static final int GALLERY_REQUEST_CODE = 2;
 
@@ -74,6 +82,11 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
 
         dbSource = new RememberMeDbSource(this);
         dbSource.open();
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        fileName = "IMG_" + timeStamp + ".jpg";
+        pictureFile = new File(getExternalFilesDir(null), fileName);
+        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
 
         title = findViewById(R.id.title);
         text = findViewById(R.id.text);
@@ -147,7 +160,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         }
         else {
             dbSource.insertMemory(memory);
-            Toast.makeText(this, "New Framily Member Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "New Memory Saved", Toast.LENGTH_SHORT).show();
             memoryId = dbSource.fetchLastMemoryEntry().getId();
             framily.addMemory(memoryId);
             dbSource.updateFramilyEntry(framilyId, framily);
@@ -159,7 +172,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     public void loadData() {
         title.setText(memory.getTitle());
         text.setText(memory.getText());
-        image.setImageBitmap(memory.getImage());
+        updateImageView(memory.getImage());
     }
 
     public void askRemove(Context context) {
@@ -222,25 +235,48 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 try {
-                    Bitmap bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
-                    image.setImageBitmap(bitmap);
-                    memory.setImage(bitmap);
-                    Log.d("rdudak", "memory image set");
+                    InputStream iStream = getContentResolver().openInputStream(imageUri);
+                    byte[] image = getBytes(iStream);
+                    memory.setImage(image);
+                    updateImageView(image);
+                    Log.d("rdudak", "camera bitmap saved: " + memory.getImage().toString());
                 } catch (Exception e) {
+                    Log.d("rdudak", "camera save failed");
                     e.printStackTrace();
                 }
             }
             if (requestCode == GALLERY_REQUEST_CODE) {
                 try {
-                    Bitmap bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(imageUri, "r").getFileDescriptor());
-                    image.setImageBitmap(bitmap);
-                    memory.setImage(bitmap);
-                    Log.d("rdudak", "memory image set");
+                    imageUri = data.getData();
+                    InputStream iStream = getContentResolver().openInputStream(imageUri);
+                    byte[] image = getBytes(iStream);
+                    memory.setImage(image);
+                    updateImageView(image);
+                    Log.d("rdudak", "gallery bitmap saved: " + memory.getImage().toString());
                 } catch (Exception e) {
+                    Log.d("rdudak", "gallery save failed");
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+    public void updateImageView(byte[] imageAr) {
+        Bitmap bmp= BitmapFactory.decodeByteArray(imageAr, 0 , imageAr.length);
+        image.setImageBitmap(bmp);
+       // rotateImage();
     }
 
     public void startAudio() {
@@ -269,5 +305,12 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         memory.setAudio(mFileName);
         Log.d("rdudak", "memory audio set");
         Toast.makeText(this, "Audio recording saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void rotateImage() {
+        Matrix matrix = new Matrix();
+        image.setScaleType(ImageView.ScaleType.MATRIX);   //required
+        matrix.postRotate((float) 90, 0, 0);
+        image.setImageMatrix(matrix);
     }
 }

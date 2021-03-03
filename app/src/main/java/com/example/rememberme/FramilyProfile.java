@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -180,7 +181,15 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 //        roundedImage = new RoundImage(bmp);
 //        photo.setImageDrawable(roundedImage);
         photo.setImageBitmap(bmp);
+      //  rotateImage();
     }
+
+//    public void rotateImage() {
+//        Matrix matrix = new Matrix();
+//        photo.setScaleType(ImageView.ScaleType.MATRIX);   //required
+//        matrix.postRotate((float) 90, 0, 0);
+//        photo.setImageMatrix(matrix);
+//    }
 
     @Override
     public void onClick(View v) {

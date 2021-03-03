@@ -25,7 +25,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/memory"
+            android:src="@drawable/memory"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/custom_blue"
             android:id="@+id/memory_image"

@@ -8,7 +8,7 @@ public class Memory {
     Long id;
     String title;
     String text;
-    Bitmap image;
+    byte[] image;
     String audio;
 
     public void setId(Long id){this.id = id;}
@@ -20,8 +20,8 @@ public class Memory {
     public void setText(String text) {this.text = text;}
     public String getText() {return text;}
 
-    public void setImage(Bitmap image) {this.image = image;}
-    public Bitmap getImage() {return image;}
+    public void setImage(byte[] image) {this.image = image;}
+    public byte[] getImage() {return image;}
 
     public void setAudio(String audio) {this.audio = audio;}
     public String getAudio() {return audio;}

@@ -87,9 +87,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         checkPermissions();
         myCalendar = Calendar.getInstance();
 
-        pictureFile = new File(getExternalFilesDir(null), fileName);
-        imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
-
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
             field.setAccessible(true);
@@ -285,12 +282,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
                 try {
-//                    FileProvider.getUriForFile(this, "com.example.rememberme", folder);
-//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
-//                    roundedImage = new RoundImage(bitmap);
-//                    photo.setImageDrawable(roundedImage);
-//                    FileInputStream fis = new FileInputStream(folder);
-//                    byte[] image = new byte[fis.available()];
                     InputStream iStream = getContentResolver().openInputStream(imageUri);
                     byte[] image = getBytes(iStream);
                     framily.setImage(image);
@@ -306,13 +297,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                     imageUri = data.getData();
                     InputStream iStream = getContentResolver().openInputStream(imageUri);
                     byte[] image = getBytes(iStream);
-//                    File folder = new File(imageUri.getPath());
-//                    FileProvider.getUriForFile(this, "com.example.rememberme", folder);
-//                    bitmap = BitmapFactory.decodeFileDescriptor(getContentResolver().openFileDescriptor(data.getData(), "r").getFileDescriptor());
-//                    roundedImage = new RoundImage(bitmap);
-//                    photo.setImageDrawable(roundedImage);
-//                    FileInputStream fis = new FileInputStream(folder);
-//                    byte[] image = new byte[fis.available()];
                     framily.setImage(image);
                     updateImageView(image);
                     Log.d("rdudak", "gallery bitmap saved: " + framily.getImage().toString());
@@ -383,7 +367,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
 //        roundedImage = new RoundImage(bmp);
 //        photo.setImageDrawable(roundedImage);
         photo.setImageBitmap(bmp);
-
     }
 
     private void checkPermissions()

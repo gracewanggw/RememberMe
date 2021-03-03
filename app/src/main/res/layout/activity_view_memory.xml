@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
         android:backgroundTint="@color/custom_blue"
-        android:background="@drawable/memory"/>
+        android:src="@drawable/memory"/>
 
     <TextView
         android:layout_width="wrap_content"
