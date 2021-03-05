@@ -165,6 +165,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     public void onResume() {
         super.onResume();
         dbSource.open();
+        framily = dbSource.fetchFramilyByIndex(framilyId);
+        memories = framily.getMemories();
         memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView.setAdapter(memoriesAdapter);
 

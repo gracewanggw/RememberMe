@@ -80,8 +80,10 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         back.setText("< Back to " + framily.getNameFirst());
         title.setText(memory.getTitle());
         text.setText(memory.getText());
-        Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
-        image.setImageBitmap(bmp);
+        if(memory.getImage() != null) {
+            Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
+            image.setImageBitmap(bmp);
+        }
     }
 
     @Override

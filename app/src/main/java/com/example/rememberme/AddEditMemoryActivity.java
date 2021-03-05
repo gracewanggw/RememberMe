@@ -172,7 +172,8 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     public void loadData() {
         title.setText(memory.getTitle());
         text.setText(memory.getText());
-        updateImageView(memory.getImage());
+        if(memory.getImage() != null)
+            updateImageView(memory.getImage());
     }
 
     public void askRemove(Context context) {
