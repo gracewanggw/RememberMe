@@ -40,6 +40,29 @@
             android:layout_marginTop="20dp"
             android:id="@+id/text"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Who's in this memory?"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <com.example.rememberme.MultiSpinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tag_spinner"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tagged_names"
+            android:text="Tagged: "
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

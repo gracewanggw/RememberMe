@@ -85,16 +85,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
                 photo.setImageDrawable(roundedImage);
             }
-//            try
-//            {
-//                FileInputStream fis = openFileInput(framily.getImage());
-//                Bitmap bmap = BitmapFactory.decodeStream(fis);
-//                roundedImage = new RoundImage(bmap);
-//                photo.setImageDrawable(roundedImage);
-//                fis.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
         else {
             framily = new Framily();
@@ -102,7 +92,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             roundedImage = new RoundImage(bm);
             photo.setImageDrawable(roundedImage);
         }
-
 
         name = findViewById(R.id.name);
         name.setText(framily.getNameFirst() + " " + framily.getNameLast());
@@ -134,11 +123,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         gridView = (GridView)findViewById(R.id.gridview);
         gridView.setAdapter(memoriesAdapter);
 
-        name.setText(framily.getNameFirst() + " " + framily.getNameLast());
-        relationship.setText(framily.getRelationship());
-        age.setText(framily.getAge() + "");
-        birthday.setText(framily.getBirthday());
-        location.setText(framily.getLocation());
+       updateViews();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -178,21 +163,27 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         dbSource.close();
     }
 
+    public void updateViews() {
+        name.setText(framily.getNameFirst() + " " + framily.getNameLast());
+        relationship.setText(framily.getRelationship());
+        age.setText(framily.getAge() + "");
+        birthday.setText(framily.getBirthday());
+        location.setText(framily.getLocation());
+        if (framily.getImage() != null)
+            updateImageView(framily.getImage());
+        else {
+            roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
+            photo.setImageDrawable(roundedImage);
+        }
+    }
+
     public void updateImageView(byte[] image) {
         Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
         Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
 //        roundedImage = new RoundImage(bmp);
 //        photo.setImageDrawable(roundedImage);
         photo.setImageBitmap(rotatedBmp);
-      //  rotateImage();
     }
-
-//    public void rotateImage() {
-//        Matrix matrix = new Matrix();
-//        photo.setScaleType(ImageView.ScaleType.MATRIX);   //required
-//        matrix.postRotate((float) 90, 0, 0);
-//        photo.setImageMatrix(matrix);
-//    }
 
     @Override
     public void onClick(View v) {
