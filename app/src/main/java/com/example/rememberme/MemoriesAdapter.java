@@ -48,7 +48,8 @@ public class MemoriesAdapter extends BaseAdapter {
         title.setText(memories.get(position).getTitle());
         if (memories.get(position).getImage() != null) {
             Bitmap bmp= BitmapFactory.decodeByteArray(memories.get(position).getImage(), 0 , memories.get(position).getImage().length);
-            imageView.setImageBitmap(bmp);
+            Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
+            imageView.setImageBitmap(rotatedBmp);
         }
         else {
             imageView.setImageBitmap(null);

@@ -180,9 +180,10 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 
     public void updateImageView(byte[] image) {
         Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+        Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
 //        roundedImage = new RoundImage(bmp);
 //        photo.setImageDrawable(roundedImage);
-        photo.setImageBitmap(bmp);
+        photo.setImageBitmap(rotatedBmp);
       //  rotateImage();
     }
 

@@ -76,13 +76,28 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         updateViews();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        dbSource.open();
+        memory = dbSource.fetchMemoryByIndex(memoryId);
+        updateViews();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dbSource.close();
+    }
+
     public void updateViews() {
         back.setText("< Back to " + framily.getNameFirst());
         title.setText(memory.getTitle());
         text.setText(memory.getText());
         if(memory.getImage() != null) {
             Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
-            image.setImageBitmap(bmp);
+            Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
+            image.setImageBitmap(rotatedBmp);
         }
     }
 

@@ -276,8 +276,8 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
 
     public void updateImageView(byte[] imageAr) {
         Bitmap bmp= BitmapFactory.decodeByteArray(imageAr, 0 , imageAr.length);
-        image.setImageBitmap(bmp);
-       // rotateImage();
+        Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
+        image.setImageBitmap(rotatedBmp);
     }
 
     public void startAudio() {
