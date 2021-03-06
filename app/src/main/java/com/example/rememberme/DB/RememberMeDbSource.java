@@ -249,6 +249,7 @@ public class RememberMeDbSource {
         framily.setImage(cursor.getBlob(8));
         if (cursor.getBlob(9) != null)
             framily.setMemories(byteArrayToArrayList(cursor.getBlob(9)));
+        framily.setPhotoFileName(cursor.getString(10));
         return framily;
     }
 
