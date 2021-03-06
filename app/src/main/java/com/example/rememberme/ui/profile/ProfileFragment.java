@@ -23,6 +23,9 @@ import com.example.rememberme.EditUserProfileActivity;
 import com.example.rememberme.R;
 import com.example.rememberme.RoundImage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public class ProfileFragment extends Fragment {
     ImageView photo;
     RoundImage roundedImage;
@@ -54,6 +57,16 @@ public class ProfileFragment extends Fragment {
         name = root.findViewById(R.id.name);
 
         updateView();
+
+        try {
+            FileInputStream fis = this.getActivity().openFileInput(EditUserProfileActivity.saveImgFileName);
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+            
+        }
 
         edit = root.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {

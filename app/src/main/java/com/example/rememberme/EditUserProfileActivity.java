@@ -1,12 +1,24 @@
 package com.example.rememberme;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
 import androidx.preference.PreferenceManager;
+
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +33,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rememberme.DB.FramilyDbSource;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,20 +77,28 @@ public class EditUserProfileActivity extends AppCompatActivity{
     public final static String AGE_KEY = "age key";
     public final static String BIRTHDAY_KEY = "bday key";
 
+    public static final String IMG_URI_KEY = "urikey";
+
+    public static final int CAMERA_REQUEST_CODE =  1;
+    public static final int GALLERY_REQUEST_CODE = 0;
+    private Uri tempImgUri;
+    private Uri saveImgUri;
+    private ImageView imageView;
+    private String tempImgFileName = "profile.jpg";
+    public static String saveImgFileName = "savedImage.jpg";
+
+    private Context context = this;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        checkPermissions();
 
         myCalendar = Calendar.getInstance();
 
-        profilePhoto = (ImageView) findViewById(R.id.photo_profile);
-        profilePhoto = (ImageView) findViewById(R.id.photo);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
-        roundedImage = new RoundImage(bm);
-        profilePhoto.setImageDrawable(roundedImage);
+        profilePhoto = (ImageView) findViewById(R.id.profile_photo);
 
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
@@ -85,6 +110,18 @@ public class EditUserProfileActivity extends AppCompatActivity{
 
         cancelBtn = findViewById(R.id.cancel);
         saveBtn = findViewById(R.id.save);
+
+        File tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
+        File saveImgFile = new File(getExternalFilesDir(null),saveImgFileName);
+        tempImgUri = FileProvider.getUriForFile(this, "com.example.rememberme", tempImgFile);
+        saveImgUri = FileProvider.getUriForFile(this,"com.example.rememberme",saveImgFile);
+
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileImageChange(v);
+            }
+        });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +183,141 @@ public class EditUserProfileActivity extends AppCompatActivity{
             age.setText(ageStr);
         }
 
+        if(savedInstanceState!=null){
+            saveImgUri = Uri.parse(savedInstanceState.getString(IMG_URI_KEY));
+            imageView.setImageURI(saveImgUri);
+            //Log.d("gwang", saveImgUri.toString());
+        }
+
+        try {
+            FileInputStream fis = openFileInput(saveImgFileName);
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            profilePhoto.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+            roundedImage = new RoundImage(bm);
+            profilePhoto.setImageDrawable(roundedImage);
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString(IMG_URI_KEY,saveImgUri.toString());
+        //Log.d("gwang", saveImgUri.toString());
+    }
+
+    private void checkPermissions()
+    {
+        if(Build.VERSION.SDK_INT < 23)
+            return;
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
+        }
+    }
+//
+//    public void openDialog() {
+//        final EditText input = new EditText(this);
+//        AlertDialog dialog = new AlertDialog.Builder(this)
+//                .setTitle("Select profile image")
+//                .setView(input)
+//                .setPositiveButton("Take from camera", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        File tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
+//                        tempImgUri = FileProvider.getUriForFile(context, "com.example.rememberme", tempImgFile);
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri);
+//                        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+//                    }
+//                })
+//                .setNegativeButton("Select from gallery", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+//                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                        startActivityForResult(pickPhoto , GALLERY_REQUEST_CODE);
+//                    }
+//                })
+//                .create();
+//        dialog.show();
+//    }
+
+    public void profileImageChange(View view)
+    {
+        String[] options = {"Open Camera", "Select from Gallery"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick Profile Picture");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (options[which].equals("Open Camera")) {
+                    Log.d("rdudak", "camera selected");
+                    File tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
+                    tempImgUri = FileProvider.getUriForFile(context, "com.example.rememberme", tempImgFile);
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri);
+                    startActivityForResult(intent, CAMERA_REQUEST_CODE);
+                }
+                else {
+                    Log.d("rdudak", "gallery selected");
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , GALLERY_REQUEST_CODE);
+                }
+            }
+        });
+        builder.show();
+        Log.d("rdudak", "The Change button has been clicked.");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                saveImgUri = tempImgUri;
+                profilePhoto.setImageURI(saveImgUri);
+            }
+            if (requestCode == GALLERY_REQUEST_CODE) {
+                saveImgUri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), saveImgUri);
+                    RoundImage roundProfile = new RoundImage(bitmap);
+                    profilePhoto.setImageDrawable(roundProfile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                profilePhoto.setImageURI(null);
+                profilePhoto.setImageURI(saveImgUri);
+            }
+            profilePhoto.buildDrawingCache();
+            Bitmap map = profilePhoto.getDrawingCache();
+            try {
+                FileOutputStream fos = openFileOutput(tempImgFileName,MODE_PRIVATE);
+                map.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            try {
+                FileInputStream fis = openFileInput(tempImgFileName);
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                roundedImage = new RoundImage(bmap);
+                profilePhoto.setImageDrawable(roundedImage);
+                fis.close();
+            } catch (IOException e) {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+                roundedImage = new RoundImage(bm);
+                profilePhoto.setImageDrawable(roundedImage);
+            }
+        }
     }
 
     private void updateLabel() {
@@ -166,6 +338,17 @@ public class EditUserProfileActivity extends AppCompatActivity{
     }
 
     public void saveEntry() {
+        profilePhoto.buildDrawingCache();
+        Bitmap map = profilePhoto.getDrawingCache();
+        try {
+            FileOutputStream fos = openFileOutput(saveImgFileName,MODE_PRIVATE);
+            map.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editors = sharedPreferences.edit();
 
