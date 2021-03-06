@@ -51,6 +51,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     ImageView photo;
     RoundImage roundedImage;
     String fileName = "framily_img.jpg";
+    String tempImgFileName = "profile.jpg";
+    File tempImgFile;
+
     File pictureFile;
     Uri imageUri;
     Bitmap bitmap;
@@ -102,6 +105,8 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         fileName = "IMG_" + timeStamp + ".jpg";
         pictureFile = new File(getExternalFilesDir(null), fileName);
         imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
+        tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
+
 
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
@@ -138,6 +143,19 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             memories = framily.getMemories();
             loadData();
         }
+
+        try {
+            FileInputStream fis = openFileInput(fileName);
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+            roundedImage = new RoundImage(bm);
+            photo.setImageDrawable(roundedImage);
+        }
+
 
         memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView = (GridView)findViewById(R.id.gridview);
@@ -200,6 +218,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         birthday.setText(framily.getBirthday());
         location.setText(framily.getLocation());
         phone.setText(framily.getPhoneNumber());
+        fileName = framily.getPhotoFileName();
         try {
         updateImageView(framily.getImage());
         } catch (Exception e) {
@@ -295,8 +314,12 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             if (requestCode == GALLERY_REQUEST_CODE) {
                 try {
                     imageUri = data.getData();
-                    InputStream iStream = getContentResolver().openInputStream(imageUri);
-                    byte[] image = getBytes(iStream);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] image = stream.toByteArray();
+                    bitmap.recycle();
+                    //byte[] image = getBytes(iStream);
                     framily.setImage(image);
                     updateImageView(image);
                     Log.d("rdudak", "gallery bitmap saved: " + framily.getImage().toString());
@@ -305,6 +328,28 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
             }
+            photo.buildDrawingCache();
+            Bitmap map = photo.getDrawingCache();
+            try {
+                FileOutputStream fos = openFileOutput(tempImgFileName,MODE_PRIVATE);
+                map.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            try {
+                FileInputStream fis = openFileInput(tempImgFileName);
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                roundedImage = new RoundImage(bmap);
+                photo.setImageDrawable(roundedImage);
+                fis.close();
+            } catch (IOException e) {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+                roundedImage = new RoundImage(bm);
+                photo.setImageDrawable(roundedImage);
+            }
+
         }
     }
 
@@ -333,6 +378,18 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         framily.setPhoneNumber(phone.getText().toString());
         framily.setLocation(location.getText().toString());
         framily.setMemories(memories);
+        photo.buildDrawingCache();
+        Bitmap map = photo.getDrawingCache();
+        try {
+            FileOutputStream fos = openFileOutput(fileName,MODE_PRIVATE);
+            map.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            framily.setPhotoFileName(fileName);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
         if (id >= 0) {
             dbSource.updateFramilyEntry(id, framily);
             Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
@@ -363,9 +420,14 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     }
 
     public void updateImageView(byte[] image) {
+        Log.d("gwang", "updateImageView");
         Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
-//        roundedImage = new RoundImage(bmp);
-//        photo.setImageDrawable(roundedImage);
+        if(bmp!=null){
+            Log.d("gwang", "not null bmp");
+            RoundImage nRoundImg = new RoundImage(bmp);
+            photo.setImageDrawable(nRoundImg);
+        }
+        //delete when can make image round and show up
         photo.setImageBitmap(bmp);
     }
 

@@ -126,7 +126,7 @@ public class PeopleFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = getLayoutInflater().inflate(R.layout.people_grid_item,null);
 
-            ImageView imageView = v.findViewById(R.id.framily_Image);
+            ImageView imageView = (ImageView) v.findViewById(R.id.framily_Image);
             TextView nameView = v.findViewById(R.id.framily_Name);
             TextView relationView = v.findViewById(R.id.framily_Relationship);
 
@@ -136,11 +136,18 @@ public class PeopleFragment extends Fragment {
             String relationship = fram.getRelationship();
             if (image != null) {
                 Log.d("rdudak", "Bitmap for " + name + ": " + image.toString());
-                Log.d("rdudak", "profile photo set");
                 Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+                imageView.setImageBitmap(bmp);
+                if(bmp!=null){
+                    RoundImage roundedImage = new RoundImage(bmp);
+                    imageView.setImageDrawable(roundedImage);
+                    imageView.setImageBitmap(bmp);
+                    Log.d("rdudak", "profile photo set");
+                }
 //                RoundImage roundedImage = new RoundImage(bmp);
 //                imageView.setImageDrawable(roundedImage);
-                imageView.setImageBitmap(bmp);
+//                imageView.setImageBitmap(bmp);
+//                Log.d("rdudak", "profile photo set");
             }
             else {
                 Log.d("rdudak", "default photo set");

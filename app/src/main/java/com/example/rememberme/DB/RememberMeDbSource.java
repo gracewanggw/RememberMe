@@ -33,7 +33,7 @@ public class RememberMeDbSource {
     private String[] framilyColumns = { RememberMeDbHelper.ID_FRAMILY, RememberMeDbHelper.NAME_FIRST,
             RememberMeDbHelper.NAME_LAST, RememberMeDbHelper.RELATIONSHIP, RememberMeDbHelper.AGE,
             RememberMeDbHelper.BIRTHDAY, RememberMeDbHelper.LOCATION, RememberMeDbHelper.PHONE_NUMBER,
-            RememberMeDbHelper.MEMORIES, RememberMeDbHelper.IMAGE_FRAMILY};
+            RememberMeDbHelper.MEMORIES, RememberMeDbHelper.IMAGE_FRAMILY, RememberMeDbHelper.PHOTO_FILE};
 
     private String[] memoryColumns = { RememberMeDbHelper.ID_MEMORIES,RememberMeDbHelper.TITLE,
             RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, RememberMeDbHelper.AUDIO};
@@ -67,6 +67,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.LOCATION, framily.getLocation());
         values.put(RememberMeDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
         values.put(RememberMeDbHelper.IMAGE_FRAMILY, framily.getImage());
+        values.put(RememberMeDbHelper.PHOTO_FILE, framily.getPhotoFileName());
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
         long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_FRAMILY, null, values);
@@ -133,6 +134,7 @@ public class RememberMeDbSource {
             entry.setPhoneNumber(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.PHONE_NUMBER)));
             entry.setMemories(byteArrayToArrayList(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.MEMORIES))));
             entry.setImage(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_FRAMILY)));
+            entry.setPhotoFileName(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.PHOTO_FILE)));
             cursor.close();
         }
         return entry;
@@ -217,6 +219,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.LOCATION, framily.getLocation());
         values.put(RememberMeDbHelper.PHONE_NUMBER, framily.getPhoneNumber());
         values.put(RememberMeDbHelper.IMAGE_FRAMILY, framily.getImage());
+        values.put(RememberMeDbHelper.PHOTO_FILE, framily.getPhotoFileName());
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
         database.update(RememberMeDbHelper.TABLE_NAME_FRAMILY, values, RememberMeDbHelper.ID_FRAMILY + " = " + rowId, null);

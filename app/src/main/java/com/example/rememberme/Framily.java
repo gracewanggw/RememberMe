@@ -18,6 +18,7 @@ public class Framily {
     public String phoneNumber;
     public ArrayList<Long> memories;
     public byte[] image;
+    public String photoFile;
 
 
     public Framily() {
@@ -58,4 +59,7 @@ public class Framily {
     public String toString() {
         return nameFirst + " " + nameLast + ", Relationship = " + relationship;
     }
+
+    public String getPhotoFileName(){ return photoFile;}
+    public void setPhotoFileName(String photoFile){this.photoFile = photoFile;}
 }
