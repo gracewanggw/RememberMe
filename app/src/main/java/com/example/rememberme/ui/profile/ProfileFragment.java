@@ -65,7 +65,7 @@ public class ProfileFragment extends Fragment {
             photo.setImageDrawable(roundedImage);
             fis.close();
         } catch (IOException e) {
-            
+
         }
 
         edit = root.findViewById(R.id.edit);

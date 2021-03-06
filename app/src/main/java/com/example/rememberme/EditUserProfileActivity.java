@@ -219,33 +219,6 @@ public class EditUserProfileActivity extends AppCompatActivity{
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
         }
     }
-//
-//    public void openDialog() {
-//        final EditText input = new EditText(this);
-//        AlertDialog dialog = new AlertDialog.Builder(this)
-//                .setTitle("Select profile image")
-//                .setView(input)
-//                .setPositiveButton("Take from camera", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        File tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
-//                        tempImgUri = FileProvider.getUriForFile(context, "com.example.rememberme", tempImgFile);
-//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri);
-//                        startActivityForResult(intent, CAMERA_REQUEST_CODE);
-//                    }
-//                })
-//                .setNegativeButton("Select from gallery", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-//                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                        startActivityForResult(pickPhoto , GALLERY_REQUEST_CODE);
-//                    }
-//                })
-//                .create();
-//        dialog.show();
-//    }
 
     public void profileImageChange(View view)
     {

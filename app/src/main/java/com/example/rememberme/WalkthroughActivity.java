@@ -8,7 +8,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +23,6 @@ public class WalkthroughActivity extends AppCompatActivity {
 
     ViewPager viewPager;
 
-    ImageView page1;
-    ImageView page2;
-    ImageView page3;
 
     public final static String SHARED_PREFS = "sharedPrefs";
     public final static String OPENED_KEY = "opened";
@@ -44,10 +43,6 @@ public class WalkthroughActivity extends AppCompatActivity {
             editors.commit();
         }
         setContentView(R.layout.activity_walkthrough);
-
-        page1 = findViewById(R.id.page1);
-        page2 = findViewById(R.id.page2);
-        page3 = findViewById(R.id.page3);
         Button start = findViewById(R.id.button_get_started);
 
         Context context = this;
@@ -99,36 +94,51 @@ public class WalkthroughActivity extends AppCompatActivity {
             ImageView imageView = view.findViewById(R.id.start_graphic);
             TextView title = view.findViewById(R.id.title);
             TextView description = view.findViewById(R.id.description);
-            Button start = view.findViewById(R.id.button_get_started);
+            ImageView page1 = view.findViewById(R.id.page1);
+            ImageView page2 = view.findViewById(R.id.page2);
+            ImageView page3 = view.findViewById(R.id.page3);
+            TextView page = view.findViewById(R.id.page);
             Log.d("gwang", position + "position");
             switch(position){
                 case 0:
+                    Log.d("gwang", "position 0");
                     imageView.setImageResource(R.drawable.start_graphic_1);
                     page1.setImageResource(R.drawable.selected_slide);
                     page2.setImageResource(R.drawable.unselected_slide);
                     page3.setImageResource(R.drawable.unselected_slide);
                     title.setText("Welcome to RememberMe");
+                    page.setText("1 / 3");
                     description.setText("An app made to help you remember your friends and family");
                     break;
 
                 case 1:
+                    Log.d("gwang", "position 1");
                     imageView.setImageResource(R.drawable.start_graphic_2);
                     page1.setImageResource(R.drawable.unselected_slide);
                     page2.setImageResource(R.drawable.selected_slide);
                     page3.setImageResource(R.drawable.unselected_slide);
                     title.setText("Quiz");
+                    page.setText("2 / 3");
                     description.setText("You can quiz yourself on information about your friends and family");
                     break;
 
                 case 2:
+                    Log.d("gwang", "position 2");
                     imageView.setImageResource(R.drawable.start_graphic_3);
                     page1.setImageResource(R.drawable.unselected_slide);
                     page2.setImageResource(R.drawable.unselected_slide);
                     page3.setImageResource(R.drawable.selected_slide);
                     title.setText("Memories");
+                    page.setText("3 / 3");
                     description.setText("You can look through old memories you had with your friends and family");
                     break;
 
+            }
+
+            if(title.getText().equals("Memories")){
+                page1.setImageResource(R.drawable.unselected_slide);
+                page2.setImageResource(R.drawable.unselected_slide);
+                page3.setImageResource(R.drawable.selected_slide);
             }
 
             container.addView(view);
