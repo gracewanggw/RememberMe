@@ -177,12 +177,17 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     }
 
     public void updateImageView(byte[] image) {
-        Log.d("rdudak", "framily profile picure " + image.toString());
-        Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
-        roundedImage = new RoundImage(bmp);
-        photo.setImageDrawable(roundedImage);
-        photo.setImageBitmap(bmp);
-      //  rotateImage();
+        try {
+            FileInputStream fis = openFileInput(framily.getPhotoFileName());
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+
+        }
+
+        //  rotateImage();
     }
 
 //    public void rotateImage() {
