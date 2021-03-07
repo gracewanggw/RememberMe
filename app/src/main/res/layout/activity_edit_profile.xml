@@ -19,7 +19,7 @@
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:id="@+id/photo"
+        android:id="@+id/profile_photo"
         android:layout_below="@id/cancel"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
@@ -34,7 +34,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:layout_below="@+id/photo">
+        android:layout_below="@+id/profile_photo">
 
         <LinearLayout
             android:layout_width="match_parent"
