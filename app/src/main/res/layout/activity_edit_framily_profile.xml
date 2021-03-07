@@ -17,6 +17,17 @@
         android:textColor="@color/white"
         android:textSize="18dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/save_changes"
+        android:background="@android:color/transparent"
+        android:layout_toRightOf="@+id/back"
+        android:paddingLeft="140dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white" />
 
     <ImageView
         android:layout_width="120dp"
@@ -27,7 +38,8 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@drawable/_pic"/>
+        android:src="@drawable/_pic"
+        android:onClick="profileImageChange"/>
 
     <Button
         android:id="@+id/remove"

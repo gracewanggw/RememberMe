@@ -1,9 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMemoryActivity">
+    tools:context=".AddEditMemoryActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Memory Title"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:id="@+id/title"/>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/memory"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/custom_blue"
+            android:id="@+id/memory_image"
+            android:onClick="changeImage"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:layout_marginTop="20dp"
+            android:id="@+id/text"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click here to record audio"
+            android:backgroundTint="@color/custom_blue"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:id="@+id/add_audio"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center|bottom"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:backgroundTint="@color/custom_blue"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal|bottom"
+                android:id="@+id/cancel_memory"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:backgroundTint="@color/custom_blue"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal|bottom"
+                android:id="@+id/save_memory"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/remove"
+            android:id="@+id/remove"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/custom_blue"
+            android:bottomRightRadius="80dp"
+            android:bottomLeftRadius="80dp"
+            android:topLeftRadius="80dp"
+            android:topRightRadius="80dp"/>
+
+    </LinearLayout>
+
+
+</ScrollView>

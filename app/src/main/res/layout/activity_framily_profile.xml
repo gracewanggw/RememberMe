@@ -16,6 +16,17 @@
         android:id="@+id/back"
         android:text="@string/back"
         android:background="@android:color/transparent"
+        android:textColor="@color/white" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quiz_me"
+        android:id="@+id/quiz"
+        android:background="@android:color/transparent"
+        android:layout_toRightOf="@+id/back"
+        android:paddingLeft="150dp"
+        android:layout_alignParentRight="true"
         android:textColor="@color/white"
         android:textSize="18dp"/>
 
@@ -92,7 +103,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/quiz"
+        android:id="@+id/quiz_me"
         android:layout_width="380dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -111,7 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/quiz">
+        android:layout_below="@id/quiz_me">
 
 
     <LinearLayout
