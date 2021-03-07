@@ -20,6 +20,7 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
     public static final String PHONE_NUMBER = "phone_number";
     public static final String MEMORIES = "memories";
     public static final String IMAGE_FRAMILY = "image";
+    public static final String PHOTO_FILE = "photo";
 
     public static final String TABLE_NAME_MEMORIES = "memories";
     public static final String ID_MEMORIES = "id";
@@ -38,7 +39,8 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
             LOCATION + " TEXT, " +
             PHONE_NUMBER + " TEXT, " +
             IMAGE_FRAMILY + " BLOB, " +
-            MEMORIES + " BLOB);";
+            MEMORIES + " BLOB, " +
+            PHOTO_FILE + " TEXT);";
 
     private static final String CREATE_MEMORY_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_MEMORIES + "( " +
             ID_MEMORIES + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

@@ -1,5 +1,7 @@
 package com.example.rememberme.ui.people;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import android.database.CursorWindow;
@@ -41,6 +43,9 @@ import java.util.List;
 
 public class PeopleFragment extends Fragment {
 
+    Context context = this.getContext();
+    Activity activity;
+
     GridView gridView;
     List<Framily> people;
 
@@ -66,6 +71,8 @@ public class PeopleFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        activity = this.getActivity();
+
         gridView = root.findViewById(R.id.people_grid_view);
 
         updateView();
@@ -80,7 +87,7 @@ public class PeopleFragment extends Fragment {
 
     public void updateView(){
 
-        dataSource = new RememberMeDbSource(getActivity().getApplicationContext());
+        dataSource = new RememberMeDbSource(this.getActivity().getApplicationContext());
         dataSource.open();
 
         people = dataSource.fetchFramilyEntries();
@@ -126,32 +133,29 @@ public class PeopleFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = getLayoutInflater().inflate(R.layout.people_grid_item,null);
 
-            ImageView imageView = v.findViewById(R.id.framily_Image);
+            ImageView imageView = (ImageView) v.findViewById(R.id.framily_Image);
             TextView nameView = v.findViewById(R.id.framily_Name);
             TextView relationView = v.findViewById(R.id.framily_Relationship);
 
             Framily fram = framilies.get(position);
-            byte[] image = fram.getImage();
             String name = fram.getNameFirst();
+            String fileName = fram.getPhotoFileName();
             String relationship = fram.getRelationship();
-            if (image != null) {
-                Log.d("rdudak", "Bitmap for " + name + ": " + image.toString());
-                Log.d("rdudak", "profile photo set");
-                Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
-//                RoundImage roundedImage = new RoundImage(bmp);
-//                imageView.setImageDrawable(roundedImage);
-                imageView.setImageBitmap(bmp);
+            Log.d("gwang", "photo file name : " + fileName);
+            if(fileName!=null){
+                try {
+                    Log.d("gwang", "photo file name not null");
+                    FileInputStream fis = activity.openFileInput(fileName);
+                    Bitmap bmap = BitmapFactory.decodeStream(fis);
+                    RoundImage roundedImage = new RoundImage(bmap);
+                    imageView.setImageDrawable(roundedImage);
+                    fis.close();
+                } catch (IOException e) {
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+                    RoundImage roundedImage = new RoundImage(bitmap);
+                    imageView.setImageDrawable(roundedImage);
+                }
             }
-            else {
-                Log.d("rdudak", "default photo set");
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
-                RoundImage roundedImage = new RoundImage(bitmap);
-                imageView.setImageDrawable(roundedImage);
-            }
-
-//            Bitmap bm = BitmapFactory.decodeResource(getResources(),image);
-//            RoundImage roundedImage = new RoundImage(bm);
-//            imageView.setImageDrawable(roundedImage);
 
             nameView.setText(name);
             relationView.setText(relationship);
