@@ -1,8 +1,7 @@
 package com.example.rememberme.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.ui.quiz.QuizFragment;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class QuizQuestions extends AppCompatActivity {
     public ArrayList<String> allAge = new ArrayList<String>();
     public ArrayList<String> allBirthday = new ArrayList<String>();
     public ArrayList<String> allLocation = new ArrayList<String>();
-    FramilyDbSource dataSource = new FramilyDbSource(this.getApplicationContext());
+    RememberMeDbSource dataSource = new RememberMeDbSource(this.getApplicationContext());
 
 
 //    private int totalQuestions = 4;
@@ -138,10 +137,10 @@ public class QuizQuestions extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                allRelationships = dataSource.fetchColumn("relationship");
-                allAge = dataSource.fetchColumn("age");
-                allLocation = dataSource.fetchColumn("location");
-                allBirthday = dataSource.fetchColumn("birthday");
+                allRelationships = dataSource.fetchFramilyColumn("relationship");
+                allAge = dataSource.fetchFramilyColumn("age");
+                allLocation = dataSource.fetchFramilyColumn("location");
+                allBirthday = dataSource.fetchFramilyColumn("birthday");
             }
         }.start();
     }

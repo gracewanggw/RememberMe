@@ -242,6 +242,19 @@ public class RememberMeDbSource {
         database.update(RememberMeDbHelper.TABLE_NAME_MEMORIES, values, RememberMeDbHelper.ID_MEMORIES + " = " + rowId, null);
     }
 
+    //Fetches framily value of column
+    public ArrayList<String> fetchFramilyColumn(String colName) {
+        ArrayList<String> columnVals = new ArrayList<>();
+        String[] columns = {colName};
+        Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_FRAMILY, columns, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            columnVals.add(cursor.getString(cursor.getColumnIndex(colName)));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return columnVals;
+    }
+
     private Framily cursorToFramily(Cursor cursor) {
         Framily framily = new Framily();
         framily.setId(cursor.getLong(0));
