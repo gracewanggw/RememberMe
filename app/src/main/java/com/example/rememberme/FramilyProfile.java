@@ -1,10 +1,13 @@
 package com.example.rememberme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.Intent;
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,22 +18,26 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.rememberme.DB.FramilyDbHelper;
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
 
-    FramilyDbSource dbSource;
+    RememberMeDbSource dbSource;
     private Framily framily;
-    int framilyId;
+    Long framilyId;
 
     ImageView photo;
+    Uri imageUri;
     RoundImage roundedImage;
     private MemoriesAdapter memoriesAdapter;
     GridView gridView;
-    ArrayList<Integer> memories;
+    ArrayList<Long> memories;
 
     TextView name;
     TextView relationship;
@@ -46,26 +53,56 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     TextView addMemory;
 
     public static final String ID_KEY = "id_key";
-
-    public static final String IMAGE_KEY = "image";
+    public static final String MEMORY_KEY = "memory";
     public static final String POSITION_KEY = "position";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framily_profile);
+        photo = (ImageView) findViewById(R.id.photo);
 
-        dbSource = new FramilyDbSource(this);
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+
+        dbSource = new RememberMeDbSource(this);
         dbSource.open();
+
         Intent intent = getIntent();
-        framilyId = intent.getIntExtra(ID_KEY, -1);
+        framilyId = intent.getLongExtra(ID_KEY, -1);
         Log.d("rdudak", "ID = " + framilyId);
         if(framilyId >= 0) {
-            framily = dbSource.fetchEntryByIndex(framilyId);
+            framily = dbSource.fetchFramilyByIndex(framilyId);
             Log.d("rdudak", framily.toString());
+            if (framily.getImage() != null)
+                updateImageView(framily.getImage());
+            else {
+                roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
+                photo.setImageDrawable(roundedImage);
+            }
+//            try
+//            {
+//                FileInputStream fis = openFileInput(framily.getImage());
+//                Bitmap bmap = BitmapFactory.decodeStream(fis);
+//                roundedImage = new RoundImage(bmap);
+//                photo.setImageDrawable(roundedImage);
+//                fis.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
-        else
+        else {
             framily = new Framily();
+            Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+            roundedImage = new RoundImage(bm);
+            photo.setImageDrawable(roundedImage);
+        }
+
 
         name = findViewById(R.id.name);
         name.setText(framily.getNameFirst() + " " + framily.getNameLast());
@@ -92,7 +129,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         addMemory.setOnClickListener(this);
 
         memories = framily.getMemories();
-        memoriesAdapter = new MemoriesAdapter(this, memories);
+
+        memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView = (GridView)findViewById(R.id.gridview);
         gridView.setAdapter(memoriesAdapter);
 
@@ -106,18 +144,58 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             @Override
             //opens the GridItemActivity when a picture is clicked
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), GridItem.class);
-                intent.putExtra(IMAGE_KEY, memories.get(position));
+                Intent intent = new Intent(getApplicationContext(), ViewMemory.class);
+                intent.putExtra(ViewMemory.ID_MEMORY, memories.get(position));
                 intent.putExtra(POSITION_KEY, position);
+                intent.putExtra(ID_KEY, framilyId);
                 startActivity(intent);
             }
         });
-
-        photo = (ImageView) findViewById(R.id.photo);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
-        roundedImage = new RoundImage(bm);
-        photo.setImageDrawable(roundedImage);
     }
+
+    public ArrayList<Memory> getMemories() {
+        ArrayList<Memory> memoryItems = new ArrayList<Memory>();
+        for (Long id: memories) {
+            memoryItems.add(dbSource.fetchMemoryByIndex(id));
+        }
+        return memoryItems;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dbSource.open();
+        memoriesAdapter = new MemoriesAdapter(this, getMemories());
+        gridView.setAdapter(memoriesAdapter);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dbSource.close();
+    }
+
+    public void updateImageView(byte[] image) {
+        try {
+            FileInputStream fis = openFileInput(framily.getPhotoFileName());
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+
+        }
+
+        //  rotateImage();
+    }
+
+//    public void rotateImage() {
+//        Matrix matrix = new Matrix();
+//        photo.setScaleType(ImageView.ScaleType.MATRIX);   //required
+//        matrix.postRotate((float) 90, 0, 0);
+//        photo.setImageMatrix(matrix);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -145,7 +223,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.add_memory:
-                intent = new Intent(this, AddMemoryActivity.class);
+                intent = new Intent(this, AddEditMemoryActivity.class);
                 intent.putExtra(ID_KEY, framily.getId());
                 startActivity(intent);
                 break;

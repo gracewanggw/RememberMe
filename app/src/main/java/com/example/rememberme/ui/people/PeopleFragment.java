@@ -1,9 +1,16 @@
 package com.example.rememberme.ui.people;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+
+import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,24 +24,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.rememberme.DB.FramilyDbSource;
+import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
 import com.example.rememberme.FramilyProfile;
 import com.example.rememberme.R;
 import com.example.rememberme.RoundImage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class PeopleFragment extends Fragment {
 
+    Context context = this.getContext();
+    Activity activity;
+
     GridView gridView;
     List<Framily> people;
 
-    FramilyDbSource dataSource;
+    RememberMeDbSource dataSource;
 
 
     private HomeViewModel homeViewModel;
@@ -42,11 +57,21 @@ public class PeopleFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); //the 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_people, container, false);
 
         setHasOptionsMenu(true);
+
+        activity = this.getActivity();
 
         gridView = root.findViewById(R.id.people_grid_view);
 
@@ -62,10 +87,10 @@ public class PeopleFragment extends Fragment {
 
     public void updateView(){
 
-        dataSource = new FramilyDbSource(getActivity().getApplicationContext());
+        dataSource = new RememberMeDbSource(this.getActivity().getApplicationContext());
         dataSource.open();
 
-        people = dataSource.fetchEntries();
+        people = dataSource.fetchFramilyEntries();
 
         CustomAdapter customAdapter = new CustomAdapter(people);
         gridView.setAdapter(customAdapter);
@@ -83,6 +108,7 @@ public class PeopleFragment extends Fragment {
     // adapter to show grid view of people and their names and relationship from database
     private class CustomAdapter extends BaseAdapter{
         List<Framily> framilies;
+        FileInputStream fis;
 
         public CustomAdapter(List<Framily> people){
             framilies = people;
@@ -107,18 +133,29 @@ public class PeopleFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = getLayoutInflater().inflate(R.layout.people_grid_item,null);
 
-            ImageView imageView = v.findViewById(R.id.framily_Image);
+            ImageView imageView = (ImageView) v.findViewById(R.id.framily_Image);
             TextView nameView = v.findViewById(R.id.framily_Name);
             TextView relationView = v.findViewById(R.id.framily_Relationship);
 
             Framily fram = framilies.get(position);
-            int image = fram.getImage();
             String name = fram.getNameFirst();
+            String fileName = fram.getPhotoFileName();
             String relationship = fram.getRelationship();
-
-            Bitmap bm = BitmapFactory.decodeResource(getResources(),image);
-            RoundImage roundedImage = new RoundImage(bm);
-            imageView.setImageDrawable(roundedImage);
+            Log.d("gwang", "photo file name : " + fileName);
+            if(fileName!=null){
+                try {
+                    Log.d("gwang", "photo file name not null");
+                    FileInputStream fis = activity.openFileInput(fileName);
+                    Bitmap bmap = BitmapFactory.decodeStream(fis);
+                    RoundImage roundedImage = new RoundImage(bmap);
+                    imageView.setImageDrawable(roundedImage);
+                    fis.close();
+                } catch (IOException e) {
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
+                    RoundImage roundedImage = new RoundImage(bitmap);
+                    imageView.setImageDrawable(roundedImage);
+                }
+            }
 
             nameView.setText(name);
             relationView.setText(relationship);
