@@ -10,7 +10,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="600dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -34,9 +34,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_pager"
-        app:layout_constraintVertical_bias="0.77" />
+        app:layout_constraintVertical_bias="0.47000003" />
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/page1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,6 +72,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/page2"
         app:layout_constraintTop_toTopOf="@+id/page2"
-        app:srcCompat="@drawable/unselected_slide" />
+        app:srcCompat="@drawable/unselected_slide" /> -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

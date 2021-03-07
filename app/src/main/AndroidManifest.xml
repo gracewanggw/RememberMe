@@ -32,11 +32,12 @@
         <activity android:name=".FramilyProfile" />
         <!--activity android:name=".AddMemoryActivity" /-->
         <activity android:name=".EditUserProfileActivity"/>
+        <activity android:name=".AddEditMemoryActivity"></activity>
+        <activity android:name=".ViewMemory"></activity>
+
         <activity android:name=".quiz.Quiz" />
         <activity android:name=".quiz.QuizResult" />
         <activity android:name=".quiz.Flashcard" />
-        <activity android:name=".AddEditMemoryActivity"></activity>
-        <activity android:name=".ViewMemory"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
