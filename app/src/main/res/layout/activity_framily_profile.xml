@@ -16,17 +16,6 @@
         android:id="@+id/back"
         android:text="@string/back"
         android:background="@android:color/transparent"
-        android:textColor="@color/white" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quiz_me"
-        android:id="@+id/quiz"
-        android:background="@android:color/transparent"
-        android:layout_toRightOf="@+id/back"
-        android:paddingLeft="150dp"
-        android:layout_alignParentRight="true"
         android:textColor="@color/white"
         android:textSize="18dp"/>
 
@@ -47,10 +36,10 @@
         android:text="@string/edit"
         android:id="@+id/edit"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="75dp"
         android:layout_marginRight="5dp"
         android:layout_below="@id/back"
         android:textSize="20dp"/>
@@ -103,7 +92,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/quiz_me"
+        android:id="@+id/quiz"
         android:layout_width="380dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -122,7 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/quiz_me">
+        android:layout_below="@id/quiz">
 
 
     <LinearLayout
@@ -266,20 +255,6 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/information"
         android:textSize="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_memory"
-        android:text="@string/add_memory"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/information"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        android:layout_marginTop="10dp"
-        android:paddingRight="15dp"
-        android:clickable="true"
-        android:textStyle="bold"/>
 
     <GridView
         android:id="@+id/gridview"
