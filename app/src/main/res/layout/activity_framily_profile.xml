@@ -96,6 +96,7 @@
         android:layout_width="380dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
         android:layout_height="40dp"
         android:layout_below="@id/name_age_relation"
         android:background="@drawable/quiz_button1"
@@ -197,17 +198,17 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:layout_marginTop="14dp"
             android:id="@+id/contact1_label"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Phone Number"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -215,8 +216,8 @@
         <Button
             android:id="@+id/call"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="60dp"
-            android:layout_width="100dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="70dp"
             android:layout_height="30dp"
             android:text="Call"
             android:layout_weight="1"

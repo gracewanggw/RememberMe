@@ -47,18 +47,17 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:layout_width="170dp"
+                    android:layout_width="190dp"
                     android:layout_height="40dp"
                     android:id="@+id/name_first"
                     android:hint="First Name"
                     android:textSize="18dp"
                     android:padding="10dp"
-                    android:layout_marginLeft="23dp"
                     android:textColor="@color/black"
                     android:background="@drawable/input_box_name"/>
 
                 <EditText
-                    android:layout_width="170dp"
+                    android:layout_width="190dp"
                     android:layout_height="40dp"
                     android:id="@+id/name_last"
                     android:hint="Last Name"
@@ -66,6 +65,7 @@
                     android:layout_marginLeft="10dp"
                     android:textSize="18dp"
                     android:textColor="@color/black"
+                    android:layout_gravity="right"
 
                     android:background="@drawable/input_box_name"/>
 
@@ -157,7 +157,7 @@
                     android:textSize="18dp"
                     android:inputType="phone"
                     android:digits="0123456789+"
-                    android:hint="(123)-456-7890"
+                    android:hint="123 456 7890"
                     android:padding="10dp"
                     android:background="@drawable/input_box"/>
 
@@ -179,7 +179,7 @@
                     android:textSize="18dp"
                     android:inputType="phone"
                     android:digits="0123456789+"
-                    android:hint="(123)-456-7890"
+                    android:hint="123 456 7890"
                     android:padding="10dp"
                     android:background="@drawable/input_box"/>
 
