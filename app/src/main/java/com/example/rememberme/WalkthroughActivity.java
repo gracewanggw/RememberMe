@@ -31,17 +31,17 @@ public class WalkthroughActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(openedAlready()){
-            Intent intent = new Intent(this,MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-            this.startActivity(intent);
-        }
-        else{
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-            SharedPreferences.Editor editors = sharedPreferences.edit();
-            editors.putBoolean(OPENED_KEY,true);
-            editors.commit();
-        }
+//        if(openedAlready()){
+//            Intent intent = new Intent(this,MainActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+//            this.startActivity(intent);
+//        }
+//        else{
+//            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+//            SharedPreferences.Editor editors = sharedPreferences.edit();
+//            editors.putBoolean(OPENED_KEY,true);
+//            editors.commit();
+//        }
         setContentView(R.layout.activity_walkthrough);
         Button start = findViewById(R.id.button_get_started);
 
@@ -63,10 +63,10 @@ public class WalkthroughActivity extends AppCompatActivity {
 
     }
 
-    public boolean openedAlready(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        return sharedPreferences.getBoolean(OPENED_KEY,false);
-    }
+//    public boolean openedAlready(){
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+//        return sharedPreferences.getBoolean(OPENED_KEY,false);
+//    }
 
     private class SlideViewAdapter extends PagerAdapter {
 
