@@ -3,6 +3,7 @@ package com.example.rememberme.quiz;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.R;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -41,11 +43,15 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     private ListView responses;
     ArrayList<String> ans;
 
+    private RememberMeDbSource dbSource;
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_result);
         setTitle("Quiz Results");
+
+        dbSource = new RememberMeDbSource(getApplicationContext());
 
         Intent myintent = getIntent();
         Bundle bundle = myintent.getExtras();
@@ -57,7 +63,6 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         ans = bundle.getStringArrayList("response");
         quiz = bundle.getParcelableArrayList("quiz");
         questions = new QuizQuestions(quiz, this.getApplicationContext());
-        //preferences = getActivity().getSharedPreferences("MySharedPref", MODE);
 
         correctCt = (TextView)findViewById(R.id.numCorrect);
         wrongCt = (TextView)findViewById(R.id.numWrong);
@@ -101,7 +106,9 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
                         toReview.add(quiz.get(i));
                     }
                 }
+                dbSource.open();
                 updateReviewSet();
+                dbSource.close();
                 finish();
                 break;
         }
@@ -111,10 +118,17 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         new Thread() {
             @Override
             public void run() {
-                allRelationships = dataSource.fetchFramilyColumn("relationship");
-                allAge = dataSource.fetchFramilyColumn("age");
-                allLocation = dataSource.fetchFramilyColumn("location");
-                allBirthday = dataSource.fetchFramilyColumn("birthday");
+                //ArrayList<Question> allQuestions = (ArrayList)dbSource.fetchQuestions();
+                for(int i = 0; i < toReview.size(); i++){
+                    //if in review already remove from review
+                    if(toReview.get(i).getReview()){
+                        toReview.get(i).setReview(false);
+                        dbSource.removeQuestion(toReview.get(i).getId());
+                    }else {
+                        toReview.get(i).setReview(true);
+                        dbSource.insertQuestion(toReview.get(i));
+                    }
+                }
             }
         }.start();
         Log.d("fjx", ""+ toReview);
