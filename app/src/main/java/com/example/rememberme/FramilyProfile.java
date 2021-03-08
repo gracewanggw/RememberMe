@@ -238,7 +238,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                     intentquiz.putExtra(QuizFragment.FILL_IN_BLANK, false);
                     intentquiz.putExtra(QuizFragment.QUIZ_KEY, personQuiz);
                     intentquiz.putExtra(QuizFragment.QUIZ_TYPE_KEY, quizType);
-                    startActivityForResult(intentquiz, 0);
+                    startActivity(intentquiz);
                 }
                 break;
 
@@ -256,21 +256,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    // Handle data after activity returns.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK)
-            return;
-
-        switch (requestCode) {
-            case 0:
-                // stay on quiz after finish
-
-                break;
-
-        }
-    }
 
     public ArrayList<Question> makePeopleQuiz() {
         dbSource.open();

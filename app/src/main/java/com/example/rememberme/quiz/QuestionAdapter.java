@@ -27,7 +27,7 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         super(context, R.layout.ques_result, items);
         mContext = context;
         questions = items;
-        Log.d("logged", questions+"");
+
         for(int k = 0; k < items.size(); k++){
             mChecked.add(false);
         }
@@ -58,10 +58,6 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         String corr_ans = questions.get(position).get(1);
         String ans = questions.get(position).get(2);
         String type = ""+questions.get(position).get(3);
-
-
-        Log.d("logged_corr", corr_ans);
-        Log.d("logged_type", type);
 
         String text1 = "Q: " + questions.get(position).get(0);
         String text2 = "Correct Answer: "+ corr_ans;

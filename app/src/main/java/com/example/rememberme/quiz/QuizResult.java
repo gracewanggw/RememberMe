@@ -104,11 +104,9 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
                 ArrayList<Boolean> checked = v.mChecked;
                 for (int i = 0; i < responses.getCount(); i++) {
                     if(checked.get(i)) {
-                        toReview.add(quiz.get(i));
-                    }
+                        toReview.add(quiz.get(i)); }
                 }
                 updateReviewSet();
-
                 finish();
                 break;
         }
@@ -142,7 +140,6 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
                 dbSource.close();
             }
         }.start();
-        Log.d("fjx", ""+ toReview);
     }
 
 

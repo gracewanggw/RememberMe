@@ -208,7 +208,6 @@ public class QuizQuestions {
 
         choices.add(options);
 
-        Log.d("question choices made", ""+choices);
 
         return ind;
     }
