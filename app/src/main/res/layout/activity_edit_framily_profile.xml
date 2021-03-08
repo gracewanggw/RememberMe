@@ -21,12 +21,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
-        android:id="@+id/save_changes"
+        android:id="@+id/save"
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/back"
         android:paddingLeft="140dp"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
+        android:textSize="18dp"
         android:textColor="@color/white" />
 
     <ImageView
@@ -275,21 +276,6 @@
 
 
     </ScrollView>
-
-    <Button
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/scrollView"
-        android:layout_centerInParent="true"
-        android:text="Save Changes"
-        android:textAllCaps="false"
-        android:id="@+id/save"
-        android:layout_width="181dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:clickable="true"
-        android:background="@drawable/save_button"
-        android:textColor="@color/white"
-        android:textSize="18dp"/>
 
     <!--
 

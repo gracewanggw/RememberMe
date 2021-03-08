@@ -21,5 +21,13 @@
     <string name="phone">PHONE NUMBER:</string>
     <string name="remove">REMOVE</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string-array name="sort_types">
+        <item>Oldest to Newest</item>
+        <item>Newest to Oldest</item>
+        <item>Name</item>
+        <item>Relationship</item>
+        <item>Location</item>
+        <item>Age</item>
+    </string-array>
 
 </resources>
