@@ -56,7 +56,7 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         percentans = bundle.getFloat(PERCENT_KEY, -10f);
         ans = bundle.getStringArrayList("response");
         quiz = bundle.getParcelableArrayList("quiz");
-        questions = new QuizQuestions(quiz);
+        questions = new QuizQuestions(quiz, this.getApplicationContext());
         //preferences = getActivity().getSharedPreferences("MySharedPref", MODE);
 
         correctCt = (TextView)findViewById(R.id.numCorrect);

@@ -2,6 +2,7 @@ package com.example.rememberme.ui.quiz;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,8 +32,12 @@ import com.example.rememberme.quiz.Question;
 import com.example.rememberme.quiz.Quiz;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class QuizFragment extends Fragment{
 
@@ -66,6 +71,9 @@ public class QuizFragment extends Fragment{
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
+
+
+        dataSource = new RememberMeDbSource(getActivity().getApplicationContext());
 
         quizAll = root.findViewById(R.id.quiz_all);
         nameFace = root.findViewById(R.id.name_to_face);
@@ -122,8 +130,6 @@ public class QuizFragment extends Fragment{
                 return true;
             }
 
-
-
         });
 
         nameFace.setOnTouchListener(new View.OnTouchListener() {
@@ -170,17 +176,22 @@ public class QuizFragment extends Fragment{
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 review.setAlpha((float)1);
                 quizType = QUIZ_TYPE_REVIEW_KEY;
-                dataSource = new RememberMeDbSource(getActivity().getApplicationContext());
-                dataSource.open();
                 quiz = createQuiz();
-                dataSource.close();
-                MyAlertDialogFragment myDialog = new MyAlertDialogFragment();;
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("fib", fib);
-                bundle.putParcelableArrayList("givenquiz", quiz);
-                bundle.putString("title", "Review Mode");
-                myDialog.setArguments(bundle);
-                myDialog.show(getFragmentManager(), "dialog");
+                if(quiz.size() == 0){
+                    MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", "No Review");
+                    myDialog.setArguments(bundle);
+                    myDialog.show(getFragmentManager(), "dialog");
+                }else {
+                    MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("fib", fib);
+                    bundle.putParcelableArrayList("givenquiz", quiz);
+                    bundle.putString("title", "Review Mode");
+                    myDialog.setArguments(bundle);
+                    myDialog.show(getFragmentManager(), "dialog");
+                }
             }
             return true;
             }
@@ -190,28 +201,42 @@ public class QuizFragment extends Fragment{
     }
 
     public ArrayList<Question> createQuiz() {
+        dataSource.open();
         ArrayList<Question> quizQuestionList = new ArrayList<Question>();
-        int quizLength = 10;
 
         String[] infoChoice = {"relationship", "age", "birthday", "location"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
+        int quizLength = people.size();
+        ArrayList<String> visited;
 
         switch (quizType) {
             case QUIZ_TYPE_ALL_KEY:
-                for (int i = 0; i < quizLength; i++) {
+                visited = new ArrayList<String>();
+                while (quizQuestionList.size() < quizLength) {
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
                     String fact = infoChoice[new Random().nextInt(infoChoice.length)];
-                    quizQuestionList.add(createQuestion(chosen, fact));
+                    String key = chosen.getNameFirst()+chosen.getNameLast()+fact;
+                    Question ques = createQuestion(chosen, fact);
+                    if( !visited.contains(key) && ques != null) {
+                        visited.add(key);
+                        quizQuestionList.add(ques);
+                    }
                 }
                 break;
             case QUIZ_TYPE_BIRTHDAY_KEY:
-                for (int i = 0; i < quizLength; i++) {
+                visited = new ArrayList<String>();
+                while (quizQuestionList.size() < quizLength) {
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
                     String fact = "birthday";
-                    quizQuestionList.add(createQuestion(chosen, fact));
+                    String key = chosen.getNameFirst()+chosen.getNameLast();
+                    Question ques = createQuestion(chosen, fact);
+                    if( !visited.contains(key) && ques != null) {
+                        visited.add(key);
+                        quizQuestionList.add(ques);
+                    }
                 }
                 break;
             case QUIZ_TYPE_REVIEW_KEY:
@@ -219,8 +244,9 @@ public class QuizFragment extends Fragment{
                 break;
                 }
 
-        return quizQuestionList;
 
+        dataSource.close();
+        return quizQuestionList;
     }
 
 
@@ -236,7 +262,6 @@ public class QuizFragment extends Fragment{
                 mQuestion.setmQuestion("What is your relationship with "+ person.getNameFirst() + " " + person.getNameLast()+"?");
                 mQuestion.setADataType("String");
                 mQuestion.setAnswer(person.getRelationship());
-
                 break;
             case "age":
                 mQuestion.setmQuestion("How old is "+ person.getNameFirst() + " " + person.getNameLast()+"?");
@@ -254,28 +279,14 @@ public class QuizFragment extends Fragment{
                 mQuestion.setAnswer(person.getLocation());
                 break;
         }
-        return mQuestion;
+
+        Log.d("dqwe", mQuestion.getAnswer());
+        if(mQuestion.getAnswer().length() == 0 || mQuestion.getAnswer().equals("0")){
+            return null;
+        }else {
+            return mQuestion;
+        }
     }
-
-//
-//    public int getSize(String whichArray){
-//        switch (whichArray) {
-//            case "relationship":
-//                return allRelationships.size();
-//                break;
-//            case "age":
-//                return allAge.size();
-//                break;
-//            case "birthday":
-//                return allBirthday.size();
-//                break;
-//            case "location":
-//               return allLocation.size();
-//                break;
-//        }
-//
-//    }
-
 
 
 }

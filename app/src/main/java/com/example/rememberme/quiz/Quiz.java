@@ -65,7 +65,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         fillIn = myintent.getBooleanExtra(QuizFragment.FILL_IN_BLANK, false);
         quiz = myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY);
 
-        questions = new QuizQuestions(quiz);
+        questions = new QuizQuestions(quiz, this.getApplicationContext());
         correct_answers = 0;
         wrong_answers = 0;
         score = 0f;
@@ -196,6 +196,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
                // break;
             }
 
+
         if (correct){
             correct_answers++;
             correct = false;
@@ -208,7 +209,9 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
             updateQuestion();
         }
         else{
-           endQuiz();
+            if(view.getId() != R.id.exit ){
+                endQuiz();
+            }
         }
 
     }

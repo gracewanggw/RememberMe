@@ -21,20 +21,16 @@ public class Question implements Parcelable {
     }
 
     public Question(Parcel in) {
-        String[] data = new String[10];
-        in.readStringArray(data);
-
-        id = Integer.parseInt(data[0]);
-        person = data[1];
-        qType = data[2];
-        qDataType = data[3];
-        qStructure = data[4];
-        mQuestion = data[5];
-        aDataType = data[6];
-        aStructure = data[7];
-        answer = data[8];
-        byte tmpReview = in.readByte();
-        review = Boolean.parseBoolean(data[9]);;
+        id = in.readInt();
+        person = in.readString();
+        qType = in.readString();
+        qDataType = in.readString();
+        qStructure = in.readString();
+        mQuestion = in.readString();
+        aDataType = in.readString();
+        aStructure = in.readString();
+        answer = in.readString();
+        review = in.readBoolean();
     }
 
     public static final Creator<Question> CREATOR = new Creator<Question>() {
@@ -87,17 +83,16 @@ public class Question implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] {
-                Integer.toString(this.id),
-                this.person,
-                this.qType,
-                this.qDataType,
-                this.qStructure,
-                this.mQuestion,
-                this.aDataType,
-                this.aStructure,
-                this.answer,
-                String.valueOf(this.review)});
+        dest.writeInt(this.id);
+        dest.writeString(this.person);
+        dest.writeString(this.qType);
+        dest.writeString(this.qDataType);
+        dest.writeString(this.qStructure);
+        dest.writeString(this.mQuestion);
+        dest.writeString(this.aDataType);
+        dest.writeString(this.aStructure);
+        dest.writeString(this.answer);
+        dest.writeBoolean(this.review);
     }
 
 

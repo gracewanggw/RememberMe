@@ -44,7 +44,7 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
 
         Intent myintent = getIntent();
 
-        questions = new QuizQuestions(myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY));
+        questions = new QuizQuestions(myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY), this.getApplicationContext());
         questionNum = 0;
 
         exit = (Button)findViewById(R.id.exit);
