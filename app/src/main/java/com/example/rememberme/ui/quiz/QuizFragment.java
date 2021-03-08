@@ -207,7 +207,7 @@ public class QuizFragment extends Fragment{
         String[] infoChoice = {"relationship", "age", "birthday", "location"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
-        int quizLength = people.size();
+        int quizLength = Math.min(people.size(), 10);
         ArrayList<String> visited;
 
         switch (quizType) {
@@ -280,7 +280,7 @@ public class QuizFragment extends Fragment{
                 break;
         }
 
-        Log.d("dqwe", mQuestion.getAnswer());
+
         if(mQuestion.getAnswer().length() == 0 || mQuestion.getAnswer().equals("0")){
             return null;
         }else {

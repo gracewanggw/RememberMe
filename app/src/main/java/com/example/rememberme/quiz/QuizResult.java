@@ -108,9 +108,18 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     }
 
     public void updateReviewSet(){
-        //do lofix for updating the set here
+        new Thread() {
+            @Override
+            public void run() {
+                allRelationships = dataSource.fetchFramilyColumn("relationship");
+                allAge = dataSource.fetchFramilyColumn("age");
+                allLocation = dataSource.fetchFramilyColumn("location");
+                allBirthday = dataSource.fetchFramilyColumn("birthday");
+            }
+        }.start();
         Log.d("fjx", ""+ toReview);
     }
+
 
 }
 
