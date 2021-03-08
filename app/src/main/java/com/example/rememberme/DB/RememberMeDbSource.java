@@ -122,6 +122,21 @@ public class RememberMeDbSource {
                 + " = " + rowIndex, null);
     }
 
+    //get framily index
+    public long getFramilyId(String person_first, String person_last) {
+        long idOfInterest = -1;
+        String[] questions = {person_first, person_last};
+        Cursor cursor = database.rawQuery("select * from "
+                + RememberMeDbHelper.TABLE_NAME_FRAMILY + " where " + RememberMeDbHelper.NAME_FIRST + "=?"
+                + " AND " + RememberMeDbHelper.NAME_LAST + "=?", questions);
+        while (cursor.moveToNext()) {
+            idOfInterest = cursor.getLong(cursor.getColumnIndex("id"));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return idOfInterest;
+    }
+
     // Query a specific entry by its index.
     public Framily fetchFramilyByIndex(Long rowId) {
         Log.d("rdudak", DebugDB.getAddressLog());

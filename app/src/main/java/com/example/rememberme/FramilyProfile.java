@@ -8,6 +8,8 @@ import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +21,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rememberme.DB.RememberMeDbSource;
+import com.example.rememberme.quiz.Question;
+import com.example.rememberme.quiz.Quiz;
+import com.example.rememberme.ui.quiz.MyAlertDialogFragment;
+import com.example.rememberme.ui.quiz.QuizFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,7 +59,10 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     Button quiz;
     TextView edit;
     TextView addMemory;
+    int infoCount;
 
+
+    public static final int QUIZ_TYPE_PERSON_KEY = 4;
     public static final String ID_KEY = "id_key";
     public static final String MEMORY_KEY = "memory";
     public static final String POSITION_KEY = "position";
@@ -213,7 +224,22 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.quiz:
-                //TODO: Go to quiz
+                int quizType = QUIZ_TYPE_PERSON_KEY;
+                ArrayList<Question> personQuiz = makePeopleQuiz();
+
+                if(personQuiz.size() < 2){
+                    MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", "No Face Fill");
+                    myDialog.setArguments(bundle);
+                    myDialog.show(getSupportFragmentManager(), "dialog");
+                }else {
+                    Intent intentquiz = new Intent(getApplicationContext(), Quiz.class);
+                    intentquiz.putExtra(QuizFragment.FILL_IN_BLANK, false);
+                    intentquiz.putExtra(QuizFragment.QUIZ_KEY, personQuiz);
+                    intentquiz.putExtra(QuizFragment.QUIZ_TYPE_KEY, quizType);
+                    startActivityForResult(intentquiz, 0);
+                }
                 break;
 
             case R.id.edit:
@@ -227,6 +253,100 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 //                intent.putExtra(ID_KEY, framily.getId());
 //                startActivity(intent);
 //                break;
+        }
+    }
+
+    // Handle data after activity returns.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK)
+            return;
+
+        switch (requestCode) {
+            case 0:
+                // stay on quiz after finish
+
+                break;
+
+        }
+    }
+
+    public ArrayList<Question> makePeopleQuiz() {
+        dbSource.open();
+        ArrayList<Question> quizQuestionList = new ArrayList<Question>();
+
+        String[] infoChoice = {"relationship", "age", "birthday", "location", "photo", "lname", "phone"};
+
+        ArrayList<String> visited = new ArrayList<String>();
+
+        infoCount = 0;
+        while (infoCount < infoChoice.length) {
+            String fact = infoChoice[new Random().nextInt(infoChoice.length)];
+            if( !visited.contains(fact)){
+                visited.add(fact);
+                Question ques = makeQuestion(framily, fact);
+                if (ques != null) {
+                    quizQuestionList.add(ques);
+                }
+            }
+        }
+        dbSource.close();
+        return quizQuestionList;
+    }
+
+    public Question makeQuestion(Framily person, String fact){
+        Question mQuestion = new Question();
+        mQuestion.setPerson(person.getNameFirst()+person.getNameLast());
+        mQuestion.setQType(fact);
+        mQuestion.setQDataType("String");
+        mQuestion.setReview(false);
+
+        switch (fact) {
+            case "relationship":
+                mQuestion.setmQuestion("What is your relationship with "+ person.getNameFirst() + " " + person.getNameLast()+"?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getRelationship());
+                break;
+            case "age":
+                mQuestion.setmQuestion("How old is "+ person.getNameFirst() + " " + person.getNameLast()+"?");
+                mQuestion.setADataType("int");
+                mQuestion.setAnswer(""+person.getAge());
+                break;
+            case "birthday":
+                mQuestion.setmQuestion("When is "+ person.getNameFirst() + " " + person.getNameLast()+"'s birthday?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getBirthday());
+                break;
+            case "location":
+                mQuestion.setmQuestion("Where is "+ person.getNameFirst() + " " + person.getNameLast()+" living right now?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getLocation());
+                break;
+            case "photo":
+                mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
+                mQuestion.setADataType("Image");
+                mQuestion.setAnswer(person.getPhotoFileName());
+                break;
+            case "phone":
+                mQuestion.setmQuestion("What is " + person.getNameFirst() + " " + person.getNameLast() + "'s phone number?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getPhoneNumber());
+                break;
+            case "lname":
+                mQuestion.setmQuestion("What is " + person.getNameFirst() + "'s last name?");
+                mQuestion.setADataType("String");
+                mQuestion.setAnswer(person.getNameLast());
+                break;
+        }
+
+        //Log.d("answerLenth", "lenth is: " + mQuestion.getAnswer().length());
+        if(mQuestion.getAnswer().length() < 1 || mQuestion.getAnswer() == null || mQuestion.getAnswer().equals("0")){
+            infoCount += 1;
+            return null;
+        }else {
+            infoCount += 1;
+            return mQuestion;
         }
     }
 }

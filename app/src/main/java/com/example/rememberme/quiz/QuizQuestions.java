@@ -26,6 +26,8 @@ public class QuizQuestions {
     public ArrayList<String> allBirthday = new ArrayList<String>();
     public ArrayList<String> allLocation = new ArrayList<String>();
     public ArrayList<String> allFaces = new ArrayList<String>();
+    public ArrayList<String> allNameL = new ArrayList<String>();
+    public ArrayList<String> allPhone = new ArrayList<String>();
     RememberMeDbSource dataSource;
 
 
@@ -116,50 +118,79 @@ public class QuizQuestions {
         Log.d("question", ""+type);
 
         String ans = "";
+        boolean firstpass = true;
         while (options.size() < 3) {
             switch (type) {
                 case "relationship":
-                    Log.d("question", "in rel");
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allRelationships.size());
                         ans = allRelationships.get(index);
+                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                            ans = genRelationship();
+                        }
                     } else {
                         ans = genRelationship();
                     }
                     break;
                 case "age":
-                    Log.d("question", "in a");
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allAge.size());
                         ans = allAge.get(index);
+                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                            ans = genAge(answer);
+                        }
                     } else {
                         ans = genAge(answer);
                     }
                     break;
                 case "birthday":
-                    Log.d("question", "in b");
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allBirthday.size());
                         ans = allBirthday.get(index);
+                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                            ans = genBirthday(answer);
+                        }
                     } else {
                         ans = genBirthday(answer);
                     }
                     break;
                 case "location":
-                    Log.d("question", "in loc");
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allLocation.size());
                         ans = allLocation.get(index);
+                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                            ans = genLocation();
+                        }
                     } else {
                         ans = genLocation();
                     }
                     break;
                 case "photo":
-                    Log.d("question", "in face");
-
-                    int index = (int) (Math.random() * allFaces.size());
+                   int index = (int) (Math.random() * allFaces.size());
                     String tempPic = allFaces.get(index);
                     ans = tempPic;
+                    break;
+                case "lname":
+                    if (masterSize > 3) {
+                        int indexN = (int) (Math.random() * allNameL.size());
+                        ans = allNameL.get(indexN);
+                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                            ans = genLName();
+                        }
+                    } else {
+                        ans = genLName();
+                    }
+                    break;
+                case "phone":
+                    if(firstpass){
+                        if(answer.length() != 10){
+                            answer = answer.substring(0,10);
+                        }
+                        answer = answer.substring(0,3)+"-"+answer.substring(3,6)+"-"+answer.substring(6);
+                        firstpass = false;
+                    }
+                   String temp = genPhone(answer);
+                    ans = temp.substring(0,3)+"-"+temp.substring(3,6)+"-"+temp.substring(6);
                     break;
             }
 
@@ -181,6 +212,7 @@ public class QuizQuestions {
 
         return ind;
     }
+
 
     public String genBirthday(String ref){
 
@@ -265,10 +297,32 @@ public class QuizQuestions {
     }
 
     public String genAge(String ref){
-        Log.d("dani", ref);
         int num  = (int)(Math.random() * 10 + (Integer.parseInt(ref)-5));
-        Log.d("dani", ""+num);
         return ""+num;
+    }
+
+    public String genPhone(String refer){
+
+        String ref = refer.substring(0,3) + refer.substring(4,7) + refer.substring(8);
+        String finalGen = "";
+        int num  = (int)(Math.random() * ref.length());
+        int change = Character.getNumericValue(ref.charAt(num));
+        String newNum = getRandomElement(new String[]{""+((change+1)%10),
+                ""+((change-1)%10),
+                ""+((change-2)%10),
+                ""+((change+2)%10)});
+        if(num != ref.length()-1){
+          finalGen = ref.substring(0, num) + newNum + ref.substring(num+1);
+        } else{
+          finalGen = ref.substring(0, num) + newNum;
+        }
+        return finalGen;
+    }
+
+    public String genLName(){
+        Resources r = context.getResources();
+        String names[] = r.getStringArray(R.array.surnames);
+        return getRandomElement(names);
     }
 
 
@@ -285,6 +339,8 @@ public class QuizQuestions {
         allLocation = dataSource.fetchFramilyColumn("location");
         allBirthday = dataSource.fetchFramilyColumn("birthday");
         allFaces = getValidFaces();
+        allNameL = dataSource.fetchFramilyColumn("last_name");
+        allPhone = dataSource.fetchFramilyColumn("phone_number");
     }
 
     public void updateMasterLists(){
@@ -296,6 +352,8 @@ public class QuizQuestions {
                 allLocation = dataSource.fetchFramilyColumn("location");
                 allBirthday = dataSource.fetchFramilyColumn("birthday");
                 allFaces = getValidFaces();
+                allNameL = dataSource.fetchFramilyColumn("last_name");
+                allPhone = dataSource.fetchFramilyColumn("phone_number");
             }
         }.start();
     }

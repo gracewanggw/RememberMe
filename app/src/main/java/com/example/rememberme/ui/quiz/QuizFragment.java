@@ -1,13 +1,7 @@
 package com.example.rememberme.ui.quiz;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -21,14 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.example.rememberme.DB.RememberMeDbHelper;
 import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.Framily;
 import com.example.rememberme.R;
@@ -38,12 +28,8 @@ import com.example.rememberme.quiz.Quiz;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class QuizFragment extends Fragment{
 
