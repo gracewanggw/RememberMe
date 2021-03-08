@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.rememberme.R;
+import com.example.rememberme.ui.quiz.QuizFragment;
 
 import java.util.ArrayList;
 
@@ -60,17 +61,26 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         String text2 = "Correct Answer: "+ corr_ans;
         String text3 = "Your Answer: "+ ans;
 
-        if(corr_ans.equals(ans)){
+        String comp1 = ans.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+        String comp2 = corr_ans.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+
+
+        if(comp1.equals(comp2)){
             holder.textView1.setBackgroundColor(Color.parseColor("#dafaca"));
             holder.textView2.setBackgroundColor(Color.parseColor("#dafaca"));
             holder.textView3.setBackgroundColor(Color.parseColor("#dafaca"));
             holder.checked.setBackgroundColor(Color.parseColor("#dafaca"));
+            if(QuizResult.type == QuizFragment.QUIZ_TYPE_REVIEW_KEY){
+                mChecked.set(position, true);
+            }
         }else{
             holder.textView1.setBackgroundColor(Color.parseColor("#e5a3ba"));
             holder.textView2.setBackgroundColor(Color.parseColor("#e5a3ba"));
             holder.textView3.setBackgroundColor(Color.parseColor("#e5a3ba"));
             holder.checked.setBackgroundColor(Color.parseColor("#e5a3ba"));
-            mChecked.set(position, true);
+            if(QuizResult.type != QuizFragment.QUIZ_TYPE_REVIEW_KEY){
+                mChecked.set(position, true);
+            }
         }
 
         holder.textView1.setText(text1);

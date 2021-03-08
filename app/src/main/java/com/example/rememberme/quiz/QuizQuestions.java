@@ -41,6 +41,7 @@ public class QuizQuestions {
 //    private int correctAns[] = {0,2,2,3};
 
     private ArrayList<String> testQuestions = new ArrayList<String>();
+    private ArrayList<String> quesTypes = new ArrayList<String>();
     private ArrayList<ArrayList<String>> choices = new ArrayList<ArrayList<String>>();
     private ArrayList<Integer> correctAns = new ArrayList<Integer>();
     private ArrayList<Question> quiz = new ArrayList<Question>();
@@ -52,7 +53,8 @@ public class QuizQuestions {
             op2 ,
             op3 ,
             op4 ,
-            correct_answer;
+            correct_answer,
+            quesType;
 
     public int total;
     Context context;
@@ -72,6 +74,7 @@ public class QuizQuestions {
 
         for (int i = 0; i < quiz.size(); i++){
             testQuestions.add(quiz.get(i).getmQuestion());
+            quesTypes.add(quiz.get(i).getQType());
             correctAns.add(makeOptions(quiz.get(i).getAnswer(), quiz.get(i).getQType(), quiz.size()));
         }
 
@@ -94,11 +97,13 @@ public class QuizQuestions {
 //        op4 = choices[num][3] ;
 //        correct_answer = choices[num][correctAns[num]];
         question = testQuestions.get(num) ;
+
         op1 = choices.get(num).get(0);
         op2 = choices.get(num).get(1);
         op3 = choices.get(num).get(2) ;
         op4 = choices.get(num).get(3) ;
         correct_answer = choices.get(num).get(correctAns.get(num));
+        quesType = quesTypes.get(num);
         total = totalQuestions;
         return this;
     }

@@ -55,10 +55,12 @@ public class QuizFragment extends Fragment{
 
     boolean fib = true;
 
-    public static final String QUIZ_KEY = "quiz given";
+    public static final String QUIZ_KEY = "givenquiz";
+    public static final String QUIZ_TYPE_KEY = "quiztype";
     public static final int QUIZ_TYPE_ALL_KEY = 0;
     public static final int QUIZ_TYPE_BIRTHDAY_KEY = 1;
     public static final int QUIZ_TYPE_REVIEW_KEY = 2;
+    public static final int QUIZ_TYPE_FACE_KEY = 3;
 
     public int quizType;
     public ArrayList<Question> quiz;
@@ -122,6 +124,7 @@ public class QuizFragment extends Fragment{
                         Intent intent = new Intent(getContext(), Quiz.class);
                         intent.putExtra(FILL_IN_BLANK, fib);
                         intent.putExtra(QUIZ_KEY, quiz);
+                        intent.putExtra(QUIZ_TYPE_KEY, quizType);
                         startActivityForResult(intent, 0);
                         break;
                     default:
@@ -161,6 +164,7 @@ public class QuizFragment extends Fragment{
                     Intent intent = new Intent(getContext(), Quiz.class);
                     intent.putExtra(FILL_IN_BLANK, fib);
                     intent.putExtra(QUIZ_KEY, quiz);
+                    intent.putExtra(QUIZ_TYPE_KEY, quizType);
                     startActivityForResult(intent, 0);
                 }
                 return true;
@@ -187,7 +191,8 @@ public class QuizFragment extends Fragment{
                     MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("fib", fib);
-                    bundle.putParcelableArrayList("givenquiz", quiz);
+                    bundle.putParcelableArrayList(QUIZ_KEY, quiz);
+                    bundle.putInt(QUIZ_TYPE_KEY, quizType);
                     bundle.putString("title", "Review Mode");
                     myDialog.setArguments(bundle);
                     myDialog.show(getFragmentManager(), "dialog");

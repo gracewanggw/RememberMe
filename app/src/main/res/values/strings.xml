@@ -13,12 +13,12 @@
     <string name="no_review">No Questions to Review Yet</string>
 
 
-
     <string name="results_txt">Your Results: </string>
     <string name="wrong_ans">Your Answers</string>
     <string name="wrong">Wrong</string>
     <string name="right">Correct</string>
-    <string name="done_button">Save Selected</string>
+    <string name="done_button">Save Checked to Review</string>
+    <string name="done">Remove Checked from Review</string>
 
     <string name="back">&lt; Back to People</string>
     <string name="quiz_me">Quiz Me</string>

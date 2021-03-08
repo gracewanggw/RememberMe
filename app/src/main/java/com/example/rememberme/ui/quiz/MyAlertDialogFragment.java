@@ -22,14 +22,16 @@ import java.util.ArrayList;
 public class MyAlertDialogFragment extends DialogFragment implements DialogInterface.OnClickListener{
     ArrayList<Question> quiz;
     boolean fib;
+    int type;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View content;
         Bundle bundle = getArguments();
         String title = bundle.getString("title");
-        quiz = bundle.getParcelableArrayList("givenquiz");
+        quiz = bundle.getParcelableArrayList(QuizFragment.QUIZ_KEY);
         fib = bundle.getBoolean("fib");
+        type = bundle.getInt(QuizFragment.QUIZ_TYPE_KEY);
 
         if(title.equals("No Review")){
             LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -70,6 +72,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
             Intent intent = new Intent(getContext(), Quiz.class);
             intent.putExtra(QuizFragment.FILL_IN_BLANK, fib);
             intent.putExtra(QuizFragment.QUIZ_KEY, quiz);
+            intent.putExtra(QuizFragment.QUIZ_TYPE_KEY, type);
             startActivity(intent);
         }
         else if (item == DialogInterface.BUTTON_NEGATIVE){

@@ -363,7 +363,7 @@ public class RememberMeDbSource {
 
     public long insertQuestion(Question question) {
         ContentValues values = new ContentValues();
-        values.put(RememberMeDbHelper.ID_QUIZ, question.getId());
+        //values.put(RememberMeDbHelper.ID_QUIZ, question.getId());
         values.put(RememberMeDbHelper.PERSON, question.getPerson());
         values.put(RememberMeDbHelper.QUESTION_TYPE, question.getQType());
         values.put(RememberMeDbHelper.DATA_TYPE_QUESTION, question.getQDataTypen());
@@ -411,6 +411,21 @@ public class RememberMeDbSource {
         entry.setReview(cursor.getInt(cursor.getColumnIndex(RememberMeDbHelper.REVIEW)) > 0);
         cursor.close();
         return entry;
+    }
+
+    public long getQuestionID(String question, String person) {
+        long idOfInterest = -1;
+        String[] questions = {question, person};
+        Cursor cursor = database.rawQuery("select * from "
+                        + RememberMeDbHelper.TABLE_NAME_QUIZ + " where " + RememberMeDbHelper.QUESTION + "=?"
+                        + " AND " + RememberMeDbHelper.PERSON + "=?", questions);
+        while (cursor.moveToNext()) {
+            idOfInterest = cursor.getLong(cursor.getColumnIndex("id"));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        Log.d("idofinterest", ""+idOfInterest);
+        return idOfInterest;
     }
 
     // Query the entire table, return all rows

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.R;
+import com.example.rememberme.ui.quiz.QuizFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,10 +21,6 @@ import java.util.ArrayList;
 //Dialog to show the result from a quiz after done
 public class QuizResult extends AppCompatActivity implements View.OnClickListener {
 
-    public static final int PERSON = 0;
-    public static final int REVIEW = 1;
-    public static final String QUIZ_KEY = "quiz type";
-
     public static final String CORRECT_KEY = "correct";
     public static final String WRONG_KEY = "wrong";
     public static final String PERCENT_KEY = "percent";
@@ -32,7 +29,7 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
     private ArrayList<Question> quiz;
     private ArrayList<Question> toReview = new ArrayList<Question>();
 
-    private int type;
+    public static int type;
     private int correctans;
     private int wrongans;
     private float percentans;
@@ -56,7 +53,8 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         Intent myintent = getIntent();
         Bundle bundle = myintent.getExtras();
         //uses the key to know what message to get
-        type = bundle.getInt(QUIZ_KEY, -1);
+        type = bundle.getInt(QuizFragment.QUIZ_TYPE_KEY, -1);
+
         correctans = bundle.getInt(CORRECT_KEY, -1);
         wrongans = bundle.getInt(WRONG_KEY, -1);
         percentans = bundle.getFloat(PERCENT_KEY, -10f);
@@ -75,7 +73,9 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         String noDec = ""+ (int)percentans;
         percent.setText(noDec);
         save_btn.setOnClickListener(this);
-
+        if(type == QuizFragment.QUIZ_TYPE_REVIEW_KEY){
+            save_btn.setText(R.string.done);
+        }
         renderQuestions(ans);
     }
 
@@ -106,9 +106,8 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
                         toReview.add(quiz.get(i));
                     }
                 }
-                dbSource.open();
                 updateReviewSet();
-                dbSource.close();
+
                 finish();
                 break;
         }
@@ -118,17 +117,28 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
         new Thread() {
             @Override
             public void run() {
+                dbSource.open();
                 //ArrayList<Question> allQuestions = (ArrayList)dbSource.fetchQuestions();
                 for(int i = 0; i < toReview.size(); i++){
-                    //if in review already remove from review
-                    if(toReview.get(i).getReview()){
-                        toReview.get(i).setReview(false);
-                        dbSource.removeQuestion(toReview.get(i).getId());
-                    }else {
+                    int quesid = (int)dbSource.getQuestionID(toReview.get(i).getmQuestion(), toReview.get(i).getPerson());
+
+                    if (type == QuizFragment.QUIZ_TYPE_REVIEW_KEY){
+                        //if in review already remove from review
+                        if(quesid >= 0){
+                            toReview.get(i).setReview(false);
+                            dbSource.removeQuestion(quesid);
+                        }else {
+                           Log.d("debug", "Error question should be able to be removed");
+                        }
+                    }else{
+                        //if in review already remove from review
                         toReview.get(i).setReview(true);
-                        dbSource.insertQuestion(toReview.get(i));
+                        if (quesid < 0) {
+                            dbSource.insertQuestion(toReview.get(i));
+                        }
                     }
                 }
+                dbSource.close();
             }
         }.start();
         Log.d("fjx", ""+ toReview);

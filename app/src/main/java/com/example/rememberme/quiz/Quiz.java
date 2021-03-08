@@ -39,7 +39,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private int questionNum;
     private String answer;
 
-    private int type = 0;
+    private int type;
     private int correct_answers;
     private int wrong_answers;
     private Float score;
@@ -64,6 +64,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         //uses the key to know what message to get
         fillIn = myintent.getBooleanExtra(QuizFragment.FILL_IN_BLANK, false);
         quiz = myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY);
+        type = myintent.getIntExtra(QuizFragment.QUIZ_TYPE_KEY, 0);
 
         questions = new QuizQuestions(quiz, this.getApplicationContext());
         correct_answers = 0;
@@ -129,13 +130,13 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         mQuestion.setText(questions.getQuestion(questionNum).question);
         answer = questions.getQuestion(questionNum).correct_answer;
 
-        if(fillIn == false) {
+        if(!fillIn) {
             c1.setText(questions.getQuestion(questionNum).op1);
             c2.setText(questions.getQuestion(questionNum).op2);
             c3.setText(questions.getQuestion(questionNum).op3);
             c4.setText(questions.getQuestion(questionNum).op4);
         }else{
-            Log.d("debug", "invalid quiz type");
+            input.setHint(formatHint(questions.getQuestion(questionNum).quesType));
         }
     }
 
@@ -174,9 +175,12 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.submit_ans:
                 responses.add(input.getText().toString());
-                if(input.getText().toString().toLowerCase().equals(answer.toLowerCase())){
-                    correct = true;
-                }
+
+                String comp1 = input.getText().toString().toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+                String comp2 = answer.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+
+                correct = comp1.equals(comp2);
+
                 input.getText().clear();
                 break;
 //            case R.id.question_sec:
@@ -222,7 +226,7 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         Intent intent = new Intent( this, QuizResult.class);
         Bundle bundle = new Bundle();
 
-        bundle.putInt(QuizResult.QUIZ_KEY, QuizResult.PERSON);
+        bundle.putInt(QuizFragment.QUIZ_TYPE_KEY, type);
         bundle.putInt(QuizResult.CORRECT_KEY, correct_answers);
         bundle.putInt(QuizResult.WRONG_KEY, wrong_answers);
         bundle.putFloat(QuizResult.PERCENT_KEY, score);
@@ -232,6 +236,26 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         startActivity(intent);
         finish();
     }
+
+    public String formatHint(String qType){
+        String format = "";
+        switch (qType) {
+            case "relationship":
+               format = "ex. friend";
+               break;
+            case "age":
+                format = "ex. 22";
+                break;
+            case "birthday":
+                format = "ex. September 9 1998";
+                break;
+            case "location":
+                format = "ex. Portland, OR";
+                break;
+        }
+        return format;
+    }
+
 
 
 }
