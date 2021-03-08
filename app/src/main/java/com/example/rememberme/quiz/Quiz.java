@@ -201,19 +201,19 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
             }
 
 
-        if (correct){
-            correct_answers++;
-            correct = false;
-        }else{
-            wrong_answers++;
-        }
+        if(view.getId() != R.id.exit ) {
+            if (correct) {
+                correct_answers++;
+                correct = false;
+            } else {
+                wrong_answers++;
+            }
 
-        questionNum ++;
-        if (questionNum < questions.getSize()){
-            updateQuestion();
-        }
-        else{
-            if(view.getId() != R.id.exit ){
+            questionNum++;
+            if (questionNum < questions.getSize()) {
+                updateQuestion();
+            } else {
+
                 endQuiz();
             }
         }

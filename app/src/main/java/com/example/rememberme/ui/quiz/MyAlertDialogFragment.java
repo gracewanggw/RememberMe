@@ -44,7 +44,18 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
             noneBuilder.setNegativeButton("Done", this);
 
             return noneBuilder.create();
-        }else {
+        }else if(title.equals("Not Enough")){
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            content = inflater.inflate(R.layout.dialog_not_enough, null);
+
+            AlertDialog.Builder noneBuilder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogTheme);
+            noneBuilder.setView(content);
+
+            // add the buttons
+            noneBuilder.setNegativeButton("Done", this);
+
+            return noneBuilder.create();
+        }else{
             LayoutInflater inflater = getActivity().getLayoutInflater();
             content = inflater.inflate(R.layout.dialog_quiz, null);
 

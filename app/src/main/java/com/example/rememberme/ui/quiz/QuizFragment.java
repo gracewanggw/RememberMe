@@ -161,11 +161,19 @@ public class QuizFragment extends Fragment{
                     birthdays.setAlpha((float)1);
                     quizType = QUIZ_TYPE_BIRTHDAY_KEY;
                     quiz = createQuiz();
-                    Intent intent = new Intent(getContext(), Quiz.class);
-                    intent.putExtra(FILL_IN_BLANK, fib);
-                    intent.putExtra(QUIZ_KEY, quiz);
-                    intent.putExtra(QUIZ_TYPE_KEY, quizType);
-                    startActivityForResult(intent, 0);
+                    if(quiz.size() == 0){
+                        MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("title", "Not Enough");
+                        myDialog.setArguments(bundle);
+                        myDialog.show(getFragmentManager(), "dialog");
+                    }else {
+                        Intent intent = new Intent(getContext(), Quiz.class);
+                        intent.putExtra(FILL_IN_BLANK, fib);
+                        intent.putExtra(QUIZ_KEY, quiz);
+                        intent.putExtra(QUIZ_TYPE_KEY, quizType);
+                        startActivityForResult(intent, 0);
+                    }
                 }
                 return true;
             }
@@ -212,7 +220,7 @@ public class QuizFragment extends Fragment{
         String[] infoChoice = {"relationship", "age", "birthday", "location"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
-        int quizLength = Math.min(people.size(), 10);
+        int quizLength = Math.min(people.size() * 2 , 10);
         ArrayList<String> visited;
 
         switch (quizType) {
@@ -232,6 +240,17 @@ public class QuizFragment extends Fragment{
                 break;
             case QUIZ_TYPE_BIRTHDAY_KEY:
                 visited = new ArrayList<String>();
+                quizLength = 0;
+                for(String birthday : dataSource.fetchFramilyColumn("birthday")){
+                    if(birthday.length() != 0){
+                        quizLength += 1;
+                    }
+                }
+
+                if(quizLength < 2){
+                    return quizQuestionList;
+                }
+
                 while (quizQuestionList.size() < quizLength) {
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
