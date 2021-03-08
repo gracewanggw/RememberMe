@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditFramilyProfile" android:theme="@style/Theme.RememberMe.NoActionBar"/>
-        <activity android:name=".FramilyProfile" />
+        <activity android:name=".FramilyProfile" android:theme="@style/Theme.RememberMe.NoActionBar"/>
         <!--activity android:name=".AddMemoryActivity" /-->
         <activity android:name=".EditUserProfileActivity" android:theme="@style/Theme.RememberMe.NoActionBar"/>
         <activity android:name=".AddEditMemoryActivity" />
