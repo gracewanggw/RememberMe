@@ -84,9 +84,11 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         }
 
         holder.textView1.setText(text1);
-        holder.textView2.setText(text2);
-        holder.textView3.setText(text3);
-        holder.checked.setTag(Integer.valueOf(position)); // set the tag so we can identify the correct row in the listener
+        if(QuizResult.type != QuizFragment.QUIZ_TYPE_FACE_KEY) {
+            holder.textView2.setText(text2);
+            holder.textView3.setText(text3);
+        }
+        holder.checked.setTag(position); // set the tag so we can identify the correct row in the listener
         holder.checked.setChecked(mChecked.get(position));
         holder.checked.setOnCheckedChangeListener(mListener); // set the listener
 

@@ -12,6 +12,7 @@
     <string name="next">Next Card</string>
     <string name="no_review">No Questions to Review Yet</string>
     <string name="not_enough">Not Enough Entries to Make Quiz</string>
+    <string name="no_face">Fill-In Quizzes for Faces Not Yet Avaliable</string>
 
 
     <string name="results_txt">Your Results: </string>

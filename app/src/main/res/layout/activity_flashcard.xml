@@ -12,19 +12,34 @@
         android:orientation="vertical">
         <!--progress bar -->
 
-        <TextView
-            android:id = "@+id/question"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/card"
-            android:textSize="40dp"
-            android:gravity="center"
-            app:autoSizeTextType="uniform"
-            app:autoSizePresetSizes="@array/autosize_text_sizes"
-            >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        </TextView>
+            <TextView
+                android:id = "@+id/question"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/card"
+                android:textSize="40sp"
+                android:gravity="center"
+                app:autoSizeTextType="uniform"
+                app:autoSizePresetSizes="@array/autosize_text_sizes"
+                >
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/card"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                />
+
+        </RelativeLayout>
+
 
         <!--progress bar <FrameLayout
              android:id="@+id/question_sec"

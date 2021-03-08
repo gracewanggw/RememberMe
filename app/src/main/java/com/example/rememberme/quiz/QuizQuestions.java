@@ -2,12 +2,18 @@ package com.example.rememberme.quiz;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import com.example.rememberme.R;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.ui.quiz.QuizFragment;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +25,7 @@ public class QuizQuestions {
     public ArrayList<String> allAge = new ArrayList<String>();
     public ArrayList<String> allBirthday = new ArrayList<String>();
     public ArrayList<String> allLocation = new ArrayList<String>();
+    public ArrayList<String> allFaces = new ArrayList<String>();
     RememberMeDbSource dataSource;
 
 
@@ -90,12 +97,6 @@ public class QuizQuestions {
 
 
     public QuizQuestions getQuestion(int num){
-//        question = testQuestions[num] ;
-//        op1 = choices[num][0];
-//        op2 = choices[num][1];
-//        op3 = choices[num][2] ;
-//        op4 = choices[num][3] ;
-//        correct_answer = choices[num][correctAns[num]];
         question = testQuestions.get(num) ;
 
         op1 = choices.get(num).get(0);
@@ -153,15 +154,19 @@ public class QuizQuestions {
                         ans = genLocation();
                     }
                     break;
+                case "photo":
+                    Log.d("question", "in face");
 
+                    int index = (int) (Math.random() * allFaces.size());
+                    String tempPic = allFaces.get(index);
+                    ans = tempPic;
+                    break;
             }
 
             if (!ans.equals(answer) && !options.contains(ans)) {
                 options.add(ans);
             }
         }
-
-
 
         ind = (int)(Math.random() * 4);
         if (ind == 3) {
@@ -172,7 +177,8 @@ public class QuizQuestions {
 
         choices.add(options);
 
-        Log.d("question1", ""+choices);
+        Log.d("question choices made", ""+choices);
+
         return ind;
     }
 
@@ -278,6 +284,7 @@ public class QuizQuestions {
         allAge = dataSource.fetchFramilyColumn("age");
         allLocation = dataSource.fetchFramilyColumn("location");
         allBirthday = dataSource.fetchFramilyColumn("birthday");
+        allFaces = getValidFaces();
     }
 
     public void updateMasterLists(){
@@ -288,8 +295,34 @@ public class QuizQuestions {
                 allAge = dataSource.fetchFramilyColumn("age");
                 allLocation = dataSource.fetchFramilyColumn("location");
                 allBirthday = dataSource.fetchFramilyColumn("birthday");
+                allFaces = getValidFaces();
             }
         }.start();
+    }
+
+    public ArrayList<String> getValidFaces(){
+        ArrayList<String> realImages = new  ArrayList<String>();
+        ArrayList<String> allImgs = dataSource.fetchFramilyColumn("photo");
+
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable._pic);
+        Drawable defaultPic = new BitmapDrawable(context.getResources(), bitmap);
+        Drawable.ConstantState cdefault = defaultPic.getConstantState();
+
+        for(String img : allImgs) {
+            try {
+                FileInputStream fis = context.openFileInput(img);
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                Drawable d = new BitmapDrawable(context.getResources(), bmap);
+                Drawable.ConstantState c1 = d.getConstantState();
+
+                if(!c1.equals(cdefault)){
+                    realImages.add(img);
+                }
+            } catch (IOException e) {
+            }
+        }
+
+        return realImages;
     }
 
 }

@@ -8,7 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,9 +32,11 @@ import com.example.rememberme.DB.RememberMeDbHelper;
 import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.Framily;
 import com.example.rememberme.R;
+import com.example.rememberme.RoundImage;
 import com.example.rememberme.quiz.Question;
 import com.example.rememberme.quiz.Quiz;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -143,9 +149,28 @@ public class QuizFragment extends Fragment{
                     v.playSoundEffect(android.view.SoundEffectConstants.CLICK);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     nameFace.setAlpha((float)1);
-//                Intent intent = new Intent(getContext(),QuizActivity.class);
-//                intent.putExtra(FILL_IN_BLANK,fib);
-//                intent.putExtra(QUIZ_TYPE_KEY,"name to face");
+
+                    quizType = QUIZ_TYPE_FACE_KEY;
+                    quiz = createQuiz();
+                    if(quiz.size() == 0){
+                        MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("title", "Not Enough");
+                        myDialog.setArguments(bundle);
+                        myDialog.show(getFragmentManager(), "dialog");
+                    }else if(fib){
+                        MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("title", "No Face Fill");
+                        myDialog.setArguments(bundle);
+                        myDialog.show(getFragmentManager(), "dialog");
+                    } else{
+                        Intent intent = new Intent(getContext(), Quiz.class);
+                        intent.putExtra(FILL_IN_BLANK, fib);
+                        intent.putExtra(QUIZ_KEY, quiz);
+                        intent.putExtra(QUIZ_TYPE_KEY, quizType);
+                        startActivityForResult(intent, 0);
+                    }
                 }
                 return true;
             }
@@ -217,7 +242,7 @@ public class QuizFragment extends Fragment{
         dataSource.open();
         ArrayList<Question> quizQuestionList = new ArrayList<Question>();
 
-        String[] infoChoice = {"relationship", "age", "birthday", "location"};
+        String[] infoChoice = {"relationship", "age", "birthday", "location", "photo"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
         int quizLength = Math.min(people.size() * 2 , 10);
@@ -247,6 +272,7 @@ public class QuizFragment extends Fragment{
                     }
                 }
 
+                //incase not enough for quiz
                 if(quizLength < 2){
                     return quizQuestionList;
                 }
@@ -255,6 +281,49 @@ public class QuizFragment extends Fragment{
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
                     String fact = "birthday";
+                    String key = chosen.getNameFirst()+chosen.getNameLast();
+                    Question ques = createQuestion(chosen, fact);
+                    if( !visited.contains(key) && ques != null) {
+                        visited.add(key);
+                        quizQuestionList.add(ques);
+                    }
+                }
+                break;
+            case QUIZ_TYPE_FACE_KEY:
+                visited = new ArrayList<String>();
+                quizLength = 0;
+                for(String facepic : dataSource.fetchFramilyColumn("photo")){
+                    try {
+                        FileInputStream fis = getActivity().getApplicationContext().openFileInput(facepic);
+                        Bitmap bmap = BitmapFactory.decodeStream(fis);
+                        Drawable d = new BitmapDrawable(getActivity().getApplicationContext().getResources(), bmap);
+                        Drawable.ConstantState c1 = d.getConstantState();
+                        fis.close();
+
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable._pic);
+                        RoundImage roundedImage = new RoundImage(bitmap);
+                        Drawable defaultPic = new BitmapDrawable(getActivity().getApplicationContext().getResources(), bitmap);
+                        Drawable.ConstantState cdefault = defaultPic.getConstantState();
+
+                        if (facepic.length() != 0 && !c1.equals(cdefault)) {
+                            quizLength += 1;
+                        }
+                    }catch (Exception e){
+                        if (facepic.length() != 0) {
+                            quizLength += 1;
+                        }
+                    }
+                }
+
+                //incase not enough for quiz
+                if(quizLength < 4){
+                    return quizQuestionList;
+                }
+
+                while (quizQuestionList.size() < quizLength) {
+                    int random = (int) (Math.random() * people.size());
+                    Framily chosen = people.get(random);
+                    String fact = "photo";
                     String key = chosen.getNameFirst()+chosen.getNameLast();
                     Question ques = createQuestion(chosen, fact);
                     if( !visited.contains(key) && ques != null) {
@@ -301,6 +370,11 @@ public class QuizFragment extends Fragment{
                 mQuestion.setmQuestion("Where is "+ person.getNameFirst() + " " + person.getNameLast()+" living right now?");
                 mQuestion.setADataType("String");
                 mQuestion.setAnswer(person.getLocation());
+                break;
+            case "photo":
+                mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
+                mQuestion.setADataType("Image");
+                mQuestion.setAnswer(person.getPhotoFileName());
                 break;
         }
 

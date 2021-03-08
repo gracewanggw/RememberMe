@@ -4,20 +4,29 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rememberme.R;
+import com.example.rememberme.RoundImage;
 import com.example.rememberme.ui.quiz.QuizFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 //Quiz Activity
@@ -33,6 +42,10 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
     private Button c2;
     private Button c3;
     private Button c4;
+    private ImageButton ic1;
+    private ImageButton ic2;
+    private ImageButton ic3;
+    private ImageButton ic4;
     private EditText input;
     private Button submit;
 
@@ -72,37 +85,12 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         score = 0f;
         questionNum = 0;
 
-        if (fillIn == false) {
-            setContentView(R.layout.activity_quiz_mc);
-
-            c1 = (Button) findViewById(R.id.op1);
-            c2 = (Button) findViewById(R.id.op2);
-            c3 = (Button) findViewById(R.id.op3);
-            c4 = (Button) findViewById(R.id.op4);
-
-            c1.setOnClickListener(this);
-            c2.setOnClickListener(this);
-            c3.setOnClickListener(this);
-            c4.setOnClickListener(this);
-        }else if (fillIn == true){
-
-            setContentView(R.layout.activity_quiz_fillin);
-
-            input = (EditText)findViewById(R.id.fillin_ans);
-            submit = (Button) findViewById(R.id.submit_ans);
-            submit.setOnClickListener(this);
-
-        }else{
-            Log.d("debug", "invalid quiz type");
+        if(type == QuizFragment.QUIZ_TYPE_FACE_KEY){
+            photoSetup();
         }
-
-
-        exit = (Button)findViewById(R.id.exit);
-        exit.setOnClickListener(this);
-
-        mQuestion = (TextView)findViewById(R.id.question);
-        mCardBackLayout = findViewById(R.id.card_back);
-        mCardFrontLayout = findViewById(R.id.card_front);
+        else {
+            textSetup();
+        }
 
         //loadAnimations();
         //changeCameraDistance();
@@ -110,7 +98,6 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         updateQuestion();
 
     }
-
 
 
     private void changeCameraDistance() {
@@ -125,18 +112,42 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.end_flip);
     }
 
-    private void updateQuestion(){
+    private void updateQuestion() {
+        if(questions.getQuestion(questionNum).quesType.equals("photo")){
+            photoSetup();
+            mQuestion.setText(questions.getQuestion(questionNum).question);
+            answer = questions.getQuestion(questionNum).correct_answer;
+            String[] filenames = {questions.getQuestion(questionNum).op1, questions.getQuestion(questionNum).op2,
+                    questions.getQuestion(questionNum).op3, questions.getQuestion(questionNum).op4};
+            ImageButton[] buttons = {ic1, ic2, ic3, ic4};
 
-        mQuestion.setText(questions.getQuestion(questionNum).question);
-        answer = questions.getQuestion(questionNum).correct_answer;
+            for(int k = 0; k <4; k++) {
+                try {
+                    FileInputStream fis = getApplicationContext().openFileInput(filenames[k]);
+                    Bitmap bmap = BitmapFactory.decodeStream(fis);
+                    Drawable d = new BitmapDrawable(getApplicationContext().getResources(), bmap);
+                    buttons[k].setImageDrawable(d);
+                    fis.close();
+                } catch (IOException e) {
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable._pic);
+                    Drawable defaultPic = new BitmapDrawable(getApplicationContext().getResources(), bitmap);
+                    buttons[k].setImageDrawable(defaultPic);
+                }
 
-        if(!fillIn) {
-            c1.setText(questions.getQuestion(questionNum).op1);
-            c2.setText(questions.getQuestion(questionNum).op2);
-            c3.setText(questions.getQuestion(questionNum).op3);
-            c4.setText(questions.getQuestion(questionNum).op4);
+            }
+
         }else{
-            input.setHint(formatHint(questions.getQuestion(questionNum).quesType));
+            textSetup();
+            mQuestion.setText(questions.getQuestion(questionNum).question);
+            answer = questions.getQuestion(questionNum).correct_answer;
+            if(!fillIn) {
+                c1.setText(questions.getQuestion(questionNum).op1);
+                c2.setText(questions.getQuestion(questionNum).op2);
+                c3.setText(questions.getQuestion(questionNum).op3);
+                c4.setText(questions.getQuestion(questionNum).op4);
+            }else{
+                input.setHint(formatHint(questions.getQuestion(questionNum).quesType));
+            }
         }
     }
 
@@ -173,6 +184,34 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
                     correct = true;
                 }
                 break;
+            case R.id.iop1:
+                String fileans = questions.getQuestion(questionNum).op1;
+                responses.add(fileans);
+                if(fileans.equals(answer)) {
+                    correct = true;
+                }
+                break;
+            case R.id.iop2:
+                String fileans2 = questions.getQuestion(questionNum).op2;
+                responses.add(fileans2);
+                if(fileans2.equals(answer)) {
+                    correct = true;
+                }
+                break;
+            case R.id.iop3:
+                String fileans3 = questions.getQuestion(questionNum).op3;
+                responses.add(fileans3);
+                if(fileans3.equals(answer)) {
+                    correct = true;
+                }
+                break;
+            case R.id.iop4:
+                String fileans4 = questions.getQuestion(questionNum).op4;
+                responses.add(fileans4);
+                if(fileans4.equals(answer)) {
+                    correct = true;
+                }
+                break;
             case R.id.submit_ans:
                 responses.add(input.getText().toString());
 
@@ -199,7 +238,6 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
 //                }
                // break;
             }
-
 
         if(view.getId() != R.id.exit ) {
             if (correct) {
@@ -235,6 +273,62 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
+    }
+
+    public void photoSetup(){
+        setContentView(R.layout.activity_quiz_img);
+
+        ic1 = (ImageButton) findViewById(R.id.iop1);
+        ic2 = (ImageButton) findViewById(R.id.iop2);
+        ic3 = (ImageButton) findViewById(R.id.iop3);
+        ic4 = (ImageButton) findViewById(R.id.iop4);
+
+        ic1.setOnClickListener(this);
+        ic2.setOnClickListener(this);
+        ic3.setOnClickListener(this);
+        ic4.setOnClickListener(this);
+
+        exit = (Button)findViewById(R.id.exit);
+        exit.setOnClickListener(this);
+
+        mQuestion = (TextView)findViewById(R.id.question);
+        mCardBackLayout = findViewById(R.id.card_back);
+        mCardFrontLayout = findViewById(R.id.card_front);
+
+    }
+
+    public void textSetup(){
+        if (!fillIn) {
+            setContentView(R.layout.activity_quiz_mc);
+
+            c1 = (Button) findViewById(R.id.op1);
+            c2 = (Button) findViewById(R.id.op2);
+            c3 = (Button) findViewById(R.id.op3);
+            c4 = (Button) findViewById(R.id.op4);
+
+            c1.setOnClickListener(this);
+            c2.setOnClickListener(this);
+            c3.setOnClickListener(this);
+            c4.setOnClickListener(this);
+
+        } else if (fillIn) {
+
+            setContentView(R.layout.activity_quiz_fillin);
+
+            input = (EditText) findViewById(R.id.fillin_ans);
+            submit = (Button) findViewById(R.id.submit_ans);
+            submit.setOnClickListener(this);
+
+        } else {
+            Log.d("debug", "invalid quiz type");
+        }
+
+        exit = (Button)findViewById(R.id.exit);
+        exit.setOnClickListener(this);
+
+        mQuestion = (TextView)findViewById(R.id.question);
+        mCardBackLayout = findViewById(R.id.card_back);
+        mCardFrontLayout = findViewById(R.id.card_front);
     }
 
     public String formatHint(String qType){

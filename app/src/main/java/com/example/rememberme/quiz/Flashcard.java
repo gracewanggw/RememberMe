@@ -3,12 +3,21 @@ package com.example.rememberme.quiz;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +25,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.rememberme.R;
 import com.example.rememberme.ui.quiz.QuizFragment;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public class Flashcard extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "result popup";
     private QuizQuestions questions;
 
     private TextView mQuestion;
+    private ImageView iView;
     private FrameLayout questionCard;
     private Button exit;
     private Button seeNext;
@@ -51,6 +64,7 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
         exit.setOnClickListener(this);
 
         mQuestion = (TextView)findViewById(R.id.question);
+        iView = (ImageView)findViewById(R.id.imageView);
         seeNext = (Button) findViewById(R.id.see_answer);
         seeNext.setOnClickListener(this);
 
@@ -80,11 +94,31 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
     private void updateQuestion(){
 
         if(onQuestion){
+            mQuestion.setVisibility(View.VISIBLE);
+            iView.setVisibility(View.INVISIBLE);
             mQuestion.setText(questions.getQuestion(questionNum).question);
             seeNext.setText(R.string.see);
             onQuestion = false;
         }else{
-            mQuestion.setText(questions.getQuestion(questionNum).correct_answer);
+            if(questions.getQuestion(questionNum).quesType.equals("photo")){
+                mQuestion.setVisibility(View.INVISIBLE);
+                iView.setVisibility(View.VISIBLE);
+               try {
+                    FileInputStream fis = getApplicationContext().openFileInput(questions.getQuestion(questionNum).correct_answer);
+                    Bitmap bmap = BitmapFactory.decodeStream(fis);
+                    Drawable d = new BitmapDrawable(getApplicationContext().getResources(), bmap);
+                    iView.setImageDrawable(d);
+                    fis.close();
+                } catch (IOException e) {
+                    onClick(seeNext);
+                }
+            }else {
+                mQuestion.setVisibility(View.VISIBLE);
+                iView.setVisibility(View.INVISIBLE);
+                mQuestion.setText(questions.getQuestion(questionNum).correct_answer);
+            }
+
+
             if (questionNum < questions.getSize() - 1) {
                 seeNext.setText(R.string.next);
             }else{
