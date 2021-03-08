@@ -58,16 +58,6 @@ public class ProfileFragment extends Fragment {
 
         updateView();
 
-        try {
-            FileInputStream fis = this.getActivity().openFileInput(EditUserProfileActivity.saveImgFileName);
-            Bitmap bmap = BitmapFactory.decodeStream(fis);
-            roundedImage = new RoundImage(bmap);
-            photo.setImageDrawable(roundedImage);
-            fis.close();
-        } catch (IOException e) {
-
-        }
-
         edit = root.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,5 +85,15 @@ public class ProfileFragment extends Fragment {
         String nameStr = sharedPreferences.getString(EditUserProfileActivity.FIRST_NAME_KEY, "") +
                 " " + sharedPreferences.getString(EditUserProfileActivity.LAST_NAME_KEY,"");
         name.setText(nameStr);
+        try {
+            FileInputStream fis = this.getActivity().openFileInput(EditUserProfileActivity.saveImgFileName);
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+
+        }
+
     }
 }

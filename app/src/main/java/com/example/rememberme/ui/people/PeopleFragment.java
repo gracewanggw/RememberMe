@@ -1,13 +1,16 @@
 package com.example.rememberme.ui.people;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -45,12 +49,14 @@ import java.util.List;
 public class PeopleFragment extends Fragment {
 
     Spinner spinnerSort;
-    Button sortButton;
+    Button searchButton;
+    EditText search;
     CustomAdapter customAdapter;
 
     String sort = "Oldest to Newest";
     public final String SORT_KEY = "sort key";
     public final String SORT_IDX = "sort idx";
+    public final String SEARCH_KEY = "search key";
     Activity activity;
 
     GridView gridView;
@@ -85,26 +91,36 @@ public class PeopleFragment extends Fragment {
         frag = this;
         activity = this.getActivity();
 
+        gridView = root.findViewById(R.id.people_grid_view);
+
         spinnerSort = root.findViewById(R.id.sort);
         ArrayAdapter<CharSequence> adapterSort = ArrayAdapter.createFromResource(activity,
                 R.array.sort_types, android.R.layout.simple_spinner_item);
         adapterSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSort.setAdapter(adapterSort);
 
-        gridView = root.findViewById(R.id.people_grid_view);
+        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                sort = spinnerSort.getItemAtPosition(position).toString();
+                sorted = new ArrayList<>();
+                sortPeople();
+                customAdapter.updateItems(sorted);
+            }
 
-        if(savedInstanceState!=null){
-            sort = savedInstanceState.getString(SORT_KEY, "Oldest to Newest");
-            spinnerSort.setSelection(savedInstanceState.getInt(SORT_IDX,0));
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
 
-        sortButton = root.findViewById(R.id.sort_button);
-        sortButton.setOnClickListener(new View.OnClickListener() {
+        });
+        search = root.findViewById(R.id.Search_Name);
+
+        searchButton = root.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spinnerSort.getSelectedItem()!=null){
-                    sort = spinnerSort.getSelectedItem().toString();
-                }
+                searchPeople(search.getText().toString());
                 sorted = new ArrayList<>();
                 sortPeople();
                 customAdapter.updateItems(sorted);
@@ -114,16 +130,37 @@ public class PeopleFragment extends Fragment {
         return root;
     }
 
+
     @Override
-    public void onSaveInstanceState(Bundle outState){
-        outState.putString(SORT_KEY, sort);
-        outState.putInt(SORT_IDX, spinnerSort.getSelectedItemPosition());
+    public void onStart() {
+        Log.d("gwang", "on start");
+        super.onStart();
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("pref", Context.MODE_PRIVATE);
+        sort = sharedPreferences.getString(SORT_KEY, "Oldest to Newest");
+        spinnerSort.setSelection(sharedPreferences.getInt(SORT_IDX, 0));
+        search.setText(sharedPreferences.getString(SEARCH_KEY,""));
+        if(!search.getText().toString().equals("")){
+            searchPeople(search.getText().toString());
+            sorted = new ArrayList<>();
+            sortPeople();
+            customAdapter.updateItems(sorted);
+        }
+        else{
+            updateView();
+        }
     }
 
     @Override
-    public void onResume() {
-        updateView();
-        super.onResume();
+    public void onPause() {
+        Log.d("gwang", "on pause");
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editors = sharedPreferences.edit();
+        editors.clear();
+        editors.putString(SORT_KEY,sort);
+        editors.putInt(SORT_IDX,spinnerSort.getSelectedItemPosition());
+        editors.putString(SEARCH_KEY,search.getText().toString());
+        editors.commit();
+        super.onPause();
     }
 
     public void updateView(){
@@ -145,9 +182,21 @@ public class PeopleFragment extends Fragment {
 
     }
 
+    public void searchPeople(String name){
+        people = dataSource.fetchFramilyEntries();
+        for(int i =0; i<people.size(); i++){
+            if(!people.get(i).getNameFirst().contains(name)){
+                people.remove(i);
+                i--;
+            }
+        }
+    }
+
     public void sortPeople(){
         if(sort.equals("Oldest to Newest")){
-            sorted = dataSource.fetchFramilyEntries();
+            for(Framily fram: people){
+                sorted.add(fram);
+            }
         }
         else if(sort.equals("Newest to Oldest")){
             for(int i = people.size()-1; i>=0; i--){
