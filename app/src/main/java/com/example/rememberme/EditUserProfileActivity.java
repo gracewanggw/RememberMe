@@ -13,11 +13,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
+import android.preference.PreferenceManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
-import androidx.preference.PreferenceManager;
-
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -25,15 +23,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,11 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 public class EditUserProfileActivity extends AppCompatActivity{
 

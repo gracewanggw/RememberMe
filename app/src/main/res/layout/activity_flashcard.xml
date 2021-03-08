@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/quiz_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--progress bar -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id = "@+id/question"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/card"
+                android:textSize="40sp"
+                android:gravity="center"
+                app:autoSizeTextType="uniform"
+                app:autoSizePresetSizes="@array/autosize_text_sizes"
+                >
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/card"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                />
+
+        </RelativeLayout>
+
+
+        <!--progress bar <FrameLayout
+             android:id="@+id/question_sec"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center">
+             <include layout="@layout/flashcard" />
+         </FrameLayout>
+            -->
+
+        <Button
+            android:id="@+id/see_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/see"
+            android:layout_margin="20dp"
+            android:background="@drawable/button"
+            android:textColor="@color/white"
+            />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        android:background="@drawable/button"
+        />
+
+</FrameLayout>

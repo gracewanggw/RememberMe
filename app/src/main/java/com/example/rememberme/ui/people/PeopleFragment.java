@@ -67,6 +67,7 @@ public class PeopleFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         try {
             Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
             field.setAccessible(true);
@@ -270,7 +271,7 @@ public class PeopleFragment extends Fragment {
 
             nameView.setText(name);
             relationView.setText(relationship);
-
+       
             return v;
         }
 

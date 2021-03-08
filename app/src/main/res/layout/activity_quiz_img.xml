@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/quiz_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id = "@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/card"
+            android:textSize="40sp"
+            android:gravity="center"
+            app:autoSizeTextType="uniform"
+            app:autoSizePresetSizes="@array/autosize_text_sizes"
+            >
+
+        </TextView>
+        <!--progress bar
+
+        <FrameLayout
+            android:id="@+id/question_sec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <include layout="@layout/flashcard" />
+        </FrameLayout>
+        -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <ImageButton
+                android:id="@+id/iop1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/_pic"
+                android:layout_margin="5dp"
+                android:background="@drawable/border"
+                />
+
+            <ImageButton
+                android:id="@+id/iop2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/_pic"
+                android:layout_margin="5dp"
+                android:background="@drawable/border2"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+             <ImageButton
+                android:id="@+id/iop3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/_pic"
+                 android:layout_margin="5dp"
+                 android:background="@drawable/border3"
+                />
+
+             <ImageButton
+                android:id="@+id/iop4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/_pic"
+                 android:layout_margin="5dp"
+                 android:background="@drawable/border4"
+                />
+
+
+        </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        android:background="@drawable/button"
+        />
+    </LinearLayout>
+
+</FrameLayout>

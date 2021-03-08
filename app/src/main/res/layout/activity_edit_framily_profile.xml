@@ -10,6 +10,7 @@
 
     <Button
         android:id="@+id/cancel"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:id="@+id/save"
+        android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/back"
         android:paddingLeft="140dp"
@@ -35,7 +37,7 @@
         android:layout_height="120dp"
         android:id="@+id/photo"
         android:layout_below="@id/cancel"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
@@ -61,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/photo">
 
         <LinearLayout
@@ -75,23 +77,23 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:layout_width="170dp"
+                    android:layout_width="190dp"
                     android:layout_height="40dp"
                     android:id="@+id/name_first"
                     android:hint="First Name"
                     android:textSize="18dp"
                     android:padding="10dp"
-                    android:layout_marginLeft="23dp"
                     android:textColor="@color/black"
                     android:background="@drawable/input_box_name"/>
 
                 <EditText
-                    android:layout_width="170dp"
+                    android:layout_width="190dp"
                     android:layout_height="40dp"
                     android:id="@+id/name_last"
                     android:hint="Last Name"
                     android:padding="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_gravity="end"
                     android:textSize="18dp"
                     android:textColor="@color/black"
                     android:background="@drawable/input_box_name"/>
@@ -169,7 +171,8 @@
         android:id="@+id/relationship_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/relationship"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -189,7 +192,8 @@
         android:id="@+id/location_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/location"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -209,7 +213,8 @@
         android:id="@+id/phone_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/phone"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -221,15 +226,18 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="18dp"
-        android:hint="123 456 789"
+        android:hint="123 456 7890"
         android:padding="10dp"
         android:background="@drawable/input_box"/>
 
         </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -257,7 +265,6 @@
                     android:paddingRight="5dp"
                     android:clickable="true"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <GridView

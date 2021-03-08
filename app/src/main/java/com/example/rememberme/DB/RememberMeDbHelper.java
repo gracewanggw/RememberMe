@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class RememberMeDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rememberMe.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public static final String TABLE_NAME_FRAMILY = "framily";
     public static final String ID_FRAMILY = "id";
@@ -29,6 +29,19 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
     public static final String IMAGE_MEMORY = "image";
     public static final String AUDIO = "audio";
 
+    public static final String TABLE_NAME_QUIZ = "quiz";
+    public static final String ID_QUIZ = "id";
+    public static final String PERSON = "name";
+    //ie/ birthday, face, misc?
+    public static final String QUESTION_TYPE = "categoryquesiton";
+    public static final String DATA_TYPE_QUESTION = "typequestion"; //string, image, audio
+    public static final String QUESTION_STRUCTURE = "formatquestion";
+    public static final String QUESTION = "questiontext";
+    public static final String DATA_TYPE_ANSWER = "typeanswer"; //string, image, audio
+    public static final String ANSWER_STRUCTURE = "formatanswer";
+    public static final String CORRECT_ANSWER = "answer";
+    public static final String REVIEW = "toreview";
+
     private static final String CREATE_FRAMILY_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_FRAMILY + "( " +
             ID_FRAMILY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             NAME_FIRST + " TEXT, " +
@@ -49,6 +62,18 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
             IMAGE_MEMORY + " BLOB, " +
             AUDIO + " TEXT);";
 
+    private static final String CREATE_QUIZ_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_QUIZ + "( " +
+            ID_QUIZ + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            PERSON + " TEXT, " +
+            QUESTION_TYPE + " TEXT, " +
+            DATA_TYPE_QUESTION + " TEXT, " +
+            QUESTION_STRUCTURE + " TEXT, " +
+            QUESTION + " BLOB, " +
+            DATA_TYPE_ANSWER + " TEXT, " +
+            ANSWER_STRUCTURE + " TEXT, " +
+            CORRECT_ANSWER + " BLOB, " +
+            REVIEW + " BOOLEAN);";
+
     // Constructor
     public RememberMeDbHelper(Context context) {
         // DATABASE_NAME is, of course the name of the database, which is defined as a String constant
@@ -61,6 +86,7 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_FRAMILY_ENTRIES);
         db.execSQL(CREATE_MEMORY_ENTRIES);
+        db.execSQL(CREATE_QUIZ_ENTRIES);
     }
 
     @Override
@@ -69,6 +95,7 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
         // to simply to discard the data and start over
         db.execSQL("DROP TABLE IF EXISTS " + RememberMeDbHelper.TABLE_NAME_FRAMILY);
         db.execSQL("DROP TABLE IF EXISTS " + RememberMeDbHelper.TABLE_NAME_MEMORIES);
+        db.execSQL("DROP TABLE IF EXISTS " + RememberMeDbHelper.TABLE_NAME_QUIZ);
         onCreate(db);
     }
 

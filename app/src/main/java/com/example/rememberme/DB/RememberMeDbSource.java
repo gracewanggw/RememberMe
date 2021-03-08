@@ -13,6 +13,7 @@ import com.amitshekhar.DebugDB;
 import com.example.rememberme.AddEditMemoryActivity;
 import com.example.rememberme.Framily;
 import com.example.rememberme.Memory;
+import com.example.rememberme.quiz.Question;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -37,6 +38,11 @@ public class RememberMeDbSource {
 
     private String[] memoryColumns = { RememberMeDbHelper.ID_MEMORIES,RememberMeDbHelper.TITLE,
             RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, RememberMeDbHelper.AUDIO};
+
+    private String[] quizColumns = { RememberMeDbHelper.ID_QUIZ, RememberMeDbHelper.PERSON,
+            RememberMeDbHelper.QUESTION_TYPE, RememberMeDbHelper.DATA_TYPE_QUESTION, RememberMeDbHelper.QUESTION_STRUCTURE, RememberMeDbHelper.QUESTION,
+            RememberMeDbHelper.DATA_TYPE_ANSWER, RememberMeDbHelper.ANSWER_STRUCTURE, RememberMeDbHelper.CORRECT_ANSWER, RememberMeDbHelper.REVIEW};
+
 
     private static final String TAG = "rdudak";
 
@@ -114,6 +120,21 @@ public class RememberMeDbSource {
         Log.d("rdudak", DebugDB.getAddressLog());
         database.delete(RememberMeDbHelper.TABLE_NAME_MEMORIES, RememberMeDbHelper.ID_MEMORIES
                 + " = " + rowIndex, null);
+    }
+
+    //get framily index
+    public long getFramilyId(String person_first, String person_last) {
+        long idOfInterest = -1;
+        String[] questions = {person_first, person_last};
+        Cursor cursor = database.rawQuery("select * from "
+                + RememberMeDbHelper.TABLE_NAME_FRAMILY + " where " + RememberMeDbHelper.NAME_FIRST + "=?"
+                + " AND " + RememberMeDbHelper.NAME_LAST + "=?", questions);
+        while (cursor.moveToNext()) {
+            idOfInterest = cursor.getLong(cursor.getColumnIndex("id"));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return idOfInterest;
     }
 
     // Query a specific entry by its index.
@@ -236,6 +257,19 @@ public class RememberMeDbSource {
         database.update(RememberMeDbHelper.TABLE_NAME_MEMORIES, values, RememberMeDbHelper.ID_MEMORIES + " = " + rowId, null);
     }
 
+    //Fetches framily value of column
+    public ArrayList<String> fetchFramilyColumn(String colName) {
+        ArrayList<String> columnVals = new ArrayList<>();
+        String[] columns = {colName};
+        Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_FRAMILY, columns, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            columnVals.add(cursor.getString(cursor.getColumnIndex(colName)));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return columnVals;
+    }
+
     private Framily cursorToFramily(Cursor cursor) {
         Framily framily = new Framily();
         framily.setId(cursor.getLong(0));
@@ -339,4 +373,106 @@ public class RememberMeDbSource {
         }
         return file;
     }
+
+    ////
+
+    public long insertQuestion(Question question) {
+        ContentValues values = new ContentValues();
+        //values.put(RememberMeDbHelper.ID_QUIZ, question.getId());
+        values.put(RememberMeDbHelper.PERSON, question.getPerson());
+        values.put(RememberMeDbHelper.QUESTION_TYPE, question.getQType());
+        values.put(RememberMeDbHelper.DATA_TYPE_QUESTION, question.getQDataTypen());
+        values.put(RememberMeDbHelper.QUESTION_STRUCTURE, question.getQStructure());
+        values.put(RememberMeDbHelper.QUESTION, question.getmQuestion());
+        values.put(RememberMeDbHelper.DATA_TYPE_ANSWER, question.getADataTypen());
+        values.put(RememberMeDbHelper.ANSWER_STRUCTURE, question.getAStructure());
+        values.put(RememberMeDbHelper.CORRECT_ANSWER, question.getAnswer());
+        values.put(RememberMeDbHelper.REVIEW, question.getReview());
+
+        long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_QUIZ, null, values);
+        Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_QUIZ,
+                quizColumns,
+                RememberMeDbHelper.ID_QUIZ + " = " + insertId,
+                null,null, null, null);
+        cursor.moveToFirst();//now the cursor has only one element but the index is -1, so we need to do cursor.moveToFirst()
+        Question mQuestion = cursorToQuestion(cursor);
+        Log.d("test", "Name = " + mQuestion.getmQuestion() +  " insert ID = " + mQuestion.getId());
+        cursor.close();
+        return insertId;
+    }
+
+    // Remove an entry by giving its index
+    public void removeQuestion(long rowId) {
+        database.delete(RememberMeDbHelper.TABLE_NAME_QUIZ, RememberMeDbHelper.ID_QUIZ
+                + " = " + rowId, null);
+    }
+
+    // Query a specific entry by its index.
+    public Question fetchQuestionByIndex(int rowId) {
+        Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_QUIZ,quizColumns,
+                RememberMeDbHelper.ID_QUIZ + " = " + rowId, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Question entry = new Question();
+        entry.setId(cursor.getInt(cursor.getColumnIndex(RememberMeDbHelper.ID_QUIZ)));
+        entry.setPerson(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.PERSON)));
+        entry.setQType(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.QUESTION_TYPE)));
+        entry.setQDataType(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.DATA_TYPE_QUESTION)));
+        entry.setQStructure(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.QUESTION_STRUCTURE)));
+        entry.setmQuestion(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.QUESTION)));
+        entry.setADataType(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.DATA_TYPE_ANSWER)));
+        entry.setAStructure(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.ANSWER_STRUCTURE)));
+        entry.setAnswer(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.CORRECT_ANSWER)));
+        entry.setReview(cursor.getInt(cursor.getColumnIndex(RememberMeDbHelper.REVIEW)) > 0);
+        cursor.close();
+        return entry;
+    }
+
+    public long getQuestionID(String question, String person) {
+        long idOfInterest = -1;
+        String[] questions = {question, person};
+        Cursor cursor = database.rawQuery("select * from "
+                        + RememberMeDbHelper.TABLE_NAME_QUIZ + " where " + RememberMeDbHelper.QUESTION + "=?"
+                        + " AND " + RememberMeDbHelper.PERSON + "=?", questions);
+        while (cursor.moveToNext()) {
+            idOfInterest = cursor.getLong(cursor.getColumnIndex("id"));
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        Log.d("idofinterest", ""+idOfInterest);
+        return idOfInterest;
+    }
+
+    // Query the entire table, return all rows
+    public List<Question> fetchQuestions() {
+        List<Question> entries = new ArrayList<Question>();
+        Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_QUIZ,
+                quizColumns, null, null, null, null, null);
+        cursor.moveToFirst(); //Move the cursor to the first row.
+        while (!cursor.isAfterLast()) {//Returns whether the cursor is pointing to the position after the last row.
+            Question entry = cursorToQuestion(cursor);
+            entries.add(entry);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return entries;
+    }
+
+    private Question cursorToQuestion(Cursor cursor) {
+        Question question = new Question();
+        question.setId(cursor.getInt(cursor.getColumnIndex(RememberMeDbHelper.ID_QUIZ)));
+        question.setPerson(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.PERSON)));
+        question.setQType(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.QUESTION_TYPE)));
+        question.setQDataType(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.DATA_TYPE_QUESTION)));
+        question.setQStructure(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.QUESTION_STRUCTURE)));
+        question.setmQuestion(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.QUESTION)));
+        question.setADataType(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.DATA_TYPE_ANSWER)));
+        question.setAStructure(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.ANSWER_STRUCTURE)));
+        question.setAnswer(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.CORRECT_ANSWER)));
+        question.setReview(cursor.getInt(cursor.getColumnIndex(RememberMeDbHelper.REVIEW)) > 0);
+        return question;
+    }
+
+
 }
