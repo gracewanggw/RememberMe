@@ -154,7 +154,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         memories = framily.getMemories();
         memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView.setAdapter(memoriesAdapter);
-
     }
 
     @Override
@@ -183,6 +182,16 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 //        roundedImage = new RoundImage(bmp);
 //        photo.setImageDrawable(roundedImage);
         photo.setImageBitmap(rotatedBmp);
+
+        try {
+            FileInputStream fis = openFileInput(framily.getPhotoFileName());
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+
+        }
     }
 
     @Override
