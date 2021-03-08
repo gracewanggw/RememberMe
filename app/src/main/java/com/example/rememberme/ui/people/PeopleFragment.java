@@ -1,13 +1,11 @@
 package com.example.rememberme.ui.people;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,10 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.DB.RememberMeDbSource;
@@ -40,7 +35,6 @@ import com.example.rememberme.FramilyProfile;
 import com.example.rememberme.R;
 import com.example.rememberme.RoundImage;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -54,8 +48,9 @@ public class PeopleFragment extends Fragment {
     Button sortButton;
     CustomAdapter customAdapter;
 
-    String sort = "Most Recent";
-
+    String sort = "Oldest to Newest";
+    public final String SORT_KEY = "sort key";
+    public final String SORT_IDX = "sort idx";
     Activity activity;
 
     GridView gridView;
@@ -97,6 +92,11 @@ public class PeopleFragment extends Fragment {
 
         gridView = root.findViewById(R.id.people_grid_view);
 
+        if(savedInstanceState!=null){
+            sort = savedInstanceState.getString(SORT_KEY, "Oldest to Newest");
+            spinnerSort.setSelection(savedInstanceState.getInt(SORT_IDX,0));
+        }
+
         sortButton = root.findViewById(R.id.sort_button);
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +111,12 @@ public class PeopleFragment extends Fragment {
         });
         updateView();
         return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        outState.putString(SORT_KEY, sort);
+        outState.putInt(SORT_IDX, spinnerSort.getSelectedItemPosition());
     }
 
     @Override
@@ -139,8 +145,13 @@ public class PeopleFragment extends Fragment {
     }
 
     public void sortPeople(){
-        if(sort.equals("Most Recent")){
+        if(sort.equals("Oldest to Newest")){
             sorted = dataSource.fetchFramilyEntries();
+        }
+        else if(sort.equals("Newest to Oldest")){
+            for(int i = people.size()-1; i>=0; i--){
+                sorted.add(people.get(i));
+            }
         }
         else if(sort.equals("Name")){
             ArrayList<String> firstNames = new ArrayList<>();
