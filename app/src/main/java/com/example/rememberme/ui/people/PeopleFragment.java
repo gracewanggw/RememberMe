@@ -18,14 +18,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.DB.RememberMeDbSource;
@@ -39,17 +44,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PeopleFragment extends Fragment {
 
-    Context context = this.getContext();
+    Spinner spinnerSort;
+    Button sortButton;
+    CustomAdapter customAdapter;
+
+    String sort = "Most Recent";
+
     Activity activity;
 
     GridView gridView;
     List<Framily> people;
+    List<Framily> sorted;
 
     RememberMeDbSource dataSource;
+
+    Fragment frag;
 
 
     private HomeViewModel homeViewModel;
@@ -71,10 +86,29 @@ public class PeopleFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        frag = this;
         activity = this.getActivity();
+
+        spinnerSort = root.findViewById(R.id.sort);
+        ArrayAdapter<CharSequence> adapterSort = ArrayAdapter.createFromResource(activity,
+                R.array.sort_types, android.R.layout.simple_spinner_item);
+        adapterSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSort.setAdapter(adapterSort);
 
         gridView = root.findViewById(R.id.people_grid_view);
 
+        sortButton = root.findViewById(R.id.sort_button);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(spinnerSort.getSelectedItem()!=null){
+                    sort = spinnerSort.getSelectedItem().toString();
+                }
+                sorted = new ArrayList<>();
+                sortPeople();
+                customAdapter.updateItems(sorted);
+            }
+        });
         updateView();
         return root;
     }
@@ -86,13 +120,12 @@ public class PeopleFragment extends Fragment {
     }
 
     public void updateView(){
-
         dataSource = new RememberMeDbSource(this.getActivity().getApplicationContext());
         dataSource.open();
 
         people = dataSource.fetchFramilyEntries();
 
-        CustomAdapter customAdapter = new CustomAdapter(people);
+        customAdapter = new CustomAdapter(people);
         gridView.setAdapter(customAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +136,73 @@ public class PeopleFragment extends Fragment {
             }
         });
 
+    }
+
+    public void sortPeople(){
+        if(sort.equals("Most Recent")){
+            sorted = dataSource.fetchFramilyEntries();
+        }
+        else if(sort.equals("Name")){
+            ArrayList<String> firstNames = new ArrayList<>();
+            HashMap<String,Integer> nametoId = new HashMap<>();
+
+            int idx = 0;
+            for(Framily person: people){
+                firstNames.add(person.getNameFirst()+idx);
+                nametoId.put(person.getNameFirst()+idx, idx);
+                idx++;
+            }
+            java.util.Collections.sort(firstNames);
+            for(String name: firstNames){
+                sorted.add(people.get(nametoId.get(name)));
+                idx--;
+            }
+        }
+        else if(sort.equals("Relationship")){
+            ArrayList<String> relationships = new ArrayList<>();
+            HashMap<String,Integer> relationtoId = new HashMap<>();
+
+            int idx = 0;
+            for(Framily person: people){
+                relationships.add(person.getRelationship()+idx);
+                relationtoId.put(person.getRelationship()+idx, idx);
+                idx++;
+            }
+            java.util.Collections.sort(relationships);
+            for(String rel: relationships){
+                sorted.add(people.get(relationtoId.get(rel)));
+            }
+        }
+        else if(sort.equals("Location")){
+            ArrayList<String> locations = new ArrayList<>();
+            HashMap<String,Integer> locationtoId = new HashMap<>();
+
+            int idx = 0;
+            for(Framily person: people){
+                locations.add(person.getLocation()+idx);
+                locationtoId.put(person.getLocation()+idx, idx);
+                idx++;
+            }
+            java.util.Collections.sort(locations);
+            for(String loc: locations){
+                sorted.add(people.get(locationtoId.get(loc)));
+            }
+        }
+        else if(sort.equals("Age")){
+            ArrayList<Integer> ages = new ArrayList<>();
+            HashMap<Integer,Integer> agetoId = new HashMap<>();
+
+            int idx = 0;
+            for(Framily person: people){
+                ages.add(person.getAge()+idx);
+                agetoId.put(person.getAge()+idx, idx);
+                idx++;
+            }
+            java.util.Collections.sort(ages);
+            for(int age: ages){
+                sorted.add(people.get(agetoId.get(age)));
+            }
+        }
     }
 
     // adapter to show grid view of people and their names and relationship from database
@@ -161,6 +261,12 @@ public class PeopleFragment extends Fragment {
             relationView.setText(relationship);
 
             return v;
+        }
+
+        public void updateItems(List<Framily> people) {
+            framilies.clear();
+            framilies.addAll(people);
+            this.notifyDataSetChanged();
         }
     }
 

@@ -7,10 +7,44 @@
     tools:context=".ui.people.PeopleFragment">
 
 
-    <GridView
-        android:padding="8dp"
-        android:id="@+id/people_grid_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="2"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort By: "
+                android:textSize="18dp"/>
+
+            <Spinner
+                android:id="@+id/sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/sort_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sort"
+                android:layout_marginRight="16dp"/>
+
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/people_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"
+            android:padding="8dp" />
+    </LinearLayout>
+
 </RelativeLayout>
