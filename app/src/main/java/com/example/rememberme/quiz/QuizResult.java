@@ -86,6 +86,7 @@ public class QuizResult extends AppCompatActivity implements View.OnClickListene
             thisQues.add(questions.getQuestion(j).question);
             thisQues.add(questions.getQuestion(j).correct_answer);
             thisQues.add(answers.get(j));
+            thisQues.add(questions.getQuestion(j).quesType);
             toPass.add(thisQues);
         }
 

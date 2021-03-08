@@ -302,7 +302,6 @@ public class QuizQuestions {
     }
 
     public String genPhone(String refer){
-
         String ref = refer.substring(0,3) + refer.substring(4,7) + refer.substring(8);
         String finalGen = "";
         int num  = (int)(Math.random() * ref.length());

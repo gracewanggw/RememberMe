@@ -2,6 +2,7 @@ package com.example.rememberme.quiz;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         super(context, R.layout.ques_result, items);
         mContext = context;
         questions = items;
+        Log.d("logged", questions+"");
         for(int k = 0; k < items.size(); k++){
             mChecked.add(false);
         }
@@ -37,7 +39,6 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         TextView textView2;
         TextView textView3;
         CheckBox checked;
-        boolean ischecked;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -50,13 +51,18 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
             holder.checked = (CheckBox) convertView.findViewById(R.id.checked);
             convertView.setTag(holder);
 
-
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         String corr_ans = questions.get(position).get(1);
         String ans = questions.get(position).get(2);
+        String type = ""+questions.get(position).get(3);
+
+
+        Log.d("logged_corr", corr_ans);
+        Log.d("logged_type", type);
+
         String text1 = "Q: " + questions.get(position).get(0);
         String text2 = "Correct Answer: "+ corr_ans;
         String text3 = "Your Answer: "+ ans;
@@ -84,9 +90,12 @@ public class QuestionAdapter extends ArrayAdapter{ // extends ArrayAdapter<Quest
         }
 
         holder.textView1.setText(text1);
-        if(QuizResult.type != QuizFragment.QUIZ_TYPE_FACE_KEY) {
+        if(!type.equals("photo")) {
             holder.textView2.setText(text2);
             holder.textView3.setText(text3);
+        }else{
+            holder.textView2.setText("");
+            holder.textView3.setText("");
         }
         holder.checked.setTag(position); // set the tag so we can identify the correct row in the listener
         holder.checked.setChecked(mChecked.get(position));
