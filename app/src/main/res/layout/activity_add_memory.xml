@@ -37,7 +37,10 @@
             android:layout_gravity="center_horizontal"
             android:inputType="textMultiLine"
             android:maxLines="10"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint= "   Write something about this memory..."
             android:id="@+id/text"/>
 
         <TextView
