@@ -31,7 +31,7 @@
         <activity android:name=".FramilyProfile" android:theme="@style/Theme.RememberMe.NoActionBar"/>
         <!--activity android:name=".AddMemoryActivity" /-->
         <activity android:name=".EditUserProfileActivity" android:theme="@style/Theme.RememberMe.NoActionBar"/>
-        <activity android:name=".AddEditMemoryActivity" />
+        <activity android:name=".AddEditMemoryActivity" android:theme="@style/Theme.RememberMe.NoActionBar"/>
         <activity android:name=".ViewMemory" />
 
         <activity android:name=".quiz.Quiz" android:theme="@style/Theme.RememberMe.NoActionBar"/>
