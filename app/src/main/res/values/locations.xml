@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--us census 2019 top populus cities-->
+<resources>
+    <array name="locations_cities">
+        <item>New York, New York</item>
+        <item>Los Angeles, California</item>
+        <item>Chicago, Illinois</item>
+        <item>Houston, Texas</item>
+        <item>Phoenix, Arizona</item>
+        <item>Philadelphia, Pennsylvania</item>
+        <item>San Antonio, Texas</item>
+        <item> San Diego, California</item>
+        <item> Dallas, Texas</item>
+        <item>San Jose, California</item>
+        <item> Austin, Texas</item>
+        <item> Jacksonville, Florida</item>
+        <item>Fort Worth, Texas</item>
+        <item>Columbus, Ohio</item>
+        <item>Charlotte, North Carolina</item>
+        <item>San Francisco, California</item>
+        <item>Indianapolis, Indiana</item>
+        <item>Seattle, Washington</item>
+        <item>Denver. Colorado</item>
+        <item>Washington, District of Columbia</item>
+        <item>Boston, Massachusetts</item>
+        <item>El Paso, Texas</item>
+        <item>Detroit, Michigan</item>
+        <item>Oklahoma City, Oklahoma</item>
+        <item>Portland, Oregon</item>
+        <item>Las Vegas, Nevada</item>
+        <item>Memphis, Tennessee</item>
+        <item>Louisville, Kentucky</item>
+        <item>Baltimore, Maryland</item>
+        <item>Milwaukee, Wisconsin</item>
+        <item>Albuquerque, New Mexico</item>
+        <item>Tucson, Arizona</item>
+        <item>Fresno, California</item>
+        <item>Mesa, Arizona</item>
+        <item>Sacramento, California</item>
+        <item>Atlanta, Georgia</item>
+        <item>Kansas City, Missouri</item>
+        <item> Colorado Springs, Colorado</item>
+        <item>Omaha, Nebraska</item>
+        <item>Raleigh, North Carolina</item>
+        <item>Miami, Florida</item>
+        <item>Long Beach, California</item>
+        <item>Virginia Beach, Virginia</item>
+        <item> Oakland, California</item>
+        <item>Minneapolis, Minnesota</item>
+        <item>Tulsa, Oklahoma</item>
+        <item>Tampa, Florida</item>
+        <item>Arlington, Texas</item>
+        <item>New Orleans, Louisiana</item>
+        <item> Wichita, Kansas</item>
+        <item>Bakersfield, California</item>
+        <item>Cleveland, Ohio</item>
+        <item>Aurora, Colorado</item>
+        <item>Anaheim, California</item>
+        <item>Urban Honolulu CDP, Hawaii</item>
+        <item> Santa Ana, California</item>
+        <item> Riverside, California</item>
+        <item>Corpus Christi, Texas</item>
+        <item>Lexington-Fayette urban county, Kentucky</item>
+        <item>Henderson, Nevada</item>
+        <item> Stockton, California</item>
+        <item> St. Paul, Minnesota</item>
+        <item> Cincinnati, Ohio</item>
+        <item> St. Louis, Missouri</item>
+        <item> Pittsburgh, Pennsylvania</item>
+        <item> Greensboro, North Carolina</item>
+        <item> Lincoln, Nebraska</item>
+        <item> Anchorage municipality, Alaska</item>
+        <item>Plano, Texas</item>
+        <item> Orlando, Florida</item>
+        <item>Irvine, California</item>
+        <item>Newark, New Jersey</item>
+        <item>Durham, North Carolina</item>
+        <item>Chula Vista, California</item>
+        <item>Toledo, Ohio</item>
+        <item>Fort Wayne, Indiana</item>
+        <item>St. Petersburg, Florida</item>
+        <item>Laredo, Texas</item>
+        <item>Jersey City, New Jersey</item>
+        <item>Chandler, Arizona</item>
+        <item>Madison, Wisconsin</item>
+        <item> Lubbock, Texas</item>
+        <item>Scottsdale, Arizona</item>
+        <item> Reno, Nevada</item>
+        <item>Buffalo, New York</item>
+        <item> Gilbert town, Arizona</item>
+        <item>Glendale, Arizona</item>
+        <item>North Las Vegas, Nevada</item>
+        <item>Winston-Salem, North Carolina</item>
+        <item>Chesapeake, Virginia</item>
+        <item> Norfolk, Virginia</item>
+        <item>Fremont, California</item>
+        <item>Garland, Texas</item>
+        <item>Irving, Texas</item>
+        <item>Hialeah, Florida</item>
+        <item>Richmond, Virginia</item>
+        <item>Boise City, Idaho</item>
+        <item>Spokane, Washington</item>
+        <item> Baton Rouge, Louisiana</item>
+        <item> Tacoma, Washington</item>
+        <item>San Bernardino, California</item>
+        <item>Modesto, California</item>
+        <item>Fontana, California</item>
+        <item>Des Moines, Iowa</item>
+        <item> Moreno Valley, California</item>
+        <item>Santa Clarita, California</item>
+        <item> La Crosse, Wisconsin</item>
+        <item>Battle Creek, Michigan</item>
+        <item> Beaumont, California</item>
+        <item> Collierville town, Tennessee</item>
+        <item> West Lafayette, Indiana</item>
+        <item> Florissant, Missouri</item>
+        <item> Hoffman Estates village, Illinois</item>
+        <item>Joplin, Missouri</item>
+        <item> Queen Creek town, Arizona</item>
+        <item>Aliso Viejo, California</item>
+        <item>Kannapolis, North Carolina</item>
+        <item> Methuen Town, Massachusetts</item>
+        <item>Galveston, Texas</item>
+        <item>Mishawaka, Indiana</item>
+        <item> Plainfield, New Jersey</item>
+        <item>Newark, Ohio</item>
+        <item>Stillwater, Oklahoma</item>
+        <item>Twin Falls, Idaho</item>
+        <item>Texas City, Texas</item>
+        <item>Cerritos, California</item>
+        <item>Coral Gables, Florida</item>
+        <item>Enid, Oklahoma</item>
+        <item>Lakewood, Ohio</item>
+        <item> Troy, New York</item>
+        <item>Saginaw, Michigan</item>
+        <item>Niagara Falls, New York</item>
+        <item>Charleston, West Virginia</item>
+        <item>Fayetteville, North Carolina</item>
+        <item>Birmingham, Alabama</item>
+        <item>Oxnard, California</item>
+        <item>Rochester, New York</item>
+        <item>Port St. Lucie, Florida</item>
+        <item>Grand Rapids, Michigan</item>
+        <item>Huntsville, Alabama</item>
+        <item>Salt Lake City, Utah</item>
+        <item>Frisco, Texas</item>
+        <item>Yonkers, New York</item>
+        <item>Amarillo, Texas</item>
+        <item>Glendale, California</item>
+        <item>Huntington Beach, California</item>
+        <item>McKinney, Texas</item>
+        <item>Montgomery, Alabama</item>
+        <item>Augusta-Richmond County, Georgia</item>
+        <item>Aurora, Illinois</item>
+        <item>Akron, Ohio</item>
+        <item>Little Rock, Arkansas</item>
+        <item>Tempe, Arizona</item>
+        <item>Columbus, Georgia</item>
+        <item>Overland Park, Kansas</item>
+        <item>Grand Prairie, Texas</item>
+        <item>Tallahassee, Florida</item>
+        <item>Cape Coral, Florida</item>
+        <item>Mobile, Alabama</item>
+        <item>Knoxville, Tennessee</item>
+        <item>Shreveport, Louisiana</item>
+        <item>Worcester, Massachusetts</item>
+        <item>Ontario, California</item>
+        <item>Vancouver, Washington</item>
+        <item>Sioux Falls, South Dakota</item>
+        <item>Chattanooga, Tennessee</item>
+        <item>Brownsville, Texas</item>
+        <item>Fort Lauderdale, Florida</item>
+        <item>Providence, Rhode Island</item>
+        <item>Newport News, Virginia</item>
+        <item>Rancho Cucamonga, California</item>
+        <item>Santa Rosa, California</item>
+        <item>Peoria, Arizona</item>
+        <item>Oceanside, California</item>
+        <item>Elk Grove, California</item>
+        <item>Salem, Oregon</item>
+        <item>Pembroke Pines, Florida</item>
+        <item>Eugene, Oregon</item>
+        <item>Garden Grove, California</item>
+        <item>Cary town, North Carolina</item>
+        <item>Fort Collins, Colorado</item>
+        <item>Corona, California</item>
+        <item>Springfield, Missouri</item>
+        <item>Jackson, Mississippi</item>
+        <item>Alexandria, Virginia</item>
+        <item>Hayward, California</item>
+        <item>Clarksville, Tennessee</item>
+        <item>Lakewood, Colorado</item>
+        <item>Lancaster, California</item>
+        <item>Salinas, California</item>
+        <item>Palmdale, California</item>
+        <item>Hollywood, Florida</item>
+        <item>Springfield, Massachusetts</item>
+        <item>Macon-Bibb County, Georgia</item>
+        <item>Kansas City, Kansas</item>
+        <item>Sunnyvale, California</item>
+        <item>Pomona, California</item>
+        <item>Killeen, Texas</item>
+        <item>Escondido, California</item>
+        <item>Pasadena, Texas</item>
+        <item>Naperville, Illinois</item>
+        <item>Bellevue, Washington</item>
+        <item>Joliet, Illinois</item>
+        <item>Murfreesboro, Tennessee</item>
+        <item>Midland, Texas</item>
+        <item>Rockford, Illinois</item>
+        <item>Paterson, New Jersey</item>
+        <item>Savannah, Georgia</item>
+        <item>Bridgeport, Connecticut</item>
+        <item>Torrance, California</item>
+        <item>McAllen, Texas</item>
+        <item>Syracuse, New York</item>
+        <item>Surprise, Arizona</item>
+        <item>Denton, Texas</item>
+        <item>Roseville, California</item>
+        <item>Thornton, Colorado</item>
+        <item>Miramar, Florida</item>
+        <item>Pasadena, California</item>
+        <item>Mesquite, Texas</item>
+        <item>Olathe, Kansas</item>
+        <item>Dayton, Ohio</item>
+        <item>Carrollton, Texas</item>
+        <item>Waco, Texas</item>
+        <item>Orange, California</item>
+        <item>Fullerton, California</item>
+        <item>Charleston, South Carolina</item>
+        <item>West Valley City, Utah</item>
+        <item>Visalia, California</item>
+        <item>Hampton, Virginia</item>
+        <item>Gainesville, Florida</item>
+        <item>Warren, Michigan</item>
+        <item>Coral Springs, Florida</item>
+        <item>Cedar Rapids, Iowa</item>
+        <item>Round Rock, Texas</item>
+        <item>Sterling Heights, Michigan</item>
+        <item>Kent, Washington</item>
+        <item>Columbia, South Carolina</item>
+        <item>Santa Clara, California</item>
+        <item>New Haven, Connecticut</item>
+        <item>Stamford, Connecticut</item>
+        <item>Concord, California</item>
+        <item>Elizabeth, New Jersey</item>
+        <item>Athens-Clarke County, Georgia</item>
+        <item>Thousand Oaks, California</item>
+        <item>Lafayette, Louisiana</item>
+        <item>Simi Valley, California</item>
+        <item>Topeka, Kansas</item>
+        <item>Norman, Oklahoma</item>
+        <item>Fargo, North Dakota</item>
+        <item>Wilmington, North Carolina</item>
+        <item>Abilene, Texas</item>
+        <item>Odessa, Texas</item>
+        <item>Columbia, Missouri</item>
+        <item>Pearland, Texas</item>
+        <item>Victorville, California</item>
+        <item>Hartford, Connecticut</item>
+        <item>Vallejo, California</item>
+        <item>Allentown, Pennsylvania</item>
+        <item>Berkeley, California</item>
+        <item>Richardson, Texas</item>
+        <item>Arvada, Colorado</item>
+        <item>Ann Arbor, Michigan</item>
+        <item>Rochester, Minnesota</item>
+        <item>Cambridge, Massachusetts</item>
+        <item>Sugar Land, Texas</item>
+        <item>Lansing, Michigan</item>
+        <item>Evansville, Indiana</item>
+        <item>College Station, Texas</item>
+        <item>Fairfield, California</item>
+        <item>Clearwater, Florida</item>
+        <item>Beaumont, Texas</item>
+        <item>Independence, Missouri</item>
+        <item>Provo, Utah</item>
+        <item>West Jordan, Utah</item>
+        <item>Murrieta, California</item>
+        <item>Palm Bay, Florida</item>
+        <item>El Monte, California</item>
+        <item>Carlsbad, California</item>
+        <item>North Charleston, South Carolina</item>
+        <item>Temecula, California</item>
+        <item>Clovis, California</item>
+        <item>Springfield, Illinois</item>
+        <item>Meridian, Idaho</item>
+        <item>Westminster, Colorado</item>
+        <item>Costa Mesa, California</item>
+        <item>High Point, North Carolina</item>
+        <item>Manchester, New Hampshire</item>
+        <item>Pueblo, Colorado</item>
+        <item>Lakeland, Florida</item>
+        <item>Pompano Beach, Florida</item>
+        <item>West Palm Beach, Florida</item>
+        <item>Antioch, California</item>
+        <item>Everett, Washington</item>
+        <item>Downey, California</item>
+        <item>Lowell, Massachusetts</item>
+        <item>Centennial, Colorado</item>
+        <item>Elgin, Illinois</item>
+        <item>Richmond, California</item>
+        <item>Peoria, Illinois</item>
+        <item>Broken Arrow, Oklahoma</item>
+        <item>Miami Gardens, Florida</item>
+        <item>Billings, Montana</item>
+        <item>Jurupa Valley, California</item>
+        <item>Sandy Springs, Georgia</item>
+        <item>Gresham, Oregon</item>
+        <item>Lewisville, Texas</item>
+        <item>Hillsboro, Oregon</item>
+        <item>San Buenaventura (Ventura), California</item>
+        <item>Greeley, Colorado</item>
+        <item>Inglewood, California</item>
+        <item>Waterbury, Connecticut</item>
+        <item>League City, Texas</item>
+        <item>Santa Maria, California</item>
+        <item>Tyler, Texas</item>
+        <item>Davie town, Florida</item>
+        <item>Daly City, California</item>
+        <item>Boulder, Colorado</item>
+        <item>Allen, Texas</item>
+        <item>West Covina, California</item>
+        <item>Sparks, Nevada</item>
+        <item>Wichita Falls, Texas</item>
+        <item>Green Bay, Wisconsin</item>
+        <item>San Mateo, California</item>
+        <item>Norwalk, California</item>
+        <item>Rialto, California</item>
+        <item>Las Cruces, New Mexico</item>
+        <item>Chico, California</item>
+        <item>El Cajon, California</item>
+        <item>Burbank, California</item>
+        <item>South Bend, Indiana</item>
+        <item>Renton, Washington</item>
+        <item>Renton, Washington</item>
+        <item>Vista, California</item>
+        <item>Davenport, Iowa</item>
+        <item>Edinburg, Texas</item>
+        <item>Tuscaloosa, Alabama</item>
+        <item>Carmel, Indiana</item>
+        <item>Spokane Valley, Washington</item>
+        <item>San Angelo, Texas</item>
+        <item>Vacaville, California</item>
+        <item>Bend, Oregon</item>
+        <item>Kenosha, Wisconsin</item>
+        <item>Boca Raton, Florida</item>
+        <item>Lees Summit, Missouri</item>
+        <item>Nampa, Idaho</item>
+        <item>Rio Rancho, New Mexico</item>
+        <item>South Fulton, Georgia</item>
+        <item>Roanoke, Virginia</item>
+        <item>Beaverton, Oregon</item>
+        <item>Yuma, Arizona</item>
+        <item>Lawrence, Kansas</item>
+        <item>Orem, Utah</item>
+        <item>Longmont, Colorado</item>
+        <item>San Marcos, California</item>
+        <item>Albany, New York</item>
+        <item>Sandy, Utah</item>
+        <item>Concord, North Carolina</item>
+        <item>Federal Way, Washington</item>
+        <item>Hesperia, California</item>
+        <item>Brockton, Massachusetts</item>
+        <item>Compton, California</item>
+        <item>Flint, Michigan</item>
+        <item>Erie, Pennsylvania</item>
+        <item>New Bedford, Massachusetts</item>
+        <item>Fishers, Indiana</item>
+        <item>Sunrise, Florida</item>
+        <item>Roswell, Georgia</item>
+        <item>Menifee, California</item>
+        <item>Tracy, California</item>
+        <item>Plantation, Florida</item>
+        <item>Quincy, Massachusetts</item>
+        <item>Portsmouth, Virginia</item>
+        <item>Mission Viejo, California</item>
+        <item>Chino, California</item>
+        <item>Lynn, Massachusetts</item>
+        <item>Edmond, Oklahoma</item>
+        <item>Dearborn, Michigan</item>
+        <item>Livonia, Michigan</item>
+        <item>Yakima, Washington</item>
+        <item>South Gate, California</item>
+        <item>Greenville, North Carolina</item>
+        <item>Lawton, Oklahoma</item>
+        <item>Kirkland, Washington</item>
+        <item>Asheville, North Carolina</item>
+        <item>Deltona, Florida</item>
+        <item>Redding, California</item>
+        <item>Bellingham, Washington</item>
+        <item>Suffolk, Virginia</item>
+        <item>Indio, California</item>
+        <item>Mount Pleasant town, South Carolina</item>
+        <item>Carson, California</item>
+        <item>Santa Barbara, California</item>
+        <item>Conroe, Texas</item>
+        <item>Westminster, California</item>
+        <item>Santa Monica, California</item>
+        <item>New Braunfels, Texas</item>
+        <item>New Rochelle, New York</item>
+        <item>Temple, Texas</item>
+        <item>Lake Charles, Louisiana</item>
+        <item>Jonesboro, Arkansas</item>
+        <item>Napa, California</item>
+        <item>Parma, Ohio</item>
+        <item>Layton, Utah</item>
+        <item>Alameda, California</item>
+        <item>Warner Robins, Georgia</item>
+        <item>Rapid City, South Dakota</item>
+        <item>Bloomington, Illinois</item>
+        <item>Gastonia, North Carolina</item>
+        <item>Baytown, Texas</item>
+        <item>Upland, California</item>
+        <item>Racine, Wisconsin</item>
+        <item>Scranton, Pennsylvania</item>
+        <item>South Jordan, Utah</item>
+        <item>Bellflower, California</item>
+        <item>Kalamazoo, Michigan</item>
+        <item>San Ramon, California</item>
+        <item>Bethlehem, Pennsylvania</item>
+        <item>Wyoming, Michigan</item>
+        <item>Hammond, Indiana</item>
+        <item>Missoula, Montana</item>
+        <item>Missouri City, Texas</item>
+        <item>Pasco, Washington</item>
+        <item>Baldwin Park, California</item>
+        <item>Iowa City, Iowa</item>
+        <item>Rancho Cordova, California</item>
+        <item>Rock Hill, South Carolina</item>
+        <item>Flagstaff, Arizona</item>
+        <item>Gary, Indiana</item>
+        <item>St. Joseph, Missouri</item>
+        <item>Arlington Heights village, Illinois</item>
+        <item>Bolingbrook village, Illinois</item>
+        <item> Rochester Hills, Michigan</item>
+        <item>Framingham, Massachusetts</item>
+        <item>Union City, California</item>
+        <item>Appleton, Wisconsin</item>
+        <item>Turlock, California</item>
+        <item>Camden, New Jersey</item>
+        <item>Bismarck, North Dakota</item>
+        <item>Evanston, Illinois</item>
+        <item>Apple Valley town, California</item>
+        <item>Schaumburg village, Illinois</item>
+        <item>Woodbury, Minnesota</item>
+        <item>Kissimmee, Florida</item>
+        <item>Southfield, Michigan</item>
+        <item>Maple Grove, Minnesota</item>
+        <item>Pittsburg, California</item>
+        <item>New Britain, Connecticut</item>
+        <item>Jacksonville, North Carolina</item>
+        <item>Mansfield, Texas</item>
+        <item>Waukesha, Wisconsin</item>
+        <item>Frederick, Maryland</item>
+        <item>Albany, Georgia</item>
+        <item>Pawtucket, Rhode Island</item>
+        <item>Redmond, Washington</item>
+        <item>Lauderhill, Florida</item>
+        <item> Lafayette, Indiana</item>
+        <item>Gulfport, Mississippi</item>
+        <item>Redlands, California</item>
+        <item>Weston, Florida</item>
+        <item>St. Charles, Missouri</item>
+        <item>Decatur, Illinois</item>
+        <item>North Port, Florida</item>
+        <item>North Richland Hills, Texas</item>
+        <item>Greenville, South Carolina</item>
+        <item>Bowling Green, Kentucky</item>
+        <item>Broomfield, Colorado</item>
+        <item>Canton, Ohio</item>
+        <item>Marysville, Washington</item>
+        <item>Walnut Creek, California</item>
+        <item>Wilmington, Delaware</item>
+        <item>Camarillo, California</item>
+        <item>Lynwood, California</item>
+        <item>Lehi, Utah</item>
+        <item>Passaic, New Jersey</item>
+        <item>Homestead, Florida</item>
+        <item> Delray Beach, Florida</item>
+        <item> Davis, California</item>
+        <item>Lake Elsinore, California</item>
+        <item>Daytona Beach, Florida</item>
+        <item>Dothan, Alabama</item>
+        <item>Rocklin, California</item>
+        <item> Eau Claire, Wisconsin</item>
+    </array>
+    <array name="surnames">
+        <item>Smith</item>
+        <item>Johnson</item>
+        <item>Williams</item>
+        <item>Brown</item>
+        <item>Jones</item>
+        <item>Garcia</item>
+        <item>Miller</item>
+        <item>Davis</item>
+        <item>Rodriguez</item>
+        <item>Martinez</item>
+        <item>Hernandez</item>
+        <item>Lopez</item>
+        <item>Gonzales</item>
+        <item>Wilson</item>
+        <item>Anderson</item>
+        <item>Thomas</item>
+        <item>Taylor</item>
+        <item>Moore</item>
+        <item>Jackson</item>
+        <item>Martin</item>
+        <item>Lee</item>
+        <item>Perez</item>
+        <item>Thompson</item>
+        <item>White</item>
+        <item>Harris</item>
+        <item>Sanchez</item>
+        <item>Clark</item>
+        <item>Ramirez</item>
+        <item>Lewis</item>
+        <item>Robinson</item>
+        <item>Walker</item>
+        <item>Young</item>
+        <item>Allen</item>
+        <item>King</item>
+        <item>Wright</item>
+        <item>Scott</item>
+        <item>Torres</item>
+        <item>Nguyen</item>
+        <item>Hill</item>
+        <item>Flores</item>
+        <item>Green</item>
+        <item>Adams</item>
+        <item>Nelson</item>
+        <item>Baker</item>
+        <item>Diaz</item>
+        <item>Cruz</item>
+        <item>Ortiz</item>
+        <item>Bailey</item>
+        <item>Peterson</item>
+        <item>Howard</item>
+        <item>Cooper</item>
+        <item>Reed</item>
+        <item>Kim</item>
+        <item>Wang</item>
+        <item>Park</item>
+        <item>Fang</item>
+        <item>Castillo</item>
+        <item>Dudak</item>
+        <item>Sanders</item>
+        <item>Yang</item>
+        <item>Ruiz</item>
+        <item>Price</item>
+        <item>Watson</item>
+        <item>Meyers</item>
+        <item>Reyes</item>
+    </array>
+</resources>
+        <!--Rogers, Arkansas
+        Castle Rock town, Colorado
+        St. Cloud, Minnesota
+        Bossier City, Louisiana
+        Rockville, Maryland
+        Muncie, Indiana
+        Gaithersburg, Maryland
+        Union City, New Jersey
+        West Des Moines, Iowa
+        South San Francisco, California
+        Yorba Linda, California
+        Conway, Arkansas
+        Lodi, California
+        Palatine village, Illinois
+        Ankeny, Iowa
+        Mount Vernon, New York
+        Rowlett, Texas
+        Waterloo, Iowa
+        Lakeville, Minnesota
+        Alpharetta, Georgia
+        Jackson, Tennessee
+        Yuba City, California
+        Oshkosh, Wisconsin
+        Victoria, Texas
+        Johnson City, Tennessee
+        Redondo Beach, California
+        Tamarac, Florida
+        Laguna Niguel, California
+        Eagan, Minnesota
+        Kenner, Louisiana
+        Auburn, Alabama
+        Ames, Iowa
+        Portland, Maine
+        North Little Rock, Arkansas
+        Sammamish, Washington
+        Madera, California
+        Shawnee, Kansas
+        Livermore, California
+        Palm Coast, Florida
+        St. George, Utah
+        Fall River, Massachusetts
+        Nashua, New Hampshire
+        Champaign, Illinois
+        Miami Beach, Florida
+        Norwalk, Connecticut
+        San Leandro, California
+        O'Fallon, Missouri
+        Newton, Massachusetts
+        Reading, Pennsylvania
+        Avondale, Arizona
+        Fort Smith, Arkansas
+        Citrus Heights, California
+        Ogden, Utah
+        Fayetteville, Arkansas
+        Fort Myers, Florida
+        Goodyear, Arizona
+        Bryan, Texas
+        Waukegan, Illinois
+        Hawthorne, California
+        Redwood City, California
+        Hoover, Alabama
+        Bloomington, Indiana
+        Duluth, Minnesota
+        Lake Forest, California
+        Hemet, California
+        Whittier, California
+        Clifton, New Jersey
+        Largo, Florida
+        Bloomington, Minnesota
+        Danbury, Connecticut
+        Santa Fe, New Mexico
+        Johns Creek, Georgia
+        Newport Beach, California
+        Kennewick, Washington
+        Mission, Texas
+        Milpitas, California
+        Troy, Michigan
+        Chino Hills, California
+        Alhambra, California
+        Merced, California
+        Trenton, New Jersey
+        Franklin, Tennessee
+        Medford, Oregon
+        Melbourne, Florida
+        Manteca, California
+        Mountain View, California
+        Sioux City, Iowa
+        Lynchburg, Virginia
+        Buena Park, California
+        Pleasanton, California
+        Longview, Texas
+        Westland, Michigan
+        Auburn, Washington
+        Cranston, Rhode Island
+        Somerville, Massachusetts
+        Folsom, California
+        Springdale, Arkansas
+        Deerfield Beach, Florida
+        Warwick, Rhode Island
+        Cicero town, Illinois
+        Farmington Hills, Michigan
+        Brooklyn Park, Minnesota
+        Lawrence, Massachusetts
+        Plymouth, Minnesota
+        Buckeye, Arizona
+        Georgetown, Texas
+        Cedar Park, Texas
+        Tustin, California
+        Lakewood, California
+        Perris, California
+        Flower Mound town, Texas
+        Pharr, Texas
+        Loveland, Colorado
+        Boynton Beach, Florida
+        Jupiter town, Florida
+        Doral, Florida
+        Blaine, Minnesota
+        Tulare, California
+        Youngstown, Ohio
+        Wellington village, Florida
+        Pflugerville, Texas
+        Palo Alto, California
+        Schenectady, New York
+        Harlingen, Texas
+        Bayonne, New Jersey
+        Eden Prairie, Minnesota
+        Port Orange, Florida
+        Dublin, California
+        San Marcos, Texas
+        Noblesville, Indiana
+        Santa Cruz, California
+        Janesville, Wisconsin
+        San Clemente, California
+        Brentwood, California
+        East Orange, New Jersey
+        Cheyenne, Wyoming
+        Eastvale, California
+        Chapel Hill town, North Carolina
+        Haverhill, Massachusetts
+        Lorain, Ohio
+        Grand Junction, Colorado
+        Springfield, Oregon
+        Coon Rapids, Minnesota
+        Idaho Falls, Idaho
+        North Miami, Florida
+        Encinitas, California
+        Skokie village, Illinois
+        Leander, Texas
+        Waltham, Massachusetts
+        Council Bluffs, Iowa
+        Hamilton, Ohio
+        Moore, Oklahoma
+        Pico Rivera, California
+        Montebello, California
+        Millcreek, Utah
+        Sanford, Florida
+        National City, California
+        Burnsville, Minnesota
+        Coconut Creek, Florida
+        Lakewood, Washington
+        Taylor, Michigan
+        Novi, Michigan
+        Marietta, Georgia
+        Ocala, Florida
+        Terre Haute, Indiana
+        Woodland, California
+        Petaluma, California
+        La Habra, California
+        Malden, Massachusetts
+        Commerce City, Colorado
+        Owensboro, Kentucky
+        Bristol, Connecticut
+        West Allis, Wisconsin
+        Taylorsville, Utah
+        Utica, New York
+        Monterey Park, California
+        Bonita Springs, Florida
+        Porterville, California
+        Greenwood, Indiana
+        Bartlett, Tennessee
+        Bradenton, Florida
+        Vineland, New Jersey
+        Pontiac, Michigan
+        Meriden, Connecticut
+        Gardena, California
+        Apex town, North Carolina
+        Royal Oak, Michigan
+        Cupertino, California
+        Lancaster, Pennsylvania
+        La Mesa, California
+        Gilroy, California
+        St. Clair Shores, Michigan
+        Des Plaines, Illinois
+        Springfield, Ohio
+        Corvallis, Oregon
+        Margate, Florida
+        Bowie, Maryland
+        Casa Grande, Arizona
+        Caldwell, Idaho
+        San Rafael, California
+        Great Falls, Montana
+        Sarasota, Florida
+        Richland, Washington
+        St. Peters, Missouri
+        Hendersonville, Tennessee
+        White Plains, New York
+        Huntersville town, North Carolina
+        Santee, California
+        Kokomo, Indiana
+        Arcadia, California
+        Casper, Wyoming
+        Dubuque, Iowa
+        Orland Park village, Illinois
+        Weymouth Town, Massachusetts
+        Parker town, Colorado
+        Palm Beach Gardens, Florida
+        Hanford, California
+        Huntington Park, California
+        Taunton, Massachusetts
+        Midwest City, Oklahoma
+        Medford, Massachusetts
+        Euless, Texas
+        Shoreline, Washington
+        Smyrna, Georgia
+        Pocatello, Idaho
+        Valdosta, Georgia
+        Carson City, Nevada
+        Lake Havasu City, Arizona
+        Grand Forks, North Dakota
+        Blue Springs, Missouri
+        Southaven, Mississippi
+        Tinley Park village, Illinois
+        Diamond Bar, California
+        New Brunswick, New Jersey
+        Lenexa, Kansas
+        Brookhaven, Georgia
+        Novato, California
+        Tigard, Oregon
+        Highland, California
+        Fountain Valley, California
+        Dearborn Heights, Michigan
+        Albany, Oregon
+        Grapevine, Texas
+        Apple Valley, Minnesota
+        Chicopee, Massachusetts
+        Hempstead village, New York
+        Oak Lawn village, Illinois
+        Cathedral City, California
+        Bentonville, Arkansas
+        Stonecrest, Georgia
+        Kettering, Ohio
+        Colton, California
+        Anderson, Indiana
+        West Haven, Connecticut
+        Burlington, North Carolina
+        Manhattan, Kansas
+        St. Cloud, Florida
+        Normal town, Illinois
+        Decatur, Alabama
+        Berwyn, Illinois
+        Port Arthur, Texas
+        Kingsport, Tennessee
+        Minnetonka, Minnesota
+        Rosemead, California
+        Paramount, California
+        Rocky Mount, North Carolina
+        Yucaipa, California
+        Watsonville, California
+        Elyria, Ohio
+        Leesburg town, Virginia
+        Mount Prospect village, Illinois
+        Pinellas Park, Florida
+        Delano, California
+        Bellevue, Nebraska
+        West Sacramento, California
+        Apopka, Florida
+        Palm Desert, California
+        Milford, Connecticut
+        Little Elm, Texas
+        Revere, Massachusetts
+        Peabody, Massachusetts
+        Wylie, Texas
+        Harrisonburg, Virginia
+        DeSoto, Texas
+        Pensacola, Florida
+        Olympia, Washington
+        Edina, Minnesota
+        Wheaton, Illinois
+        West New York town, New Jersey
+        Hoboken, New Jersey
+        Lacey, Washington
+        Summerville town, South Carolina
+        Coeur d'Alene, Idaho
+        Oak Park village, Illinois
+        Elkhart, Indiana
+        Maricopa, Arizona
+        Kentwood, Michigan
+        Madison, Alabama
+        Smyrna town, Tennessee
+        Glendora, California
+        Logan, Utah
+        Burien, Washington
+        Perth Amboy, New Jersey
+        Herriman, Utah
+        Grand Island, Nebraska
+        Placentia, California-->

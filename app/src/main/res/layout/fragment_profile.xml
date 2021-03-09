@@ -28,7 +28,7 @@
         android:textColor="@color/black"
         android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="180dp"
         android:textSize="16dp"
         android:layout_marginRight="16dp"
         android:background="?attr/selectableItemBackground"/>
@@ -88,37 +88,37 @@
                     android:background="@drawable/location_icon" />
 
                 <TextView
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     android:id="@+id/birthday_icon"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/birthday_icon" />
 
                 <TextView
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     android:id="@+id/phone_icon1"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/phone_icon" />
 
                 <TextView
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     android:id="@+id/phone_icon2"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/phone_icon" />
 
-
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginTop="7dp"
                     android:id="@+id/location_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="20dp"
                     android:id="@+id/birthday_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="24dp"
                     android:id="@+id/contact1_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="24dp"
                     android:id="@+id/contact2_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

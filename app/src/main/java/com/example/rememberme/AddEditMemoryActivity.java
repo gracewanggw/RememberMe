@@ -2,6 +2,7 @@ package com.example.rememberme;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -13,6 +14,7 @@ import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
+import com.example.rememberme.quiz.Quiz;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,6 +48,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddEditMemoryActivity extends AppCompatActivity implements View.OnClickListener, MultiSpinner.MultiSpinnerListener {
+
+    Context context;
 
     public static Memory memory;
     public static Framily framily;
@@ -63,11 +69,12 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     private static final String LOG_TAG = "AudioRecording";
     private static String mFileName = null;
     public static final int REQUEST_AUDIO_PERMISSION_CODE = 3;
+    long tStart;
 
     EditText title;
     EditText text;
     ImageView image;
-    Button audio;
+    TextView audio;
     Button saveMemory;
     Button cancelMemory;
     Button removeMemory;
@@ -140,20 +147,44 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         framNames.remove(framily.getNameFirst());
         tagSpinner.setItems(framNames, "Select Framily Members to Tag", this);
         checkPermissions();
+
+        context = this;
+
+        audio.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        tStart = System.currentTimeMillis();
+                        audio.setBackground(ContextCompat.getDrawable(context,R.drawable.mic_on));
+                        startAudio();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        audio.setBackground(ContextCompat.getDrawable(context,R.drawable.mic_off));
+                        if((System.currentTimeMillis()-tStart)/1000 >=1){
+                            saveAudio();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.add_audio:
-                if(!audioPlay) {
-                    startAudio();
-                }
-                else {
-                    saveAudio();
-                    audioPlay = false;
-                }
-                break;
+//            case R.id.add_audio:
+//                if(!audioPlay) {
+//                    startAudio();
+//                }
+//                else {
+//                    saveAudio();
+//                    audioPlay = false;
+//                }
+//                break;
 
             case R.id.save_memory:
                 saveMemoryData();
@@ -306,7 +337,6 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     }
 
     public void startAudio() {
-        audio.setText("Recording audio: click here to save.");
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -323,7 +353,6 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     }
 
     public void saveAudio() {
-        audio.setText("Click here to record audio");
         recorder.stop();
         recorder.release();
         recorder = null;

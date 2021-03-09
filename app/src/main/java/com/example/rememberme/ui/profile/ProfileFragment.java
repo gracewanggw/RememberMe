@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
 
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.EditUserProfileActivity;
@@ -58,16 +58,6 @@ public class ProfileFragment extends Fragment {
 
         updateView();
 
-        try {
-            FileInputStream fis = this.getActivity().openFileInput(EditUserProfileActivity.saveImgFileName);
-            Bitmap bmap = BitmapFactory.decodeStream(fis);
-            roundedImage = new RoundImage(bmap);
-            photo.setImageDrawable(roundedImage);
-            fis.close();
-        } catch (IOException e) {
-
-        }
-
         edit = root.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,5 +85,15 @@ public class ProfileFragment extends Fragment {
         String nameStr = sharedPreferences.getString(EditUserProfileActivity.FIRST_NAME_KEY, "") +
                 " " + sharedPreferences.getString(EditUserProfileActivity.LAST_NAME_KEY,"");
         name.setText(nameStr);
+        try {
+            FileInputStream fis = this.getActivity().openFileInput(EditUserProfileActivity.saveImgFileName);
+            Bitmap bmap = BitmapFactory.decodeStream(fis);
+            roundedImage = new RoundImage(bmap);
+            photo.setImageDrawable(roundedImage);
+            fis.close();
+        } catch (IOException e) {
+
+        }
+
     }
 }

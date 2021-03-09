@@ -17,24 +17,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RememberMe">
         <activity android:name=".WalkthroughActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".EditFramilyProfile" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+        <activity android:name=".FramilyProfile" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+        <!--activity android:name=".AddMemoryActivity" /-->
+        <activity android:name=".EditUserProfileActivity" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+        <activity android:name=".AddEditMemoryActivity" />
+        <activity android:name=".ViewMemory" />
 
-        <activity android:name=".EditFramilyProfile"></activity>
-        <activity android:name=".FramilyProfile"></activity>
-        <activity android:name=".AddEditMemoryActivity"></activity>
-        <activity android:name=".ViewMemory"></activity>
-        <activity android:name=".EditUserProfileActivity"/>
-      
+        <activity android:name=".quiz.Quiz" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+        <activity android:name=".quiz.QuizResult" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+        <activity android:name=".quiz.Flashcard" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.rememberme"

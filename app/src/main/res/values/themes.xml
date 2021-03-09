@@ -21,4 +21,5 @@
     <style name="Theme.RememberMe.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.RememberMe.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

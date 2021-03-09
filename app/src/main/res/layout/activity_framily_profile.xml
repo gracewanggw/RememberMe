@@ -13,20 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="3dp"
         android:id="@+id/back"
         android:text="@string/back"
         android:background="@android:color/transparent"
-        android:textColor="@color/white" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quiz_me"
-        android:id="@+id/quiz"
-        android:background="@android:color/transparent"
-        android:layout_toRightOf="@+id/back"
-        android:paddingLeft="150dp"
-        android:layout_alignParentRight="true"
         android:textColor="@color/white"
         android:textSize="18dp"/>
 
@@ -47,10 +37,10 @@
         android:text="@string/edit"
         android:id="@+id/edit"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="95dp"
         android:layout_marginRight="5dp"
         android:layout_below="@id/back"
         android:textSize="20dp"/>
@@ -103,15 +93,16 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/quiz_me"
+        android:id="@+id/quiz"
         android:layout_width="380dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
+        android:layout_marginBottom="15dp"
         android:layout_height="40dp"
         android:layout_below="@id/name_age_relation"
         android:background="@drawable/quiz_button1"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="Quiz Me"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -122,7 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/quiz_me">
+        android:layout_below="@id/quiz">
 
 
     <LinearLayout
@@ -139,21 +130,21 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/location_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/location_icon" />
 
         <TextView
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:id="@+id/birthday_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/birthday_icon" />
 
         <TextView
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:id="@+id/phone_icon1"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -171,6 +162,7 @@
 
     <TextView
         android:id="@+id/location_label"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Location"
@@ -188,7 +180,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="22dp"
         android:id="@+id/birthday_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -208,26 +200,44 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
 
-        <TextView
-            android:layout_marginTop="14dp"
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="7dp">
+
+            <TextView
             android:id="@+id/contact1_label"
-            android:layout_width="match_parent"
+                android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Phone Number"
-            android:layout_weight="1"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="phone number"
+                android:textColor="@color/blue1"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            </LinearLayout>
+
         <Button
             android:id="@+id/call"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="60dp"
-            android:layout_width="100dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="70dp"
             android:layout_height="30dp"
             android:text="Call"
             android:layout_weight="1"
@@ -239,15 +249,6 @@
     </LinearLayout>
 
 
-
-    <TextView
-        android:id="@+id/phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="phone number"
-        android:textColor="@color/blue1"
-        android:textSize="18dp"
-        android:textStyle="bold" />
     </LinearLayout>
 
     </LinearLayout>
@@ -263,29 +264,17 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_below="@id/information"
         android:textSize="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_memory"
-        android:text="@string/add_memory"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/information"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        android:layout_marginTop="10dp"
-        android:paddingRight="15dp"
-        android:clickable="true"
-        android:textStyle="bold"/>
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:columnWidth="100dp"
         android:numColumns="3"
