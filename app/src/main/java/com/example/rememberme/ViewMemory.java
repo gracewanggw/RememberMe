@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
@@ -102,10 +103,16 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
             case R.id.speaker:
                 try {
                     player = new MediaPlayer();
-                    Log.d("rdudak", memory.getAudio());
-                    player.setDataSource(memory.getAudio());
-                    player.prepare();
-                    player.start();
+                    //Log.d("rdudak", memory.getAudio() + "");
+                    if(memory.getAudio()!=null){
+                        player.setDataSource(memory.getAudio());
+                        player.prepare();
+                        player.start();
+                    }
+                    else{
+                        Toast.makeText(this,"No Audio Recorded", Toast.LENGTH_SHORT).show();
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
