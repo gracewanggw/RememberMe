@@ -14,30 +14,49 @@
         android:orientation="vertical">
 
         <EditText
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="Memory Title"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:textSize="20dp"
             android:id="@+id/title"/>
 
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/memory"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/custom_blue"
-            android:id="@+id/memory_image"
-            android:onClick="changeImage"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/memory"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/custom_blue"
+                android:id="@+id/memory_image"
+                android:onClick="changeImage"/>
+            <TextView
+                android:id="@+id/add_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Click to Add Picture"
+                android:textSize="28dp"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_gravity="center_horizontal"
             android:inputType="textMultiLine"
             android:maxLines="10"
             android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:hint="Description"
             android:id="@+id/text"/>
 
         <TextView
@@ -52,52 +71,53 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Press and hold mic to record"
+            android:text="press and hold mic to record"
+            android:textSize="18dp"
             android:layout_marginBottom="8dp"
             android:textAlignment="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal"
             android:layout_gravity="center|bottom"
             android:layout_weight="1">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
                 android:text="Cancel"
-                android:backgroundTint="@color/custom_blue"
+                android:textAllCaps="false"
+                android:textSize="20dp"
+                android:background="@drawable/save_button"
                 android:textColor="@color/white"
-                android:layout_weight="1"
                 android:layout_gravity="center_horizontal|bottom"
                 android:id="@+id/cancel_memory"/>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="27dp"
                 android:text="Save"
-                android:backgroundTint="@color/custom_blue"
+                android:textAllCaps="false"
+                android:textSize="20dp"
+                android:background="@drawable/save_button"
                 android:textColor="@color/white"
-                android:layout_weight="1"
                 android:layout_gravity="center_horizontal|bottom"
                 android:id="@+id/save_memory"/>
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/remove"
+        <TextView
             android:id="@+id/remove"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/custom_blue"
-            android:bottomRightRadius="80dp"
-            android:bottomLeftRadius="80dp"
-            android:topLeftRadius="80dp"
-            android:topRightRadius="80dp"/>
-
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/trash_icon"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:clickable="true"/>
     </LinearLayout>
 
 

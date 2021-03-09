@@ -70,10 +70,11 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     EditText title;
     EditText text;
     ImageView image;
+    TextView addImage;
     TextView audio;
     Button saveMemory;
     Button cancelMemory;
-    Button removeMemory;
+    TextView removeMemory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         title = findViewById(R.id.title);
         text = findViewById(R.id.text);
         image = findViewById(R.id.memory_image);
+        addImage = findViewById(R.id.add_image);
         audio = findViewById(R.id.add_audio);
         saveMemory = findViewById(R.id.save_memory);
         cancelMemory = findViewById(R.id.cancel_memory);
@@ -306,6 +308,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     }
 
     public void updateImageView(byte[] imageAr) {
+        addImage.setVisibility(View.GONE);
         Bitmap bmp= BitmapFactory.decodeByteArray(imageAr, 0 , imageAr.length);
         image.setImageBitmap(bmp);
        // rotateImage();

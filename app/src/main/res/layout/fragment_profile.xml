@@ -172,7 +172,8 @@
                     android:text="phone number"
                     android:textColor="@color/blue1"
                     android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"/>
 
                 <TextView
                     android:layout_marginTop="24dp"
@@ -191,7 +192,8 @@
                     android:text="phone number"
                     android:textColor="@color/blue1"
                     android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"/>
             </LinearLayout>
 
         </LinearLayout>

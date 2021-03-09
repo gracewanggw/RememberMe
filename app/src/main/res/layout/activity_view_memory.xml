@@ -16,8 +16,8 @@
         android:text="@string/edit"
         android:background="@android:color/transparent"
         android:layout_alignParentRight="true"
-        android:textStyle="bold"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
 
     <Button
         android:id="@+id/backToPerson"
@@ -27,8 +27,8 @@
         android:text="@string/backItem"
         android:background="@android:color/transparent"
         android:layout_alignParentLeft="true"
-        android:textStyle="bold"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,16 +54,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text"
-        android:layout_below="@id/photo"
-        android:paddingTop="30dp"
+        android:layout_below="@id/speaker"
+        android:paddingTop="20dp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/black"
+        android:textSize="18dp"
         android:text="Memory text here"/>
 
     <Button
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:paddingTop="20dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/speaker"
         android:background="@drawable/speaker"
