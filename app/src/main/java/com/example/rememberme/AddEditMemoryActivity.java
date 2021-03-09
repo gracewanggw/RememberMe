@@ -65,6 +65,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     private static final String LOG_TAG = "AudioRecording";
     private static String mFileName = null;
     public static final int REQUEST_AUDIO_PERMISSION_CODE = 3;
+    long tStart;
 
     EditText title;
     EditText text;
@@ -134,12 +135,15 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        tStart = System.currentTimeMillis();
                         audio.setBackground(ContextCompat.getDrawable(context,R.drawable.mic_on));
                         startAudio();
                         break;
                     case MotionEvent.ACTION_UP:
                         audio.setBackground(ContextCompat.getDrawable(context,R.drawable.mic_off));
-                        saveAudio();
+                        if((System.currentTimeMillis()-tStart)/1000 >=1){
+                            saveAudio();
+                        }
                         break;
                     default:
                         break;
