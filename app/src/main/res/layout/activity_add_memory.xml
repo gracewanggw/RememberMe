@@ -40,14 +40,21 @@
             android:layout_marginTop="20dp"
             android:id="@+id/text"/>
 
-        <Button
+        <TextView
+            android:id="@+id/add_audio"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/mic_off"
+            android:layout_gravity="center"
+            android:clickable="true" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Click here to record audio"
-            android:backgroundTint="@color/custom_blue"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:id="@+id/add_audio"/>
+            android:text="Press and hold mic to record"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
