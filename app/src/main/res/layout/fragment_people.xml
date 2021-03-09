@@ -23,19 +23,36 @@
                 android:layout_marginLeft="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sort By: "
+                android:text="Sort: "
                 android:textSize="18dp"/>
 
             <Spinner
                 android:id="@+id/sort"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:id="@+id/search_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_baseline_search_24" />
+
+            <EditText
+                android:id="@+id/Search_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="First Name"
+                android:text=""/>
+
             <Button
-                android:id="@+id/sort_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sort"
+                android:id="@+id/search_button"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:text="Go"
                 android:layout_marginRight="16dp"/>
 
         </LinearLayout>
