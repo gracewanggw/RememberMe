@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -57,6 +58,24 @@ public class ProfileFragment extends Fragment {
         name = root.findViewById(R.id.name);
 
         updateView();
+
+        contact1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel: " + contact1.getText()));
+                startActivity(intent);
+            }
+        });
+
+        contact2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel: " + contact2.getText()));
+                startActivity(intent);
+            }
+        });
 
         edit = root.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
