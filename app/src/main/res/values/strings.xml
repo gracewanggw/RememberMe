@@ -9,11 +9,13 @@
     <string name="submit">Submit Answer</string>
     <string name="enter_answer">your answer...</string>
     <string name="see">See Answer</string>
-    <string name="next">Next Card</string>
+    <string name="next">Next Question</string>
     <string name="no_review">No Questions to Review Yet</string>
+    <string name="review_mode">Review Mode</string>
+    <string name="flashcard_mode">Flashcard Mode</string>
     <string name="not_enough">Not Enough Information to Make Quiz</string>
     <string name="no_face">Fill-In Quizzes for Faces Not Yet Avaliable</string>
-
+    <string name="finish">Done</string>
 
     <string name="results_txt">Your Results: </string>
     <string name="wrong_ans">Your Answers</string>

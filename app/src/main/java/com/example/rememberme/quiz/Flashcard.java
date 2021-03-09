@@ -38,6 +38,7 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
     private FrameLayout questionCard;
     private Button exit;
     private Button seeNext;
+    private Button seeAns;
 
     private int questionNum;
     private String answer;
@@ -65,7 +66,9 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
 
         mQuestion = (TextView)findViewById(R.id.question);
         iView = (ImageView)findViewById(R.id.imageView);
-        seeNext = (Button) findViewById(R.id.see_answer);
+        seeAns = (Button) findViewById(R.id.see_answer);
+        seeAns.setOnClickListener(this);
+        seeNext = (Button) findViewById(R.id.next_question);
         seeNext.setOnClickListener(this);
 
 //        mCardBackLayout = findViewById(R.id.card_back);
@@ -96,10 +99,15 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
         if(onQuestion){
             mQuestion.setVisibility(View.VISIBLE);
             iView.setVisibility(View.INVISIBLE);
+            seeAns.setVisibility(View.VISIBLE);
+            seeNext.setVisibility(View.INVISIBLE);
             mQuestion.setText(questions.getQuestion(questionNum).question);
-            seeNext.setText(R.string.see);
+            seeAns.setText(R.string.see);
             onQuestion = false;
         }else{
+            seeAns.setVisibility(View.INVISIBLE);
+            seeNext.setVisibility(View.VISIBLE);
+
             if(questions.getQuestion(questionNum).quesType.equals("photo")){
                 mQuestion.setVisibility(View.INVISIBLE);
                 iView.setVisibility(View.VISIBLE);
@@ -137,6 +145,9 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.see_answer:
+                updateQuestion();
+                break;
+            case R.id.next_question:
                 if (questionNum < questions.getSize()){
                     updateQuestion();
                 }
