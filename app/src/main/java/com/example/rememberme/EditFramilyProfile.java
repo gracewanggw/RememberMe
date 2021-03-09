@@ -122,8 +122,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         saveBtn.setOnClickListener(this);
         remove = findViewById(R.id.remove);
         remove.setOnClickListener(this);
-        addMemory = findViewById(R.id.add_memory);
-        addMemory.setOnClickListener(this);
 
         Intent intent = getIntent();
         id = intent.getLongExtra(FramilyProfile.ID_KEY, -1);
@@ -253,12 +251,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 saveEntry();
                 intent = new Intent(this, FramilyProfile.class);
                 intent.putExtra(FramilyProfile.ID_KEY, id);
-                startActivity(intent);
-                break;
-
-            case R.id.add_memory:
-                intent = new Intent(this, AddEditMemoryActivity.class);
-                intent.putExtra(FramilyProfile.ID_KEY, framily.getId());
                 startActivity(intent);
                 break;
 

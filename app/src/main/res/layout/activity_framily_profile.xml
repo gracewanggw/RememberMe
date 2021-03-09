@@ -200,6 +200,7 @@
 
 
     <LinearLayout
+        android:id="@+id/location_birthday_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -255,18 +256,38 @@
 
     </LinearLayout>
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/memories"
-        android:text="Memories"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/information"
-        android:textSize="20dp"/>
+        android:id="@+id/memory_header"
+        android:layout_below="@+id/information">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/memories"
+            android:text="Memories"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/information"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_memory"
+            android:text="+"
+            android:layout_toRightOf="@+id/memories"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"/>
+
+    </LinearLayout>
 
     <GridView
         android:id="@+id/gridview"
@@ -280,7 +301,7 @@
         android:numColumns="3"
         android:horizontalSpacing="0dp"
         android:verticalSpacing="0dp"
-        android:layout_below="@id/memories"
+        android:layout_below="@id/memory_header"
         />
 
 

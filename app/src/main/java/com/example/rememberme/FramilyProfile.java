@@ -126,8 +126,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         quiz.setOnClickListener(this);
         edit = findViewById(R.id.edit);
         edit.setOnClickListener(this);
-        //addMemory = findViewById(R.id.add_memory);
-        //addMemory.setOnClickListener(this);
+        addMemory = findViewById(R.id.add_memory);
+        addMemory.setOnClickListener(this);
 
         memories = framily.getMemories();
 
@@ -251,11 +251,11 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
 
-//            case R.id.add_memory:
-//                intent = new Intent(this, AddEditMemoryActivity.class);
-//                intent.putExtra(ID_KEY, framily.getId());
-//                startActivity(intent);
-//                break;
+            case R.id.add_memory:
+                intent = new Intent(this, AddEditMemoryActivity.class);
+                intent.putExtra(ID_KEY, framily.getId());
+                startActivity(intent);
+                break;
         }
     }
 
