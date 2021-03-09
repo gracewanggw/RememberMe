@@ -17,18 +17,6 @@
         android:textColor="@color/white"
         android:textSize="18dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/save_changes"
-        android:background="@android:color/transparent"
-        android:layout_toRightOf="@+id/back"
-        android:paddingLeft="140dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/white" />
-
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -149,7 +137,8 @@
                         android:background="@drawable/input_box"
                         android:padding="10dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:inputType="number"/>
 
                     <EditText
                         android:id="@+id/birthday"
@@ -222,7 +211,8 @@
         android:textSize="18dp"
         android:hint="123 456 789"
         android:padding="10dp"
-        android:background="@drawable/input_box"/>
+        android:background="@drawable/input_box"
+        android:inputType="phone"/>
 
         </LinearLayout>
             <LinearLayout

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class RememberMeDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rememberMe.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 11;
 
     public static final String TABLE_NAME_FRAMILY = "framily";
     public static final String ID_FRAMILY = "id";

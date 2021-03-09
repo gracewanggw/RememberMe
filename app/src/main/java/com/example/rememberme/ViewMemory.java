@@ -110,6 +110,7 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.edit:
+                finish();
                 intent = new Intent(this, AddEditMemoryActivity.class);
                 intent.putExtra(ID_MEMORY, memoryId);
                 intent.putExtra(FramilyProfile.ID_KEY, framilyId);
@@ -117,14 +118,16 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.speaker:
-                try {
-                    player = new MediaPlayer();
-                    Log.d("rdudak", memory.getAudio());
-                    player.setDataSource(memory.getAudio());
-                    player.prepare();
-                    player.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (memory.getAudio() != null) {
+                    try {
+                        player = new MediaPlayer();
+                        Log.d("rdudak", memory.getAudio());
+                        player.setDataSource(memory.getAudio());
+                        player.prepare();
+                        player.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
         }
     }

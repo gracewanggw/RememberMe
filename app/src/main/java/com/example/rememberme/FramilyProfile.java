@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
 
@@ -140,8 +141,11 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 
     public ArrayList<Memory> getMemories() {
         ArrayList<Memory> memoryItems = new ArrayList<Memory>();
-        for (Long id: memories) {
-            memoryItems.add(dbSource.fetchMemoryByIndex(id));
+        Log.d("rdudak", memories.toString());
+        if(!memories.isEmpty()) {
+            for (Long id: memories) {
+                memoryItems.add(dbSource.fetchMemoryByIndex(id));
+            }
         }
         return memoryItems;
     }
@@ -152,8 +156,10 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         dbSource.open();
         framily = dbSource.fetchFramilyByIndex(framilyId);
         memories = framily.getMemories();
-        memoriesAdapter = new MemoriesAdapter(this, getMemories());
-        gridView.setAdapter(memoriesAdapter);
+        if (!memories.isEmpty()) {
+            memoriesAdapter = new MemoriesAdapter(this, getMemories());
+            gridView.setAdapter(memoriesAdapter);
+        }
     }
 
     @Override

@@ -107,7 +107,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
         tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
 
-
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
         relationship = findViewById(R.id.relationship);
@@ -446,4 +445,5 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
         }
     }
+
 }

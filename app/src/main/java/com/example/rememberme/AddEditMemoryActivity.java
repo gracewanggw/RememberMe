@@ -204,7 +204,11 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
                 .setPositiveButton("Yes, I'm Sure", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dbSource.removeMemory(memoryId);
+                        UpdateDbMemoryThread updateDbMemoryThread = new UpdateDbMemoryThread();
+                        updateDbMemoryThread.start();
+//                        Intent intent = new Intent(context, FramilyProfile.class);
+//                        intent.putExtra(FramilyProfile.ID_KEY, framilyId);
+//                        startActivity(intent);
                         finish();
                     }
                 })
@@ -342,5 +346,17 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         }
         tag = tag.substring(0, tag.length() -2);
         tagged.setText(tag);
+    }
+
+    public class UpdateDbMemoryThread extends Thread {
+        @Override
+        public void run() {
+            dbSource.removeMemory(memoryId);
+            Log.d("rdudak", "Memories: " + framily.getMemories());
+            framily.removeMemory(memoryId);
+            Log.d("rdudak", "Memories: " + framily.getMemories());
+            dbSource.updateFramilyEntry(framilyId, framily);
+            dbSource.close();
+        }
     }
 }
