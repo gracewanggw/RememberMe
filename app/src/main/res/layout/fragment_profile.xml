@@ -25,13 +25,14 @@
         android:text="@string/edit"
         android:id="@+id/edit"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="180dp"
-        android:textSize="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="145dp"
+        android:textSize="18dp"
+        android:layout_marginRight="10dp"
         android:background="?attr/selectableItemBackground"/>
+
 
     <LinearLayout
         android:id="@+id/name_age"
