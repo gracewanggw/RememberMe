@@ -141,7 +141,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         addMemory.setOnClickListener(this);
 
         memories = framily.getMemories();
-        memories = framily.getMemories();
         Log.d("rdudak", "on create memories: " + memories);
 //        if (!removeLast && !memories.isEmpty()) {
 //            Log.d("rdudak", "empty: " + memories.isEmpty() + " Remove Last: " + removeLast);
@@ -212,7 +211,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         try {
             FileInputStream fis = openFileInput(framily.getPhotoFileName());
             Bitmap bmap = BitmapFactory.decodeStream(fis);
-            Bitmap rotBmap = ImageRotation.rotateImage(bmap,90);
+            Bitmap rotBmap = ImageRotation.rotateImage(bmap,0);
             roundedImage = new RoundImage(rotBmap);
             photo.setImageDrawable(roundedImage);
             fis.close();
