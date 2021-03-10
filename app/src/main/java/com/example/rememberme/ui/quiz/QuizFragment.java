@@ -113,11 +113,19 @@ public class QuizFragment extends Fragment{
                         quizAll.setAlpha((float)1);
                         quizType = QUIZ_TYPE_ALL_KEY;
                         quiz = createQuiz();
-                        Intent intent = new Intent(getContext(), Quiz.class);
-                        intent.putExtra(FILL_IN_BLANK, fib);
-                        intent.putExtra(QUIZ_KEY, quiz);
-                        intent.putExtra(QUIZ_TYPE_KEY, quizType);
-                        startActivityForResult(intent, 0);
+                        if(quiz.size() < 2){
+                            MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("title", "Not Enough");
+                            myDialog.setArguments(bundle);
+                            myDialog.show(getFragmentManager(), "dialog");
+                        }else {
+                            Intent intent = new Intent(getContext(), Quiz.class);
+                            intent.putExtra(FILL_IN_BLANK, fib);
+                            intent.putExtra(QUIZ_KEY, quiz);
+                            intent.putExtra(QUIZ_TYPE_KEY, quizType);
+                            startActivityForResult(intent, 0);
+                        }
                         break;
                     default:
                         break;
@@ -240,7 +248,13 @@ public class QuizFragment extends Fragment{
                 while (quizQuestionList.size() < quizLength) {
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
-                    String fact = infoChoice[new Random().nextInt(infoChoice.length)];
+                    String fact = "";
+                    if(people.size() < 4){
+                        fact = infoChoice[new Random().nextInt(infoChoice.length - 1)];
+                    }
+                    else{
+                        fact = infoChoice[new Random().nextInt(infoChoice.length)];
+                    }
                     String key = chosen.getNameFirst()+chosen.getNameLast()+fact;
                     Question ques = createQuestion(chosen, fact);
                     if( !visited.contains(key) && ques != null) {

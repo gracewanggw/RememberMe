@@ -74,10 +74,11 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     EditText title;
     EditText text;
     ImageView image;
+    TextView addImage;
     TextView audio;
     Button saveMemory;
     Button cancelMemory;
-    Button removeMemory;
+    TextView removeMemory;
 
     MultiSpinner tagSpinner;
     ArrayList<String> framNames;
@@ -108,6 +109,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         title = findViewById(R.id.title);
         text = findViewById(R.id.text);
         image = findViewById(R.id.memory_image);
+        addImage = findViewById(R.id.add_image);
         audio = findViewById(R.id.add_audio);
         tagged = findViewById(R.id.tagged_names);
         saveMemory = findViewById(R.id.save_memory);
@@ -343,6 +345,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     }
 
     public void updateImageView(byte[] imageAr) {
+        addImage.setVisibility(View.GONE);
         Bitmap bmp= BitmapFactory.decodeByteArray(imageAr, 0 , imageAr.length);
         Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
         image.setImageBitmap(rotatedBmp);

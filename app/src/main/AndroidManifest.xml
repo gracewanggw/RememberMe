@@ -11,9 +11,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.RememberMe">
         <activity android:name=".WalkthroughActivity">
@@ -31,8 +31,9 @@
         <activity android:name=".FramilyProfile" android:theme="@style/Theme.RememberMe.NoActionBar"/>
         <!--activity android:name=".AddMemoryActivity" /-->
         <activity android:name=".EditUserProfileActivity" android:theme="@style/Theme.RememberMe.NoActionBar"/>
-        <activity android:name=".AddEditMemoryActivity" />
-        <activity android:name=".ViewMemory" />
+
+        <activity android:name=".AddEditMemoryActivity" android:theme="@style/Theme.RememberMe.NoActionBar"/>
+        <activity android:name=".ViewMemory" android:theme="@style/Theme.RememberMe.NoActionBar" />
 
         <activity android:name=".quiz.Quiz" android:theme="@style/Theme.RememberMe.NoActionBar"/>
         <activity android:name=".quiz.QuizResult" android:theme="@style/Theme.RememberMe.NoActionBar"/>
