@@ -260,6 +260,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 int quizType = QUIZ_TYPE_PERSON_KEY;
                 ArrayList<Question> personQuiz = makePeopleQuiz();
 
+                Log.d("personQuiz", ""+personQuiz);
+
                 if(personQuiz.size() < 2){
                     MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                     Bundle bundle = new Bundle();
@@ -314,10 +316,14 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         ArrayList<String> visited = new ArrayList<String>();
 
         pics = dbSource.fetchFramilyColumn("photo");
+        Log.d("pics", ""+pics);
         pics.removeAll(defaultPics);
+
+        Log.d("pics", ""+pics);
 
         infoCount = 0;
         while (infoCount < infoChoice.length) {
+            Log.d("facts checked", ""+visited);
             String fact = infoChoice[new Random().nextInt(infoChoice.length)];
             if( !visited.contains(fact)){
                 visited.add(fact);
@@ -361,6 +367,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 break;
             case "photo":
                 if (pics.size() < 4){
+                    infoCount += 1;
                     return null;
                 }
                 mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
