@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -180,6 +181,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
+                presetAge();
             }
 
         };
@@ -191,7 +193,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
-                //age here String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
             }
         });
 
@@ -247,6 +248,35 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         birthday.setText(sdf.format(myCalendar.getTime()));
     }
 
+    private void presetAge() {
+        String months[] = {"January", "February", "March", "April",
+                "May", "June", "July", "August",
+                "September", "October", "November", "December"
+        };
+
+        String birthdaytxt = birthday.getText().toString();
+        int year = Integer.parseInt(birthdaytxt.substring(birthdaytxt.length()-4));
+        int day = Integer.parseInt(birthdaytxt.substring(birthdaytxt.length()-7, birthdaytxt.length()-5));
+        String month = birthdaytxt.substring(0, birthdaytxt.length()-8);
+
+        String time = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH).format(new Date());
+        int myear = Integer.parseInt(time.substring(time.length()-4));
+        int mday = Integer.parseInt(time.substring(time.length()-7, time.length()-5));
+        String mmonth = time.substring(0, time.length()-8);
+
+        int index1 = Arrays.asList(months).indexOf(month);
+        int index2 = Arrays.asList(months).indexOf(mmonth);
+        if(index2 >= index1){
+            if(mday > day){
+                age.setText(""+ (myear - year));
+            }
+        }
+        else{
+            age.setText(""+ (myear - year-1));
+        }
+        //age.setText();
+    }
+
     public ArrayList<Memory> getMemories() {
         ArrayList<Memory> memoryItems = new ArrayList<Memory>();
         for (Long id: memories) {
@@ -266,8 +296,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             case R.id.save:
                 if(nameFirst.getText().toString().length() < 1){
                     Toast.makeText(this, "Person Must Have Name", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                }else {
                     saveEntry();
                     intent = new Intent(this, FramilyProfile.class);
                     intent.putExtra(FramilyProfile.ID_KEY, id);
