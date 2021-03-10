@@ -413,18 +413,19 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     public void updateImageView(byte[] image) {
         Log.d("gwang", "updateImageView");
         Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+
         Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
 //        roundedImage = new RoundImage(bmp);
 //        photo.setImageDrawable(roundedImage);
-//        photo.setImageBitmap(rotatedBmp);
+        photo.setImageBitmap(rotatedBmp);
 
         if(bmp!=null){
             Log.d("gwang", "not null bmp");
-            RoundImage nRoundImg = new RoundImage(rotatedBmp);
+            RoundImage nRoundImg = new RoundImage(bmp);
             photo.setImageDrawable(nRoundImg);
         }
         //delete when can make image round and show up
-      //  photo.setImageBitmap(bmp);
+        photo.setImageBitmap(bmp);
     }
 
     private void checkPermissions()
