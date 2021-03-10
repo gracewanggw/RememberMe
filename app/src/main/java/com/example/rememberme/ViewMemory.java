@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
@@ -96,9 +97,15 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         title.setText(memory.getTitle());
         text.setText(memory.getText());
         if(memory.getImage() != null) {
-            Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
-            Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
-            image.setImageBitmap(rotatedBmp);
+            try {
+                FileInputStream fis = openFileInput(memory.getFilename());
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                Bitmap rotBmap = ImageRotation.rotateImage(bmap,0);
+                image.setImageBitmap(rotBmap);
+                fis.close();
+            } catch (IOException e) {
+
+            }
         }
     }
 

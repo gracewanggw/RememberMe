@@ -10,6 +10,7 @@ public class Memory {
     String text;
     byte[] image;
     String audio;
+    String filename;
 
     public void setId(Long id){this.id = id;}
     public Long getId() {return id;}
@@ -25,6 +26,9 @@ public class Memory {
 
     public void setAudio(String audio) {this.audio = audio;}
     public String getAudio() {return audio;}
+
+    public void setFilename(String filename){this.filename = filename;}
+    public String getFilename(){return filename;}
 
 }
 

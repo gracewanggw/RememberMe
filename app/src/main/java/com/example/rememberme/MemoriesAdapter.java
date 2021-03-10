@@ -3,6 +3,7 @@ package com.example.rememberme;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MemoriesAdapter extends BaseAdapter {
@@ -47,10 +51,19 @@ public class MemoriesAdapter extends BaseAdapter {
         title = view.findViewById(R.id.memory_title);
         title.setText(memories.get(position).getTitle());
         if (memories.get(position).getImage() != null) {
-            Bitmap bmp= BitmapFactory.decodeByteArray(memories.get(position).getImage(), 0 , memories.get(position).getImage().length);
+            //Bitmap bmp= BitmapFactory.decodeByteArray(memories.get(position).getImage(), 0 , memories.get(position).getImage().length);
            // Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
            // imageView.setImageBitmap(rotatedBmp);
-            imageView.setImageBitmap(bmp);
+            try {
+                FileInputStream fis = mContext.openFileInput(memories.get(position).getFilename());
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                Bitmap rotBmap = ImageRotation.rotateImage(bmap,0);
+                imageView.setImageBitmap(rotBmap);
+                fis.close();
+            } catch (IOException e) {
+
+            }
+            //imageView.setImageBitmap(bmp);
         }
         else {
             imageView.setImageBitmap(null);

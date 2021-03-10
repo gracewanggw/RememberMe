@@ -29,6 +29,7 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
     public static final String TEXT = "text";
     public static final String IMAGE_MEMORY = "image";
     public static final String AUDIO = "audio";
+    public static final String MEMORY_FILE = "memory";
 
     public static final String TABLE_NAME_QUIZ = "quiz";
     public static final String ID_QUIZ = "id";
@@ -61,7 +62,8 @@ public class RememberMeDbHelper extends SQLiteOpenHelper {
             TITLE + " TEXT, " +
             TEXT + " TEXT, " +
             IMAGE_MEMORY + " BLOB, " +
-            AUDIO + " TEXT);";
+            AUDIO + " TEXT, " +
+            MEMORY_FILE + " TEXT);";
 
     private static final String CREATE_QUIZ_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_QUIZ + "( " +
             ID_QUIZ + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
