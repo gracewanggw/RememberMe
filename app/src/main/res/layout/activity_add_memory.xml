@@ -61,7 +61,7 @@
             android:hint= "   Write a description..."
             android:textSize="20dp"
             android:id="@+id/text"/>
-
+<!--
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="16sp"/>
-
+-->
         <Button
             android:id="@+id/add_audio"
             android:layout_width="75dp"

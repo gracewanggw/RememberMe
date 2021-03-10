@@ -143,8 +143,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         try {
             FileInputStream fis = openFileInput(fileName);
             Bitmap bmap = BitmapFactory.decodeStream(fis);
-            Bitmap rotated = ImageRotation.rotateImage(bmap, 90);
-            roundedImage = new RoundImage(rotated);
+            roundedImage = new RoundImage(bmap);
             photo.setImageDrawable(roundedImage);
             fis.close();
         } catch (IOException e) {

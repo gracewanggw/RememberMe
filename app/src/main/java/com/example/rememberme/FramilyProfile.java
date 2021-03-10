@@ -212,12 +212,12 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         age.setText(framily.getAge() + "");
         birthday.setText(framily.getBirthday());
         location.setText(framily.getLocation());
-        if (framily.getImage() != null)
-            updateImageView(framily.getImage());
-        else {
-            roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
-            photo.setImageDrawable(roundedImage);
-        }
+//        if (framily.getImage() != null)
+//            updateImageView(framily.getImage());
+//        else {
+//            roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
+//            photo.setImageDrawable(roundedImage);
+//        }
     }
 
     public void updateImageView(byte[] image) {
@@ -230,8 +230,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         try {
             FileInputStream fis = openFileInput(framily.getPhotoFileName());
             Bitmap bmap = BitmapFactory.decodeStream(fis);
-            Bitmap rotatedBmp = ImageRotation.rotateImage(bmap, 90);
-            roundedImage = new RoundImage(rotatedBmp);
+            roundedImage = new RoundImage(bmap);
             photo.setImageDrawable(roundedImage);
             fis.close();
         } catch (IOException e) {

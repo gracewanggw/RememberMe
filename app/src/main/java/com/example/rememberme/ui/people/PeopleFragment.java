@@ -309,8 +309,8 @@ public class PeopleFragment extends Fragment {
                     Log.d("gwang", "photo file name not null");
                     FileInputStream fis = activity.openFileInput(fileName);
                     Bitmap bmap = BitmapFactory.decodeStream(fis);
-                    Bitmap rotatedBmp = ImageRotation.rotateImage(bmap, 90);
-                    RoundImage roundedImage = new RoundImage(rotatedBmp);
+                   // Bitmap rotatedBmp = ImageRotation.rotateImage(bmap, 90);
+                    RoundImage roundedImage = new RoundImage(bmap);
                     imageView.setImageDrawable(roundedImage);
                     fis.close();
                 } catch (IOException e) {
