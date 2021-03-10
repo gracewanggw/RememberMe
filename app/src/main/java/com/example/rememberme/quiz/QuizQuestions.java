@@ -78,7 +78,7 @@ public class QuizQuestions {
         for (int i = 0; i < quiz.size(); i++){
             testQuestions.add(quiz.get(i).getmQuestion());
             quesTypes.add(quiz.get(i).getQType());
-            correctAns.add(makeOptions(quiz.get(i).getAnswer(), quiz.get(i).getQType(), quiz.size()));
+            correctAns.add(makeOptions(quiz.get(i).getAnswer(), quiz.get(i).getQType(), allAge.size()));
         }
 
         dataSource.close();
