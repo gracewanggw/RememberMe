@@ -113,7 +113,7 @@ public class QuizFragment extends Fragment{
                         quizAll.setAlpha((float)1);
                         quizType = QUIZ_TYPE_ALL_KEY;
                         quiz = createQuiz();
-                        if(quiz.size() < 2){
+                        if(quiz.size() < 5){
                             MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                             Bundle bundle = new Bundle();
                             bundle.putString("title", "Not Enough");
