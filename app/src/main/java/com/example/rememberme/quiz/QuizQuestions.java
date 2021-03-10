@@ -119,8 +119,10 @@ public class QuizQuestions {
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allRelationships.size());
                         ans = allRelationships.get(index);
-                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                        if(ans.length() < 1 || ans.equals("0")){
                             ans = genRelationship();
+                        }else{
+                            ans = ans.substring(0,1).toUpperCase() + ans.substring(1);
                         }
                     } else {
                         ans = genRelationship();
@@ -130,7 +132,7 @@ public class QuizQuestions {
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allAge.size());
                         ans = allAge.get(index);
-                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                        if(ans.length() < 1 || ans.equals("0")){
                             ans = genAge(answer);
                         }
                     } else {
@@ -141,7 +143,7 @@ public class QuizQuestions {
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allBirthday.size());
                         ans = allBirthday.get(index);
-                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                        if(ans.length() < 1 || ans.equals("0")){
                             ans = genBirthday(answer);
                         }
                     } else {
@@ -152,7 +154,7 @@ public class QuizQuestions {
                     if (masterSize > 3) {
                         int index = (int) (Math.random() * allLocation.size());
                         ans = allLocation.get(index);
-                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                        if(ans.length() < 1 || ans.equals("0")){
                             ans = genLocation();
                         }
                     } else {
@@ -168,8 +170,10 @@ public class QuizQuestions {
                     if (masterSize > 3) {
                         int indexN = (int) (Math.random() * allNameL.size());
                         ans = allNameL.get(indexN);
-                        if(ans.length() < 1 || ans == null || ans.equals("0")){
+                        if(ans.length() < 1 || ans.equals("0")){
                             ans = genLName();
+                        }else{
+                            ans = ans.substring(0,1).toUpperCase() + ans.substring(1);
                         }
                     } else {
                         ans = genLName();

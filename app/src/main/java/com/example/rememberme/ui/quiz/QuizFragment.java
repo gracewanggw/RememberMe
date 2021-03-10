@@ -160,7 +160,6 @@ public class QuizFragment extends Fragment{
                     quizType = QUIZ_TYPE_FACE_KEY;
                     quiz = createQuiz();
                     if(quiz.size() == 0){
-                        Log.d("in dialog", "got to");
                         MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                         Bundle bundle = new Bundle();
                         bundle.putString("title", "Not Enough");
@@ -173,7 +172,6 @@ public class QuizFragment extends Fragment{
                         myDialog.setArguments(bundle);
                         myDialog.show(getFragmentManager(), "dialog");
                     } else{
-                        Log.d("in quiz", "got to");
                         Intent intent = new Intent(getContext(), Quiz.class);
                         intent.putExtra(FILL_IN_BLANK, fib);
                         intent.putExtra(QUIZ_KEY, quiz);
