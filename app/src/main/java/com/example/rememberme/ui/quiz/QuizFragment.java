@@ -29,6 +29,7 @@ import com.example.rememberme.quiz.Quiz;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -58,6 +59,7 @@ public class QuizFragment extends Fragment{
     public int quizType;
     public ArrayList<Question> quiz;
     public ArrayList<String> defaultPics = new ArrayList<String>();
+    private ArrayList<String> pics = new ArrayList<String>();
 
     public static final String FILL_IN_BLANK = "fill in blank";
 
@@ -158,6 +160,7 @@ public class QuizFragment extends Fragment{
                     quizType = QUIZ_TYPE_FACE_KEY;
                     quiz = createQuiz();
                     if(quiz.size() == 0){
+                        Log.d("in dialog", "got to");
                         MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                         Bundle bundle = new Bundle();
                         bundle.putString("title", "Not Enough");
@@ -170,6 +173,7 @@ public class QuizFragment extends Fragment{
                         myDialog.setArguments(bundle);
                         myDialog.show(getFragmentManager(), "dialog");
                     } else{
+                        Log.d("in quiz", "got to");
                         Intent intent = new Intent(getContext(), Quiz.class);
                         intent.putExtra(FILL_IN_BLANK, fib);
                         intent.putExtra(QUIZ_KEY, quiz);
@@ -250,7 +254,7 @@ public class QuizFragment extends Fragment{
         String[] infoChoice = {"relationship", "age", "birthday", "location", "photo"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
-        ArrayList<String> pics = dataSource.fetchFramilyColumn("photo");
+        pics = dataSource.fetchFramilyColumn("photo");
         pics.removeAll(defaultPics);
 
         int quizLength = Math.min(people.size() * 2 , 10);
@@ -305,29 +309,7 @@ public class QuizFragment extends Fragment{
                 break;
             case QUIZ_TYPE_FACE_KEY:
                 visited = new ArrayList<String>();
-                quizLength = 0;
-                for(String facepic : dataSource.fetchFramilyColumn("photo")){
-                    try {
-                        FileInputStream fis = getActivity().getApplicationContext().openFileInput(facepic);
-                        Bitmap bmap = BitmapFactory.decodeStream(fis);
-                        Drawable d = new BitmapDrawable(getActivity().getApplicationContext().getResources(), bmap);
-                        Drawable.ConstantState c1 = d.getConstantState();
-                        fis.close();
-
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable._pic);
-                        RoundImage roundedImage = new RoundImage(bitmap);
-                        Drawable defaultPic = new BitmapDrawable(getActivity().getApplicationContext().getResources(), bitmap);
-                        Drawable.ConstantState cdefault = defaultPic.getConstantState();
-
-                        if (facepic.length() != 0 && !c1.equals(cdefault)) {
-                            quizLength += 1;
-                        }
-                    }catch (Exception e){
-                        if (facepic.length() != 0) {
-                            quizLength += 1;
-                        }
-                    }
-                }
+                quizLength = pics.size() - 1;
 
                 //incase not enough for quiz
                 if(pics.size() < 4){
@@ -388,18 +370,17 @@ public class QuizFragment extends Fragment{
             case "photo":
                 mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
                 mQuestion.setADataType("Image");
-                String filep = person.getPhotoFileName();
-                for(String filename : defaultPics) {
-                    if (filep.equals(filename)) {
-                       return null;
+                for(String s: pics)
+                {
+                    if(s.equals(person.getPhotoFileName())) {
+                        mQuestion.setAnswer(person.getPhotoFileName());
                     }
                 }
-                mQuestion.setAnswer(filep);
                 break;
         }
 
 
-        if(mQuestion.getAnswer().length() == 0 || mQuestion.getAnswer().equals("0")){
+        if(mQuestion.getAnswer() == null || mQuestion.getAnswer().length() == 0  || mQuestion.getAnswer().equals("0")){
             return null;
         }else {
             return mQuestion;
