@@ -38,6 +38,8 @@ import com.example.rememberme.quiz.Quiz;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -58,7 +60,9 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     long memoryId;
 
     String fileName = "memory_img.jpg";
+    String tempImgFileName = "profile.jpg";
     File pictureFile;
+    File tempImgFile;
     Uri imageUri;
 
     public static final int CAMERA_REQUEST_CODE =  1;
@@ -105,6 +109,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         fileName = "IMG_" + timeStamp + ".jpg";
         pictureFile = new File(getExternalFilesDir(null), fileName);
         imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
+        tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
 
         title = findViewById(R.id.title);
         text = findViewById(R.id.text);
@@ -208,6 +213,17 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     public void saveMemoryData() {
         memory.setTitle(title.getText().toString());
         memory.setText(text.getText().toString());
+        image.buildDrawingCache();
+        Bitmap map = image.getDrawingCache();
+        try {
+            FileOutputStream fos = openFileOutput(fileName,MODE_PRIVATE);
+            map.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            memory.setFilename(fileName);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
         if (memoryId >= 0) {
             dbSource.updateMemoryEntry(memoryId);
             Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show();
@@ -319,8 +335,11 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
             if (requestCode == GALLERY_REQUEST_CODE) {
                 try {
                     imageUri = data.getData();
-                    InputStream iStream = getContentResolver().openInputStream(imageUri);
-                    byte[] image = getBytes(iStream);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] image = stream.toByteArray();
+                    bitmap.recycle();
                     memory.setImage(image);
                     updateImageView(image);
                     Log.d("rdudak", "gallery bitmap saved: " + memory.getImage().toString());
@@ -328,6 +347,25 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
                     Log.d("rdudak", "gallery save failed");
                     e.printStackTrace();
                 }
+            }
+            image.buildDrawingCache();
+            Bitmap map = image.getDrawingCache();
+            try {
+                FileOutputStream fos = openFileOutput(tempImgFileName,MODE_PRIVATE);
+                map.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            try {
+                FileInputStream fis = openFileInput(tempImgFileName);
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                image.setImageBitmap(bmap);
+                fis.close();
+            } catch (IOException e) {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.memory);
+                image.setImageBitmap(bm);
             }
         }
     }

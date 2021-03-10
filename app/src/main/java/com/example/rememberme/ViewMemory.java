@@ -14,9 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
@@ -95,9 +97,15 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         title.setText(memory.getTitle());
         text.setText(memory.getText());
         if(memory.getImage() != null) {
-            Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
-            Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
-            image.setImageBitmap(rotatedBmp);
+            try {
+                FileInputStream fis = openFileInput(memory.getFilename());
+                Bitmap bmap = BitmapFactory.decodeStream(fis);
+                Bitmap rotBmap = ImageRotation.rotateImage(bmap,0);
+                image.setImageBitmap(rotBmap);
+                fis.close();
+            } catch (IOException e) {
+
+            }
         }
     }
 
@@ -118,16 +126,20 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.speaker:
-                if (memory.getAudio() != null) {
-                    try {
-                        player = new MediaPlayer();
-                        Log.d("rdudak", memory.getAudio());
+                try {
+                    player = new MediaPlayer();
+                    //Log.d("rdudak", memory.getAudio() + "");
+                    if(memory.getAudio()!=null){
                         player.setDataSource(memory.getAudio());
                         player.prepare();
                         player.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
+                    else{
+                        Toast.makeText(this,"No Audio Recorded", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
         }
     }

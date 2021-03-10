@@ -37,7 +37,7 @@ public class RememberMeDbSource {
             RememberMeDbHelper.MEMORIES, RememberMeDbHelper.IMAGE_FRAMILY, RememberMeDbHelper.PHOTO_FILE};
 
     private String[] memoryColumns = { RememberMeDbHelper.ID_MEMORIES,RememberMeDbHelper.TITLE,
-            RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, RememberMeDbHelper.AUDIO};
+            RememberMeDbHelper.TEXT, RememberMeDbHelper.IMAGE_MEMORY, RememberMeDbHelper.AUDIO, RememberMeDbHelper.MEMORY_FILE};
 
     private String[] quizColumns = { RememberMeDbHelper.ID_QUIZ, RememberMeDbHelper.PERSON,
             RememberMeDbHelper.QUESTION_TYPE, RememberMeDbHelper.DATA_TYPE_QUESTION, RememberMeDbHelper.QUESTION_STRUCTURE, RememberMeDbHelper.QUESTION,
@@ -95,6 +95,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.TEXT, memory.getText());
         values.put(RememberMeDbHelper.IMAGE_MEMORY, memory.getImage());
         values.put(RememberMeDbHelper.AUDIO, memory.getAudio());
+        values.put(RememberMeDbHelper.MEMORY_FILE,memory.getFilename());
 
         long insertId = database.insert(RememberMeDbHelper.TABLE_NAME_MEMORIES, null, values);
         Cursor cursor = database.query(RememberMeDbHelper.TABLE_NAME_MEMORIES,
@@ -174,6 +175,7 @@ public class RememberMeDbSource {
         entry.setText(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.TEXT)));
         entry.setImage(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_MEMORY)));
         entry.setAudio(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.AUDIO)));
+        entry.setFilename(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.MEMORY_FILE)));
         cursor.close();
         return entry;
     }
@@ -256,6 +258,7 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.TEXT, memory.getText());
         values.put(RememberMeDbHelper.IMAGE_MEMORY, memory.getImage());
         values.put(RememberMeDbHelper.AUDIO, memory.getAudio());
+        values.put(RememberMeDbHelper.MEMORY_FILE, memory.getFilename());
         database.update(RememberMeDbHelper.TABLE_NAME_MEMORIES, values, RememberMeDbHelper.ID_MEMORIES + " = " + rowId, null);
     }
 
@@ -296,6 +299,7 @@ public class RememberMeDbSource {
         memory.setText(cursor.getString(2));
         memory.setImage(cursor.getBlob(3));
         memory.setAudio(cursor.getString(4));
+        memory.setFilename(cursor.getString(5));
         return memory;
     }
 

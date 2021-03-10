@@ -6,20 +6,21 @@
 
     <ImageView
         android:id="@+id/images"
+        android:layout_marginLeft="10dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/memory"
-        android:backgroundTint="@color/custom_blue"
-        android:layout_marginLeft="10dp"/>
+        android:backgroundTint="@color/custom_blue" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Memory Title"
         android:id="@+id/memory_title"
         android:layout_below="@id/images"
         android:layout_centerHorizontal="true"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textSize="18dp"
+        android:textAlignment="center"/>
 
 </RelativeLayout>
