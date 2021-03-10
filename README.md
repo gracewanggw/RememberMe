@@ -24,7 +24,7 @@ They can add profiles for each framily member with information about the person 
 - requires minimum android sdk ver 29
 
 
-### Development Setup instructions
+### Get RememberMe
 
 1. Download APK Directly onto phone
 - Google Drive: https://drive.google.com/file/d/1W-dLC6lvwrgIaZr6KQCMfQNOJwTPVn5u/view?usp=sharing
