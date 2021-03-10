@@ -248,10 +248,15 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.save:
-                saveEntry();
-                intent = new Intent(this, FramilyProfile.class);
-                intent.putExtra(FramilyProfile.ID_KEY, id);
-                startActivity(intent);
+                if(nameFirst.getText().toString().length() < 1){
+                    Toast.makeText(this, "Person Must Have Name", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    saveEntry();
+                    intent = new Intent(this, FramilyProfile.class);
+                    intent.putExtra(FramilyProfile.ID_KEY, id);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.remove:
