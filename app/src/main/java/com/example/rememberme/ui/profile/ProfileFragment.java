@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.EditUserProfileActivity;
+import com.example.rememberme.ImageRotation;
 import com.example.rememberme.R;
 import com.example.rememberme.RoundImage;
 

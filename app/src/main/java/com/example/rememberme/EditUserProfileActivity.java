@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -251,7 +252,8 @@ public class EditUserProfileActivity extends AppCompatActivity{
                 saveImgUri = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), saveImgUri);
-                    RoundImage roundProfile = new RoundImage(bitmap);
+                    Bitmap rotated = ImageRotation.rotateImage(bitmap, 90);
+                    RoundImage roundProfile = new RoundImage(rotated);
                     profilePhoto.setImageDrawable(roundProfile);
                 } catch (IOException e) {
                     e.printStackTrace();
