@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rememberme.DB.RememberMeDbSource;
 
@@ -118,16 +119,20 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.speaker:
-                if (memory.getAudio() != null) {
-                    try {
-                        player = new MediaPlayer();
-                        Log.d("rdudak", memory.getAudio());
+                try {
+                    player = new MediaPlayer();
+                    //Log.d("rdudak", memory.getAudio() + "");
+                    if(memory.getAudio()!=null){
                         player.setDataSource(memory.getAudio());
                         player.prepare();
                         player.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
+                    else{
+                        Toast.makeText(this,"No Audio Recorded", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
         }
     }
