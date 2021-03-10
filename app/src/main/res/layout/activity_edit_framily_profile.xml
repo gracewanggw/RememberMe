@@ -11,23 +11,26 @@
     <Button
         android:id="@+id/cancel"
         android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
         android:background="@android:color/transparent"
         android:text="@string/cancel"
         android:textColor="@color/white"
-        android:textSize="18dp"/>
+        android:textSize="18sp"
+        android:gravity="start"
+        android:padding="10dp"/>
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
+        android:gravity="end"
+        android:padding="10dp"
         android:text="@string/save"
         android:id="@+id/save"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/back"
         android:paddingLeft="140dp"
-        android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:textSize="18dp"
         android:textColor="@color/white" />
@@ -37,7 +40,7 @@
         android:layout_height="120dp"
         android:id="@+id/photo"
         android:layout_below="@id/cancel"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
@@ -53,9 +56,10 @@
         android:textColor="@color/white"
         android:layout_below="@id/cancel"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="80dp"
-        android:textSize="18dp"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginTop="60dp"
+        android:textSize="18sp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="10dp"/>
 
     <ScrollView
         android:id="@+id/scrollView"

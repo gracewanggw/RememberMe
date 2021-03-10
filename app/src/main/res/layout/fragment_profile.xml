@@ -20,16 +20,18 @@
         android:src="@drawable/_pic"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
         android:text="@string/edit"
         android:id="@+id/edit"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:clickable="true"
-        android:layout_alignParentRight="true"
+        android:gravity = "center_horizontal"
+        android:textAlignment="viewEnd"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="145dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:layout_marginRight="10dp"
         android:background="?attr/selectableItemBackground"/>
 

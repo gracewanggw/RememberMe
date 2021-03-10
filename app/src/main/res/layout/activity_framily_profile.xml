@@ -32,18 +32,20 @@
         android:src="@drawable/_pic"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
         android:text="@string/edit"
         android:id="@+id/edit"
         android:textStyle="bold"
+        android:gravity = "center_horizontal"
+        android:textAlignment="viewEnd"
         android:textColor="@color/white"
         android:clickable="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="95dp"
         android:layout_marginRight="5dp"
         android:layout_below="@id/back"
-        android:textSize="20dp"/>
+        android:textSize="18sp"/>
 
     <LinearLayout
         android:id="@+id/name_age_relation"
