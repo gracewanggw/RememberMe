@@ -43,6 +43,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -294,14 +295,25 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Intent intent;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy");
+        dateFormat.setLenient(false);
+        boolean bformat = false;
+        try {
+            dateFormat.parse(birthday.getText().toString().trim());
+            bformat = true;
+        } catch (ParseException pe) {
+        }
         switch (v.getId()) {
             case R.id.cancel:
                 finish();
                 break;
 
             case R.id.save:
+
                 if(nameFirst.getText().toString().length() < 1){
                     Toast.makeText(this, "Person Must Have Name", Toast.LENGTH_SHORT).show();
+                }else if(!bformat && (birthday.getText().toString().length() != 0)){
+                    Toast.makeText(this, "Invalid Birthday Format", Toast.LENGTH_SHORT).show();
                 }else {
                     saveEntry();
                     intent = new Intent(this, FramilyProfile.class);

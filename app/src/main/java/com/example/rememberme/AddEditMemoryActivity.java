@@ -49,7 +49,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AddEditMemoryActivity extends AppCompatActivity implements View.OnClickListener, MultiSpinner.MultiSpinnerListener {
+public class AddEditMemoryActivity extends AppCompatActivity implements View.OnClickListener/*, MultiSpinner.MultiSpinnerListener*/ {
 
     Context context;
 
@@ -84,10 +84,10 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
     Button cancelMemory;
     TextView removeMemory;
 
-    MultiSpinner tagSpinner;
-    ArrayList<String> framNames;
-    ArrayList<String> selectedNames;
-    TextView tagged;
+//    MultiSpinner tagSpinner;
+//    ArrayList<String> framNames;
+//    ArrayList<String> selectedNames;
+//    TextView tagged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +116,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         image = findViewById(R.id.memory_image);
         addImage = findViewById(R.id.add_image);
         audio = findViewById(R.id.add_audio);
-        tagged = findViewById(R.id.tagged_names);
+        //tagged = findViewById(R.id.tagged_names);
         saveMemory = findViewById(R.id.save_memory);
         cancelMemory = findViewById(R.id.cancel_memory);
         removeMemory = findViewById(R.id.remove);
@@ -125,13 +125,13 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         cancelMemory.setOnClickListener(this);
         removeMemory.setOnClickListener(this);
 
-        tagSpinner = (MultiSpinner) findViewById(R.id.tag_spinner);
-        List<Framily> framilys = dbSource.fetchFramilyEntries();
-        selectedNames = new ArrayList<String>();
-        framNames = new ArrayList<String>();
-        for (Framily framily: framilys) {
-            framNames.add(framily.getNameFirst() + " " + framily.getNameLast());
-        }
+//        tagSpinner = (MultiSpinner) findViewById(R.id.tag_spinner);
+//        List<Framily> framilys = dbSource.fetchFramilyEntries();
+//        selectedNames = new ArrayList<String>();
+//        framNames = new ArrayList<String>();
+//        for (Framily framily: framilys) {
+//            framNames.add(framily.getNameFirst() + " " + framily.getNameLast());
+//        }
 
         mFileName = getExternalFilesDir(null).getAbsolutePath() + "audio_file.3gp";
 
@@ -139,7 +139,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         framilyId = intent.getLongExtra(FramilyProfile.ID_KEY, -1);
         Log.d("rdudak", "id = " + framilyId);
         framily = dbSource.fetchFramilyByIndex(framilyId);
-        tagged.setText("Tagged: " + framily.getNameFirst() + " " + framily.getNameLast());
+        //tagged.setText("Tagged: " + framily.getNameFirst() + " " + framily.getNameLast());
         memoryId = intent.getLongExtra(ViewMemory.ID_MEMORY, -1);
         if (memoryId < 0) {
             Log.d("rdudak", "no id found -> new memory");
@@ -151,8 +151,8 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
             memory = dbSource.fetchMemoryByIndex(memoryId);
             loadData();
         }
-        framNames.remove(framily.getNameFirst() + " " + framily.getNameLast());
-        tagSpinner.setItems(framNames, "Select Framily Members to Tag", this);
+//        framNames.remove(framily.getNameFirst() + " " + framily.getNameLast());
+//        tagSpinner.setItems(framNames, "Select Framily Members to Tag", this);
         checkPermissions();
 
         context = this;
@@ -415,20 +415,20 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         Toast.makeText(this, "Audio recording saved", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onItemsSelected(boolean[] selected) {
-        selectedNames.clear();
-        for (int i = 0; i < selected.length; i++) {
-            if (selected[i])
-                selectedNames.add(framNames.get(i));
-        }
-        String tag = "Tagged: " + framily.getNameFirst() + ", ";
-        for (String name: selectedNames) {
-            tag = tag + name + ", ";
-        }
-        tag = tag.substring(0, tag.length() -2);
-        tagged.setText(tag);
-    }
+//    @Override
+//    public void onItemsSelected(boolean[] selected) {
+//        selectedNames.clear();
+//        for (int i = 0; i < selected.length; i++) {
+//            if (selected[i])
+//                selectedNames.add(framNames.get(i));
+//        }
+//        String tag = "Tagged: " + framily.getNameFirst() + ", ";
+//        for (String name: selectedNames) {
+//            tag = tag + name + ", ";
+//        }
+//        tag = tag.substring(0, tag.length() -2);
+//        tagged.setText(tag);
+//    }
 
     public class UpdateDbMemoryThread extends Thread {
         @Override

@@ -31,8 +31,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class EditUserProfileActivity extends AppCompatActivity{
@@ -123,8 +126,21 @@ public class EditUserProfileActivity extends AppCompatActivity{
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveEntry();
-                finish();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy");
+                dateFormat.setLenient(false);
+                boolean bformat = false;
+                try {
+                    dateFormat.parse(birthday.getText().toString().trim());
+                    bformat = true;
+                } catch (ParseException pe) {
+                }
+                
+                if(!bformat && (birthday.getText().toString().length() != 0)){
+                    Toast.makeText(getApplicationContext(), "Invalid Birthday Format", Toast.LENGTH_SHORT).show();
+                }else{
+                    saveEntry();
+                    finish();
+                }
             }
         });
 
@@ -137,6 +153,7 @@ public class EditUserProfileActivity extends AppCompatActivity{
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
+                presetAge();
             }
 
         };
@@ -145,9 +162,12 @@ public class EditUserProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Log.d("gwang","birthday on click");
-                new DatePickerDialog(EditUserProfileActivity.this, date, myCalendar
+                DatePickerDialog dialog = new DatePickerDialog(EditUserProfileActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.show();
             }
         });
 
@@ -208,6 +228,38 @@ public class EditUserProfileActivity extends AppCompatActivity{
                 || checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
         }
+    }
+
+    private void presetAge() {
+        String months[] = {"January", "February", "March", "April",
+                "May", "June", "July", "August",
+                "September", "October", "November", "December"
+        };
+
+        String birthdaytxt = birthday.getText().toString();
+        int year = Integer.parseInt(birthdaytxt.substring(birthdaytxt.length()-4));
+        int day = Integer.parseInt(birthdaytxt.substring(birthdaytxt.length()-7, birthdaytxt.length()-5));
+        String month = birthdaytxt.substring(0, birthdaytxt.length()-8);
+
+        String time = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH).format(new Date());
+        int myear = Integer.parseInt(time.substring(time.length()-4));
+        int mday = Integer.parseInt(time.substring(time.length()-7, time.length()-5));
+        String mmonth = time.substring(0, time.length()-8);
+
+        int index1 = Arrays.asList(months).indexOf(month);
+        int index2 = Arrays.asList(months).indexOf(mmonth);
+        String agecalc = "";
+        if(index2 >= index1){
+            if(mday >= day){
+                agecalc = ""+ (myear - year);
+            }
+        }
+        else{
+            agecalc = ""+ (myear - year - 1);
+        }
+
+        age.setText(agecalc);
+
     }
 
     public void profileImageChange(View view)
