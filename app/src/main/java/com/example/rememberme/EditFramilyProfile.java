@@ -16,6 +16,8 @@ import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -143,8 +145,10 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         try {
             FileInputStream fis = openFileInput(fileName);
             Bitmap bmap = BitmapFactory.decodeStream(fis);
-            roundedImage = new RoundImage(bmap);
-            photo.setImageDrawable(roundedImage);
+            //roundedImage = new RoundImage(bmap);
+            Drawable d = new BitmapDrawable(getApplicationContext().getResources(), bmap);
+            //photo.setImageDrawable(roundedImage);
+            photo.setImageDrawable(d);
             fis.close();
         } catch (IOException e) {
             Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);

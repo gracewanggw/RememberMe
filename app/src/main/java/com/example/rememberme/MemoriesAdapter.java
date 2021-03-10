@@ -3,6 +3,8 @@ package com.example.rememberme;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,8 @@ public class MemoriesAdapter extends BaseAdapter {
             Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
             imageView.setImageBitmap(rotatedBmp);
            // imageView.setImageBitmap(bmp);
+            Drawable d = new BitmapDrawable(mContext.getResources(), rotatedBmp);
+            imageView.setImageDrawable(d);
         }
         else {
             imageView.setImageBitmap(null);

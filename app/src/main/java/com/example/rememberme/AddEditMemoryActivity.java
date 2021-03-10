@@ -14,6 +14,7 @@ import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -348,7 +349,9 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         addImage.setVisibility(View.GONE);
         Bitmap bmp= BitmapFactory.decodeByteArray(imageAr, 0 , imageAr.length);
         Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
-        image.setImageBitmap(rotatedBmp);
+        Drawable d = new BitmapDrawable(getApplicationContext().getResources(), rotatedBmp);
+        image.setImageDrawable(d);
+       // image.setImageBitmap(rotatedBmp);
     }
 
     public void startAudio() {

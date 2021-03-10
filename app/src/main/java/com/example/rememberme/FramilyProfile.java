@@ -230,8 +230,10 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         try {
             FileInputStream fis = openFileInput(framily.getPhotoFileName());
             Bitmap bmap = BitmapFactory.decodeStream(fis);
-            roundedImage = new RoundImage(bmap);
-            photo.setImageDrawable(roundedImage);
+//            roundedImage = new RoundImage(bmap);
+            Drawable d = new BitmapDrawable(getApplicationContext().getResources(), bmap);
+           // photo.setImageDrawable(roundedImage);
+            photo.setImageDrawable(d);
             fis.close();
         } catch (IOException e) {
 

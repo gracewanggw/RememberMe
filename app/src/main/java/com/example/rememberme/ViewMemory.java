@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -97,7 +99,9 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         if(memory.getImage() != null) {
             Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
             Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
-            image.setImageBitmap(rotatedBmp);
+            Drawable d = new BitmapDrawable(getApplicationContext().getResources(), rotatedBmp);
+            image.setImageDrawable(d);
+            // image.setImageBitmap(rotatedBmp);
         }
     }
 
