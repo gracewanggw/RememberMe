@@ -27,9 +27,9 @@ They can add profiles for each framily member with information about the person 
 ### Development Setup instructions
 
 1. Download APK Directly onto phone
-- Google Drive:
-- Dropbox:
-2. Clone or Fork Application from Github:
+- Google Drive: https://drive.google.com/file/d/1W-dLC6lvwrgIaZr6KQCMfQNOJwTPVn5u/view?usp=sharing
+- Dropbox: https://www.dropbox.com/s/4aoigsx94gu1msx/RememberMe.apk?dl=0
+2. Clone or Fork Application from Github: https://github.com/gracewanggw/RememberMe
 
 
 ## Authors
