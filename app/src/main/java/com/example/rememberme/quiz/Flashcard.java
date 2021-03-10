@@ -30,7 +30,7 @@ import java.io.IOException;
 
 public class Flashcard extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "result popup";
+    private static final String ONQ_TAG = "on question side";
     private QuizQuestions questions;
 
     private TextView mQuestion;
@@ -77,7 +77,23 @@ public class Flashcard extends AppCompatActivity implements View.OnClickListener
         //changeCameraDistance();
 
         onQuestion = true;
+
+        if (savedInstanceState != null) {
+            if(savedInstanceState.getBoolean(ONQ_TAG)){
+                questionNum = savedInstanceState.getInt(Quiz.QNUM_TAG) - 1;
+            }else{
+                questionNum = savedInstanceState.getInt(Quiz.QNUM_TAG);
+            }
+            onQuestion = !savedInstanceState.getBoolean(ONQ_TAG);
+        }
         updateQuestion();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle saveInstanceState) {
+        super.onSaveInstanceState(saveInstanceState);
+        saveInstanceState.putInt(Quiz.QNUM_TAG, questionNum);
+        saveInstanceState.putBoolean(ONQ_TAG, onQuestion);
     }
 
 

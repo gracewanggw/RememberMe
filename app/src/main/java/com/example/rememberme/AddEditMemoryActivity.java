@@ -130,7 +130,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         selectedNames = new ArrayList<String>();
         framNames = new ArrayList<String>();
         for (Framily framily: framilys) {
-            framNames.add(framily.getNameFirst());
+            framNames.add(framily.getNameFirst() + " " + framily.getNameLast());
         }
 
         mFileName = getExternalFilesDir(null).getAbsolutePath() + "audio_file.3gp";
@@ -139,19 +139,19 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         framilyId = intent.getLongExtra(FramilyProfile.ID_KEY, -1);
         Log.d("rdudak", "id = " + framilyId);
         framily = dbSource.fetchFramilyByIndex(framilyId);
-        tagged.setText("Tagged: " + framily.getNameFirst());
+        tagged.setText("Tagged: " + framily.getNameFirst() + " " + framily.getNameLast());
         memoryId = intent.getLongExtra(ViewMemory.ID_MEMORY, -1);
         if (memoryId < 0) {
             Log.d("rdudak", "no id found -> new memory");
             memory = new Memory();
-            removeMemory.setVisibility(View.GONE);
+            removeMemory.setVisibility(View.INVISIBLE);
         }
         else {
             Log.d("rdudak", "memory id = " + memoryId);
             memory = dbSource.fetchMemoryByIndex(memoryId);
             loadData();
         }
-        framNames.remove(framily.getNameFirst());
+        framNames.remove(framily.getNameFirst() + " " + framily.getNameLast());
         tagSpinner.setItems(framNames, "Select Framily Members to Tag", this);
         checkPermissions();
 

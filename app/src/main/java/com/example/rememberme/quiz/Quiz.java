@@ -32,7 +32,7 @@ import java.util.ArrayList;
 //Quiz Activity
 public class Quiz extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "result popup";
+    public static final String QNUM_TAG = "quesiton number";
     private QuizQuestions questions;
 
     private TextView mQuestion;
@@ -95,10 +95,20 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         //loadAnimations();
         //changeCameraDistance();
 
+        if (savedInstanceState != null) {
+            questionNum = savedInstanceState.getInt(QNUM_TAG);
+            // Then the application is being reloaded
+        }
+
         updateQuestion();
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle saveInstanceState) {
+        super.onSaveInstanceState(saveInstanceState);
+        saveInstanceState.putInt(QNUM_TAG, questionNum);
+    }
 
     private void changeCameraDistance() {
         int distance = 8000;

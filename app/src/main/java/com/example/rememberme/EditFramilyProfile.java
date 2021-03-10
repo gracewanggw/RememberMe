@@ -3,6 +3,7 @@ package com.example.rememberme;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
@@ -43,6 +45,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -79,6 +82,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     EditText location;
     EditText phone;
     ArrayList<Long> memories;
+    Boolean defaultPic = true;
+
+    public ArrayList<String> defaultPics = new ArrayList<String>();
 
     public static final int CAMERA_REQUEST_CODE =  1;
     public static final int GALLERY_REQUEST_CODE = 2;
@@ -154,6 +160,15 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         }
 
 
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("defaultfiles", 0);
+
+        int size = sp.getInt("size", 0);
+        for(int i=0 ; i<size ; i++)
+        {
+            defaultPics.add(sp.getString("pic " + i, null));
+        }
+
+
         memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView = (GridView)findViewById(R.id.gridview);
         gridView.setAdapter(memoriesAdapter);
@@ -166,6 +181,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
+                presetAge();
             }
 
         };
@@ -173,9 +189,13 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         birthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(EditFramilyProfile.this, date, myCalendar
+                DatePickerDialog dialog = new DatePickerDialog(EditFramilyProfile.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.show();
+
             }
         });
 
@@ -217,7 +237,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         phone.setText(framily.getPhoneNumber());
         fileName = framily.getPhotoFileName();
         try {
-        updateImageView(framily.getImage());
+            updateImageView(framily.getImage());
         } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
             roundedImage = new RoundImage(bitmap);
@@ -229,6 +249,38 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         String myFormat = "MMMM dd yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         birthday.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private void presetAge() {
+        String months[] = {"January", "February", "March", "April",
+                "May", "June", "July", "August",
+                "September", "October", "November", "December"
+        };
+
+        String birthdaytxt = birthday.getText().toString();
+        int year = Integer.parseInt(birthdaytxt.substring(birthdaytxt.length()-4));
+        int day = Integer.parseInt(birthdaytxt.substring(birthdaytxt.length()-7, birthdaytxt.length()-5));
+        String month = birthdaytxt.substring(0, birthdaytxt.length()-8);
+
+        String time = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH).format(new Date());
+        int myear = Integer.parseInt(time.substring(time.length()-4));
+        int mday = Integer.parseInt(time.substring(time.length()-7, time.length()-5));
+        String mmonth = time.substring(0, time.length()-8);
+
+        int index1 = Arrays.asList(months).indexOf(month);
+        int index2 = Arrays.asList(months).indexOf(mmonth);
+        String agecalc = "";
+        if(index2 >= index1){
+            if(mday >= day){
+                agecalc = ""+ (myear - year);
+            }
+        }
+        else{
+            agecalc = ""+ (myear - year - 1);
+        }
+
+        age.setText(agecalc);
+
     }
 
     public ArrayList<Memory> getMemories() {
@@ -248,10 +300,14 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.save:
-                saveEntry();
-                intent = new Intent(this, FramilyProfile.class);
-                intent.putExtra(FramilyProfile.ID_KEY, id);
-                startActivity(intent);
+                if(nameFirst.getText().toString().length() < 1){
+                    Toast.makeText(this, "Person Must Have Name", Toast.LENGTH_SHORT).show();
+                }else {
+                    saveEntry();
+                    intent = new Intent(this, FramilyProfile.class);
+                    intent.putExtra(FramilyProfile.ID_KEY, id);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.remove:
@@ -296,6 +352,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                     byte[] image = getBytes(iStream);
                     framily.setImage(image);
                     updateImageView(image);
+                    defaultPic = false;
                     Log.d("rdudak", "camera bitmap saved: " + framily.getImage().toString());
                 } catch (Exception e) {
                     Log.d("rdudak", "camera save failed");
@@ -313,6 +370,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                     //byte[] image = getBytes(iStream);
                     framily.setImage(image);
                     updateImageView(image);
+                    defaultPic = false;
                     Log.d("rdudak", "gallery bitmap saved: " + framily.getImage().toString());
                 } catch (Exception e) {
                     Log.d("rdudak", "gallery save failed");
@@ -339,6 +397,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
                 roundedImage = new RoundImage(bm);
                 photo.setImageDrawable(roundedImage);
+                defaultPic = true;
             }
 
         }
@@ -372,11 +431,23 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         photo.buildDrawingCache();
         Bitmap map = photo.getDrawingCache();
         try {
-            FileOutputStream fos = openFileOutput(fileName,MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, MODE_PRIVATE);
             map.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.flush();
             fos.close();
             framily.setPhotoFileName(fileName);
+            if(defaultPic){
+                defaultPics.add(fileName);
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("defaultfiles", 0);
+                SharedPreferences.Editor editor = settings.edit();
+
+                editor.putInt("size", defaultPics.size());
+                for(int i=0 ; i<defaultPics.size() ; i++)
+                {
+                    editor.putString("pic " + i, defaultPics.get(i));
+                }
+                editor.apply();
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

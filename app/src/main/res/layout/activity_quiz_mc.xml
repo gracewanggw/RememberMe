@@ -1,96 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <LinearLayout
-        android:id="@+id/quiz_fragment"
+    <ScrollView
+        android:id="@+id/scroll_mc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id = "@+id/question"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/card"
-            android:textSize="40dp"
-            android:gravity="center"
-            app:autoSizeTextType="uniform"
-            app:autoSizePresetSizes="@array/autosize_text_sizes"
-            >
-        </TextView>
-        <!--progress bar
 
-        <FrameLayout
-            android:id="@+id/question_sec"
+        <LinearLayout
+            android:id="@+id/quiz_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
-            <include layout="@layout/flashcard" />
-        </FrameLayout>
-        -->
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
-        <Button
-            android:id="@+id/op1"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:background="@color/blue1"
-            android:layout_weight="0"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            />
+            <TextView
+                android:id = "@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/card"
+                android:textSize="40dp"
+                android:gravity="center"
+                app:autoSizeTextType="uniform"
+                app:autoSizePresetSizes="@array/autosize_text_sizes"
+                >
+            </TextView>
+            <!--progress bar
 
-        <Button
-            android:id="@+id/op2"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:background="@color/blue2"
-            android:layout_weight="0"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            />
-        <Button
-            android:id="@+id/op3"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:background="@color/blue3"
-            android:layout_weight="0"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            />
+            <FrameLayout
+                android:id="@+id/question_sec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <include layout="@layout/flashcard" />
+            </FrameLayout>
+            -->
 
-        <Button
-            android:id="@+id/op4"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:layout_weight="0"
-            android:textAllCaps="false"
-            android:background="@color/blue4"
-            android:textColor="@color/white"
-            />
+            <Button
+                android:id="@+id/op1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:background="@color/blue1"
+                android:layout_weight="0"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                />
 
+            <Button
+                android:id="@+id/op2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:background="@color/blue2"
+                android:layout_weight="0"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                />
+            <Button
+                android:id="@+id/op3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:background="@color/blue3"
+                android:layout_weight="0"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/op4"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:layout_weight="0"
+                android:textAllCaps="false"
+                android:background="@color/blue4"
+                android:textColor="@color/white"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="85dp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/exit"
+        android:padding="25dp"
+        android:layout_marginTop="120dp"
         android:textColor="@color/white"
-        android:gravity="center"
-        android:layout_gravity="bottom"
-        android:layout_margin="10dp"
-        android:background="@drawable/button"
+        android:background="@color/blue1"
+        android:layout_alignParentBottom="true"
         />
 
-</FrameLayout>
+
+</RelativeLayout>

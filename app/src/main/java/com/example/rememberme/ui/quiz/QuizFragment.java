@@ -2,6 +2,7 @@ package com.example.rememberme.ui.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -28,6 +29,7 @@ import com.example.rememberme.quiz.Quiz;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -56,6 +58,8 @@ public class QuizFragment extends Fragment{
 
     public int quizType;
     public ArrayList<Question> quiz;
+    public ArrayList<String> defaultPics = new ArrayList<String>();
+    private ArrayList<String> pics = new ArrayList<String>();
 
     public static final String FILL_IN_BLANK = "fill in blank";
 
@@ -76,6 +80,15 @@ public class QuizFragment extends Fragment{
         fill_in_blank = root.findViewById(R.id.fill_in_blank);
         mult_choice = root.findViewById(R.id.mc_button);
         //updateMasterLists();
+
+
+        SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences("defaultfiles", 0);
+
+        int size = sp.getInt("size", 0);
+        for(int i=0 ; i<size ; i++)
+        {
+            defaultPics.add(sp.getString("pic " + i, null));
+        }
 
         fill_in_blank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +126,7 @@ public class QuizFragment extends Fragment{
                         quizAll.setAlpha((float)1);
                         quizType = QUIZ_TYPE_ALL_KEY;
                         quiz = createQuiz();
-                        if(quiz.size() < 2){
+                        if(quiz.size() < 5){
                             MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                             Bundle bundle = new Bundle();
                             bundle.putString("title", "Not Enough");
@@ -239,6 +252,9 @@ public class QuizFragment extends Fragment{
         String[] infoChoice = {"relationship", "age", "birthday", "location", "photo"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
+        pics = dataSource.fetchFramilyColumn("photo");
+        pics.removeAll(defaultPics);
+
         int quizLength = Math.min(people.size() * 2 , 10);
         ArrayList<String> visited;
 
@@ -249,7 +265,7 @@ public class QuizFragment extends Fragment{
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
                     String fact = "";
-                    if(people.size() < 4){
+                    if(pics.size() < 4){
                         fact = infoChoice[new Random().nextInt(infoChoice.length - 1)];
                     }
                     else{
@@ -291,32 +307,10 @@ public class QuizFragment extends Fragment{
                 break;
             case QUIZ_TYPE_FACE_KEY:
                 visited = new ArrayList<String>();
-                quizLength = 0;
-                for(String facepic : dataSource.fetchFramilyColumn("photo")){
-                    try {
-                        FileInputStream fis = getActivity().getApplicationContext().openFileInput(facepic);
-                        Bitmap bmap = BitmapFactory.decodeStream(fis);
-                        Drawable d = new BitmapDrawable(getActivity().getApplicationContext().getResources(), bmap);
-                        Drawable.ConstantState c1 = d.getConstantState();
-                        fis.close();
-
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable._pic);
-                        RoundImage roundedImage = new RoundImage(bitmap);
-                        Drawable defaultPic = new BitmapDrawable(getActivity().getApplicationContext().getResources(), bitmap);
-                        Drawable.ConstantState cdefault = defaultPic.getConstantState();
-
-                        if (facepic.length() != 0 && !c1.equals(cdefault)) {
-                            quizLength += 1;
-                        }
-                    }catch (Exception e){
-                        if (facepic.length() != 0) {
-                            quizLength += 1;
-                        }
-                    }
-                }
+                quizLength = pics.size() - 1;
 
                 //incase not enough for quiz
-                if(quizLength < 4){
+                if(pics.size() < 4){
                     return quizQuestionList;
                 }
 
@@ -374,12 +368,17 @@ public class QuizFragment extends Fragment{
             case "photo":
                 mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
                 mQuestion.setADataType("Image");
-                mQuestion.setAnswer(person.getPhotoFileName());
+                for(String s: pics)
+                {
+                    if(s.equals(person.getPhotoFileName())) {
+                        mQuestion.setAnswer(person.getPhotoFileName());
+                    }
+                }
                 break;
         }
 
 
-        if(mQuestion.getAnswer().length() == 0 || mQuestion.getAnswer().equals("0")){
+        if(mQuestion.getAnswer() == null || mQuestion.getAnswer().length() == 0  || mQuestion.getAnswer().equals("0")){
             return null;
         }else {
             return mQuestion;

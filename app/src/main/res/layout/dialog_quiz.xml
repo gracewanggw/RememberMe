@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text = "Pick Review Mode"
         android:layout_marginTop="20dp"
@@ -19,32 +19,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         >
 
         <Button
             android:id="@+id/btn1"
-            android:background="@drawable/round_button"
+            android:background="@color/blue1"
             android:textColor="#FFFFFF"
-            android:textSize="15dp"
-            android:layout_height="wrap_content"
-            android:layout_width="160dp"
+            android:textSize="15sp"
+            android:layout_height="70dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:text="@string/review_mode"
-            android:layout_margin="10dp"
         />
 
         <Button
             android:id="@+id/btn2"
-            android:background="@drawable/round_dark"
+            android:background="@color/blue4"
+            android:layout_gravity="center_horizontal"
             android:textColor="#FFFFFF"
-            android:textSize="15dp"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="70dp"
             android:text="@string/flashcard_mode"
-            android:layout_marginLeft="5dp"
             />
     </LinearLayout>
 

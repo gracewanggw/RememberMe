@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -68,6 +69,9 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     public static final String MEMORY_KEY = "memory";
     public static final String POSITION_KEY = "position";
 
+    public ArrayList<String> defaultPics = new ArrayList<String>();
+    private ArrayList<String> pics = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,14 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         }
 
         dbSource = new RememberMeDbSource(this);
+
+        SharedPreferences sp = this.getApplicationContext().getSharedPreferences("defaultfiles", 0);
+
+        int size = sp.getInt("size", 0);
+        for(int i=0 ; i<size ; i++)
+        {
+            defaultPics.add(sp.getString("pic " + i, null));
+        }
         dbSource.open();
 
         Intent intent = getIntent();
@@ -248,10 +260,12 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 int quizType = QUIZ_TYPE_PERSON_KEY;
                 ArrayList<Question> personQuiz = makePeopleQuiz();
 
+                Log.d("personQuiz", ""+personQuiz);
+
                 if(personQuiz.size() < 2){
                     MyAlertDialogFragment myDialog = new MyAlertDialogFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString("title", "No Face Fill");
+                    bundle.putString("title", "Not Enough");
                     myDialog.setArguments(bundle);
                     myDialog.show(getSupportFragmentManager(), "dialog");
                 }else {
@@ -294,15 +308,22 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     }
 
     public ArrayList<Question> makePeopleQuiz() {
-        dbSource.open();
+        //dbSource.open();
         ArrayList<Question> quizQuestionList = new ArrayList<Question>();
 
         String[] infoChoice = {"relationship", "age", "birthday", "location", "photo", "lname", "phone"};
 
         ArrayList<String> visited = new ArrayList<String>();
 
+        pics = dbSource.fetchFramilyColumn("photo");
+        Log.d("pics", ""+pics);
+        pics.removeAll(defaultPics);
+
+        Log.d("pics", ""+pics);
+
         infoCount = 0;
         while (infoCount < infoChoice.length) {
+            Log.d("facts checked", ""+visited);
             String fact = infoChoice[new Random().nextInt(infoChoice.length)];
             if( !visited.contains(fact)){
                 visited.add(fact);
@@ -312,7 +333,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 }
             }
         }
-        dbSource.close();
+        //dbSource.close();
         return quizQuestionList;
     }
 
@@ -345,9 +366,18 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 mQuestion.setAnswer(person.getLocation());
                 break;
             case "photo":
+                if (pics.size() < 4){
+                    infoCount += 1;
+                    return null;
+                }
                 mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
                 mQuestion.setADataType("Image");
-                mQuestion.setAnswer(person.getPhotoFileName());
+                for(String s: pics)
+                {
+                    if(s.equals(person.getPhotoFileName())) {
+                        mQuestion.setAnswer(person.getPhotoFileName());
+                    }
+                }
                 break;
             case "phone":
                 mQuestion.setmQuestion("What is " + person.getNameFirst() + " " + person.getNameLast() + "'s phone number?");
@@ -362,7 +392,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         }
 
         //Log.d("answerLenth", "lenth is: " + mQuestion.getAnswer().length());
-        if(mQuestion.getAnswer().length() < 1 || mQuestion.getAnswer() == null || mQuestion.getAnswer().equals("0")){
+        if( mQuestion.getAnswer() == null || mQuestion.getAnswer().length() < 1 || mQuestion.getAnswer().equals("0")){
             infoCount += 1;
             return null;
         }else {
