@@ -62,6 +62,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     TextView addMemory;
     int infoCount;
 
+    public static boolean removeLast = false;
 
     public static final int QUIZ_TYPE_PERSON_KEY = 4;
     public static final String ID_KEY = "id_key";
@@ -130,10 +131,23 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         addMemory.setOnClickListener(this);
 
         memories = framily.getMemories();
-
-        memoriesAdapter = new MemoriesAdapter(this, getMemories());
-        gridView = (GridView)findViewById(R.id.gridview);
-        gridView.setAdapter(memoriesAdapter);
+        Log.d("rdudak", "on create memories: " + memories);
+        if (!removeLast && !memories.isEmpty()) {
+            Log.d("rdudak", "empty: " + memories.isEmpty() + " Remove Last: " + removeLast);
+            memoriesAdapter = new MemoriesAdapter(this, getMemories());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+        }
+        else {
+            Log.d("rdudak", "list empty, remove last = " + removeLast);
+            memories = new ArrayList<Long>();
+            framily.setMemories(memories);
+            dbSource.updateFramilyEntry(framilyId, framily);
+            memoriesAdapter = new MemoriesAdapter(this, new ArrayList<Memory>());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+            removeLast = false;
+        }
 
        updateViews();
 
@@ -152,7 +166,8 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 
     public ArrayList<Memory> getMemories() {
         ArrayList<Memory> memoryItems = new ArrayList<Memory>();
-        Log.d("rdudak", memories.toString());
+        Log.d("rdudak", "framily memories: " + framily.getMemories());
+        Log.d("rdudak", "getMemories() " + memories.toString());
         if(!memories.isEmpty()) {
             for (Long id: memories) {
                 memoryItems.add(dbSource.fetchMemoryByIndex(id));
@@ -167,9 +182,21 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         dbSource.open();
         framily = dbSource.fetchFramilyByIndex(framilyId);
         memories = framily.getMemories();
-        if (!memories.isEmpty()) {
+        if (!memories.isEmpty() && !removeLast) {
+            Log.d("rdudak", "empty: " + memories.isEmpty() + " Remove Last: " + removeLast);
             memoriesAdapter = new MemoriesAdapter(this, getMemories());
+            gridView = (GridView)findViewById(R.id.gridview);
             gridView.setAdapter(memoriesAdapter);
+        }
+        else {
+            Log.d("rdudak", "list empty, remove last = " + removeLast);
+            memories = new ArrayList<Long>();
+            framily.setMemories(memories);
+            dbSource.updateFramilyEntry(framilyId, framily);
+            memoriesAdapter = new MemoriesAdapter(this, new ArrayList<Memory>());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+            removeLast = false;
         }
     }
 

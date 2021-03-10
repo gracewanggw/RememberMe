@@ -235,8 +235,20 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
                 .setPositiveButton("Yes, I'm Sure", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        UpdateDbMemoryThread updateDbMemoryThread = new UpdateDbMemoryThread();
-                        updateDbMemoryThread.start();
+                        if (framily.getMemories().size() == 1) {
+                            FramilyProfile.removeLast = true;
+                            framily.setMemories(new ArrayList<Long>());
+                        }
+                        else {
+                            framily.removeMemory(memoryId);
+                        }
+                        dbSource.removeMemory(memoryId);
+                        Log.d("rdudak", "Memories: " + framily.getMemories());
+                       // Log.d("rdudak", "Memories: " + framily.getMemories());
+                        dbSource.updateFramilyEntry(framilyId, framily);
+
+//                        UpdateDbMemoryThread updateDbMemoryThread = new UpdateDbMemoryThread();
+//                        updateDbMemoryThread.start();
 //                        Intent intent = new Intent(context, FramilyProfile.class);
 //                        intent.putExtra(FramilyProfile.ID_KEY, framilyId);
 //                        startActivity(intent);
