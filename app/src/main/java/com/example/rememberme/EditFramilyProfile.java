@@ -189,9 +189,12 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         birthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(EditFramilyProfile.this, date, myCalendar
+                DatePickerDialog dialog = new DatePickerDialog(EditFramilyProfile.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.show();
 
             }
         });
@@ -266,15 +269,18 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
 
         int index1 = Arrays.asList(months).indexOf(month);
         int index2 = Arrays.asList(months).indexOf(mmonth);
+        String agecalc = "";
         if(index2 >= index1){
-            if(mday > day){
-                age.setText(""+ (myear - year));
+            if(mday >= day){
+                agecalc = ""+ (myear - year);
             }
         }
         else{
-            age.setText(""+ (myear - year-1));
+            agecalc = ""+ (myear - year - 1);
         }
-        //age.setText();
+
+        age.setText(agecalc);
+
     }
 
     public ArrayList<Memory> getMemories() {
