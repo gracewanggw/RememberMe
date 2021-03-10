@@ -2,6 +2,7 @@ package com.example.rememberme.ui.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -56,6 +57,7 @@ public class QuizFragment extends Fragment{
 
     public int quizType;
     public ArrayList<Question> quiz;
+    public ArrayList<String> defaultPics = new ArrayList<String>();
 
     public static final String FILL_IN_BLANK = "fill in blank";
 
@@ -76,6 +78,15 @@ public class QuizFragment extends Fragment{
         fill_in_blank = root.findViewById(R.id.fill_in_blank);
         mult_choice = root.findViewById(R.id.mc_button);
         //updateMasterLists();
+
+
+        SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences("defaultfiles", 0);
+
+        int size = sp.getInt("size", 0);
+        for(int i=0 ; i<size ; i++)
+        {
+            defaultPics.add(sp.getString("pic " + i, null));
+        }
 
         fill_in_blank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,6 +250,9 @@ public class QuizFragment extends Fragment{
         String[] infoChoice = {"relationship", "age", "birthday", "location", "photo"};
 
         List<Framily> people = dataSource.fetchFramilyEntries();
+        ArrayList<String> pics = dataSource.fetchFramilyColumn("photo");
+        pics.removeAll(defaultPics);
+
         int quizLength = Math.min(people.size() * 2 , 10);
         ArrayList<String> visited;
 
@@ -249,7 +263,7 @@ public class QuizFragment extends Fragment{
                     int random = (int) (Math.random() * people.size());
                     Framily chosen = people.get(random);
                     String fact = "";
-                    if(people.size() < 4){
+                    if(pics.size() < 4){
                         fact = infoChoice[new Random().nextInt(infoChoice.length - 1)];
                     }
                     else{
@@ -316,7 +330,7 @@ public class QuizFragment extends Fragment{
                 }
 
                 //incase not enough for quiz
-                if(quizLength < 4){
+                if(pics.size() < 4){
                     return quizQuestionList;
                 }
 
@@ -374,7 +388,13 @@ public class QuizFragment extends Fragment{
             case "photo":
                 mQuestion.setmQuestion("Who is " + person.getNameFirst() + " " + person.getNameLast() + "?");
                 mQuestion.setADataType("Image");
-                mQuestion.setAnswer(person.getPhotoFileName());
+                String filep = person.getPhotoFileName();
+                for(String filename : defaultPics) {
+                    if (filep.equals(filename)) {
+                       return null;
+                    }
+                }
+                mQuestion.setAnswer(filep);
                 break;
         }
 

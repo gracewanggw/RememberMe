@@ -1,6 +1,7 @@
 package com.example.rememberme.quiz;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,26 +29,10 @@ public class QuizQuestions {
     public ArrayList<String> allFaces = new ArrayList<String>();
     public ArrayList<String> allNameL = new ArrayList<String>();
     public ArrayList<String> allPhone = new ArrayList<String>();
+
+    public ArrayList<String> defaultPics = new ArrayList<String>();
+
     RememberMeDbSource dataSource;
-
-
-//    private int totalQuestions = 4;
-//
-//    private String testQuestions[] = {
-//            "What is the color of the sky?",
-//            "What term is it right now",
-//            "If you had to choose between never eating sugar again or never eating salt again what is the right choice?",
-//            "What is the best state in the US?"
-//    };
-//
-//    private String choices[][] = {
-//            {"Blue", "Red", "Pink", "Green"},
-//            {"20W", "16F", "21W", "21S"},
-//            {"Never eating sugar", "Never eating salt", "I refuse", "Both, I hate sugar and salt"},
-//            {"New Hampshire", "California", "Texas", "Oregon"}
-//    };
-//
-//    private int correctAns[] = {0,2,2,3};
 
     private ArrayList<String> testQuestions = new ArrayList<String>();
     private ArrayList<String> quesTypes = new ArrayList<String>();
@@ -73,6 +58,15 @@ public class QuizQuestions {
         totalQuestions = quiz.size();
         dataSource = new RememberMeDbSource(context);
         this.context = context;
+
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences("defaultfiles", 0);
+
+        int size = sp.getInt("size", 0);
+        for(int i=0 ; i<size ; i++)
+        {
+            defaultPics.add(sp.getString("pic " + i, null));
+        }
+
         dataSource.open();
 
         if(allAge.size() == 0) {
@@ -336,7 +330,8 @@ public class QuizQuestions {
         allAge = dataSource.fetchFramilyColumn("age");
         allLocation = dataSource.fetchFramilyColumn("location");
         allBirthday = dataSource.fetchFramilyColumn("birthday");
-        allFaces = getValidFaces();
+        allFaces = dataSource.fetchFramilyColumn("photo");
+        allFaces.removeAll(defaultPics);
         allNameL = dataSource.fetchFramilyColumn("last_name");
         allPhone = dataSource.fetchFramilyColumn("phone_number");
     }
@@ -349,36 +344,11 @@ public class QuizQuestions {
                 allAge = dataSource.fetchFramilyColumn("age");
                 allLocation = dataSource.fetchFramilyColumn("location");
                 allBirthday = dataSource.fetchFramilyColumn("birthday");
-                allFaces = getValidFaces();
+                allFaces = dataSource.fetchFramilyColumn("photo");
+                allFaces.removeAll(defaultPics);
                 allNameL = dataSource.fetchFramilyColumn("last_name");
                 allPhone = dataSource.fetchFramilyColumn("phone_number");
             }
         }.start();
     }
-
-    public ArrayList<String> getValidFaces(){
-        ArrayList<String> realImages = new  ArrayList<String>();
-        ArrayList<String> allImgs = dataSource.fetchFramilyColumn("photo");
-
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable._pic);
-        Drawable defaultPic = new BitmapDrawable(context.getResources(), bitmap);
-        Drawable.ConstantState cdefault = defaultPic.getConstantState();
-
-        for(String img : allImgs) {
-            try {
-                FileInputStream fis = context.openFileInput(img);
-                Bitmap bmap = BitmapFactory.decodeStream(fis);
-                Drawable d = new BitmapDrawable(context.getResources(), bmap);
-                Drawable.ConstantState c1 = d.getConstantState();
-
-                if(!c1.equals(cdefault)){
-                    realImages.add(img);
-                }
-            } catch (IOException e) {
-            }
-        }
-
-        return realImages;
-    }
-
 }

@@ -3,6 +3,7 @@ package com.example.rememberme;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.CursorWindow;
 import android.graphics.Bitmap;
@@ -79,6 +81,9 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     EditText location;
     EditText phone;
     ArrayList<Long> memories;
+    Boolean defaultPic = true;
+
+    public ArrayList<String> defaultPics = new ArrayList<String>();
 
     public static final int CAMERA_REQUEST_CODE =  1;
     public static final int GALLERY_REQUEST_CODE = 2;
@@ -154,6 +159,15 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         }
 
 
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("defaultfiles", 0);
+
+        int size = sp.getInt("size", 0);
+        for(int i=0 ; i<size ; i++)
+        {
+            defaultPics.add(sp.getString("pic " + i, null));
+        }
+
+
         memoriesAdapter = new MemoriesAdapter(this, getMemories());
         gridView = (GridView)findViewById(R.id.gridview);
         gridView.setAdapter(memoriesAdapter);
@@ -176,6 +190,8 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 new DatePickerDialog(EditFramilyProfile.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+                //age here String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
             }
         });
 
@@ -217,7 +233,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         phone.setText(framily.getPhoneNumber());
         fileName = framily.getPhotoFileName();
         try {
-        updateImageView(framily.getImage());
+            updateImageView(framily.getImage());
         } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
             roundedImage = new RoundImage(bitmap);
@@ -301,6 +317,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                     byte[] image = getBytes(iStream);
                     framily.setImage(image);
                     updateImageView(image);
+                    defaultPic = false;
                     Log.d("rdudak", "camera bitmap saved: " + framily.getImage().toString());
                 } catch (Exception e) {
                     Log.d("rdudak", "camera save failed");
@@ -318,6 +335,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                     //byte[] image = getBytes(iStream);
                     framily.setImage(image);
                     updateImageView(image);
+                    defaultPic = false;
                     Log.d("rdudak", "gallery bitmap saved: " + framily.getImage().toString());
                 } catch (Exception e) {
                     Log.d("rdudak", "gallery save failed");
@@ -344,6 +362,7 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable._pic);
                 roundedImage = new RoundImage(bm);
                 photo.setImageDrawable(roundedImage);
+                defaultPic = true;
             }
 
         }
@@ -377,11 +396,23 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         photo.buildDrawingCache();
         Bitmap map = photo.getDrawingCache();
         try {
-            FileOutputStream fos = openFileOutput(fileName,MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, MODE_PRIVATE);
             map.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.flush();
             fos.close();
             framily.setPhotoFileName(fileName);
+            if(defaultPic){
+                defaultPics.add(fileName);
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("defaultfiles", 0);
+                SharedPreferences.Editor editor = settings.edit();
+
+                editor.putInt("size", defaultPics.size());
+                for(int i=0 ; i<defaultPics.size() ; i++)
+                {
+                    editor.putString("pic " + i, defaultPics.get(i));
+                }
+                editor.apply();
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
