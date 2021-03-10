@@ -152,7 +152,8 @@
                         android:background="@drawable/input_box"
                         android:padding="10dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:inputType="number"/>
 
                     <EditText
                         android:id="@+id/birthday"
@@ -228,7 +229,8 @@
         android:textSize="18dp"
         android:hint="123 456 7890"
         android:padding="10dp"
-        android:background="@drawable/input_box"/>
+        android:background="@drawable/input_box"
+        android:inputType="phone"/>
 
         </LinearLayout>
 
@@ -252,20 +254,6 @@
                     android:layout_below="@id/info_layout"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/add_memory"
-                    android:text="@string/add_memory"
-                    android:gravity="right"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/info_layout"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:paddingTop="18dp"
-                    android:paddingRight="10dp"
-                    android:clickable="true"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <GridView

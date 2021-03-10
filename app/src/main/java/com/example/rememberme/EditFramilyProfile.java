@@ -107,7 +107,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         imageUri = FileProvider.getUriForFile(this, "com.example.rememberme", pictureFile);
         tempImgFile = new File(getExternalFilesDir(null), tempImgFileName);
 
-
         nameFirst = findViewById(R.id.name_first);
         nameLast = findViewById(R.id.name_last);
         relationship = findViewById(R.id.relationship);
@@ -123,8 +122,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
         saveBtn.setOnClickListener(this);
         remove = findViewById(R.id.remove);
         remove.setOnClickListener(this);
-        addMemory = findViewById(R.id.add_memory);
-        addMemory.setOnClickListener(this);
 
         Intent intent = getIntent();
         id = intent.getLongExtra(FramilyProfile.ID_KEY, -1);
@@ -254,12 +251,6 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
                 saveEntry();
                 intent = new Intent(this, FramilyProfile.class);
                 intent.putExtra(FramilyProfile.ID_KEY, id);
-                startActivity(intent);
-                break;
-
-            case R.id.add_memory:
-                intent = new Intent(this, AddEditMemoryActivity.class);
-                intent.putExtra(FramilyProfile.ID_KEY, framily.getId());
                 startActivity(intent);
                 break;
 
@@ -422,6 +413,12 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
     public void updateImageView(byte[] image) {
         Log.d("gwang", "updateImageView");
         Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+
+        Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
+//        roundedImage = new RoundImage(bmp);
+//        photo.setImageDrawable(roundedImage);
+        photo.setImageBitmap(rotatedBmp);
+
         if(bmp!=null){
             Log.d("gwang", "not null bmp");
             RoundImage nRoundImg = new RoundImage(bmp);
@@ -440,4 +437,5 @@ public class EditFramilyProfile extends AppCompatActivity implements View.OnClic
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
         }
     }
+
 }

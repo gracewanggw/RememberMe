@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 public class FramilyProfile extends AppCompatActivity implements View.OnClickListener {
 
     RememberMeDbSource dbSource;
@@ -61,6 +62,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     TextView addMemory;
     int infoCount;
 
+    public static boolean removeLast = false;
 
     public static final int QUIZ_TYPE_PERSON_KEY = 4;
     public static final String ID_KEY = "id_key";
@@ -96,16 +98,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
                 photo.setImageDrawable(roundedImage);
             }
-//            try
-//            {
-//                FileInputStream fis = openFileInput(framily.getImage());
-//                Bitmap bmap = BitmapFactory.decodeStream(fis);
-//                roundedImage = new RoundImage(bmap);
-//                photo.setImageDrawable(roundedImage);
-//                fis.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
         else {
             framily = new Framily();
@@ -113,7 +105,6 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
             roundedImage = new RoundImage(bm);
             photo.setImageDrawable(roundedImage);
         }
-
 
         name = findViewById(R.id.name);
         name.setText(framily.getNameFirst() + " " + framily.getNameLast());
@@ -136,20 +127,29 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         quiz.setOnClickListener(this);
         edit = findViewById(R.id.edit);
         edit.setOnClickListener(this);
-        //addMemory = findViewById(R.id.add_memory);
-        //addMemory.setOnClickListener(this);
+        addMemory = findViewById(R.id.add_memory);
+        addMemory.setOnClickListener(this);
 
         memories = framily.getMemories();
+        Log.d("rdudak", "on create memories: " + memories);
+        if (!removeLast && !memories.isEmpty()) {
+            Log.d("rdudak", "empty: " + memories.isEmpty() + " Remove Last: " + removeLast);
+            memoriesAdapter = new MemoriesAdapter(this, getMemories());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+        }
+        else {
+            Log.d("rdudak", "list empty, remove last = " + removeLast);
+            memories = new ArrayList<Long>();
+            framily.setMemories(memories);
+            dbSource.updateFramilyEntry(framilyId, framily);
+            memoriesAdapter = new MemoriesAdapter(this, new ArrayList<Memory>());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+            removeLast = false;
+        }
 
-        memoriesAdapter = new MemoriesAdapter(this, getMemories());
-        gridView = (GridView)findViewById(R.id.gridview);
-        gridView.setAdapter(memoriesAdapter);
-
-        name.setText(framily.getNameFirst() + " " + framily.getNameLast());
-        relationship.setText(framily.getRelationship());
-        age.setText(framily.getAge() + "");
-        birthday.setText(framily.getBirthday());
-        location.setText(framily.getLocation());
+       updateViews();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -166,8 +166,12 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
 
     public ArrayList<Memory> getMemories() {
         ArrayList<Memory> memoryItems = new ArrayList<Memory>();
-        for (Long id: memories) {
-            memoryItems.add(dbSource.fetchMemoryByIndex(id));
+        Log.d("rdudak", "framily memories: " + framily.getMemories());
+        Log.d("rdudak", "getMemories() " + memories.toString());
+        if(!memories.isEmpty()) {
+            for (Long id: memories) {
+                memoryItems.add(dbSource.fetchMemoryByIndex(id));
+            }
         }
         return memoryItems;
     }
@@ -176,9 +180,24 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
     public void onResume() {
         super.onResume();
         dbSource.open();
-        memoriesAdapter = new MemoriesAdapter(this, getMemories());
-        gridView.setAdapter(memoriesAdapter);
-
+        framily = dbSource.fetchFramilyByIndex(framilyId);
+        memories = framily.getMemories();
+        if (!memories.isEmpty() && !removeLast) {
+            Log.d("rdudak", "empty: " + memories.isEmpty() + " Remove Last: " + removeLast);
+            memoriesAdapter = new MemoriesAdapter(this, getMemories());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+        }
+        else {
+            Log.d("rdudak", "list empty, remove last = " + removeLast);
+            memories = new ArrayList<Long>();
+            framily.setMemories(memories);
+            dbSource.updateFramilyEntry(framilyId, framily);
+            memoriesAdapter = new MemoriesAdapter(this, new ArrayList<Memory>());
+            gridView = (GridView)findViewById(R.id.gridview);
+            gridView.setAdapter(memoriesAdapter);
+            removeLast = false;
+        }
     }
 
     @Override
@@ -187,7 +206,27 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         dbSource.close();
     }
 
+    public void updateViews() {
+        name.setText(framily.getNameFirst() + " " + framily.getNameLast());
+        relationship.setText(framily.getRelationship());
+        age.setText(framily.getAge() + "");
+        birthday.setText(framily.getBirthday());
+        location.setText(framily.getLocation());
+        if (framily.getImage() != null)
+            updateImageView(framily.getImage());
+        else {
+            roundedImage = new RoundImage(BitmapFactory.decodeResource(getResources(),R.drawable._pic));
+            photo.setImageDrawable(roundedImage);
+        }
+    }
+
     public void updateImageView(byte[] image) {
+        Bitmap bmp= BitmapFactory.decodeByteArray(image, 0 , image.length);
+        Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
+//        roundedImage = new RoundImage(bmp);
+//        photo.setImageDrawable(roundedImage);
+        photo.setImageBitmap(rotatedBmp);
+
         try {
             FileInputStream fis = openFileInput(framily.getPhotoFileName());
             Bitmap bmap = BitmapFactory.decodeStream(fis);
@@ -197,16 +236,7 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
         } catch (IOException e) {
 
         }
-
-        //  rotateImage();
     }
-
-//    public void rotateImage() {
-//        Matrix matrix = new Matrix();
-//        photo.setScaleType(ImageView.ScaleType.MATRIX);   //required
-//        matrix.postRotate((float) 90, 0, 0);
-//        photo.setImageMatrix(matrix);
-//    }
 
     @Override
     public void onClick(View v) {
@@ -248,11 +278,11 @@ public class FramilyProfile extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
 
-//            case R.id.add_memory:
-//                intent = new Intent(this, AddEditMemoryActivity.class);
-//                intent.putExtra(ID_KEY, framily.getId());
-//                startActivity(intent);
-//                break;
+            case R.id.add_memory:
+                intent = new Intent(this, AddEditMemoryActivity.class);
+                intent.putExtra(ID_KEY, framily.getId());
+                startActivity(intent);
+                break;
         }
     }
 
