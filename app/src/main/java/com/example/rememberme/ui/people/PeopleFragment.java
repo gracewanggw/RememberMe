@@ -36,6 +36,7 @@ import com.example.rememberme.DB.RememberMeDbSource;
 import com.example.rememberme.EditFramilyProfile;
 import com.example.rememberme.Framily;
 import com.example.rememberme.FramilyProfile;
+import com.example.rememberme.ImageRotation;
 import com.example.rememberme.R;
 import com.example.rememberme.RoundImage;
 
@@ -308,7 +309,8 @@ public class PeopleFragment extends Fragment {
                     Log.d("gwang", "photo file name not null");
                     FileInputStream fis = activity.openFileInput(fileName);
                     Bitmap bmap = BitmapFactory.decodeStream(fis);
-                    RoundImage roundedImage = new RoundImage(bmap);
+                    Bitmap rotatedBmp = ImageRotation.rotateImage(bmap, 90);
+                    RoundImage roundedImage = new RoundImage(rotatedBmp);
                     imageView.setImageDrawable(roundedImage);
                     fis.close();
                 } catch (IOException e) {
