@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.AlertDialog;
+import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -19,10 +20,14 @@ import com.example.rememberme.quiz.Quiz;
 
 import java.util.ArrayList;
 
-public class MyAlertDialogFragment extends DialogFragment implements DialogInterface.OnClickListener{
+public class MyAlertDialogFragment extends DialogFragment implements View.OnClickListener{
     ArrayList<Question> quiz;
     boolean fib;
     int type;
+
+    Button positive;
+    Button negative;
+    Button neutral;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
             noneBuilder.setView(content);
 
             // add the buttons
-            noneBuilder.setNegativeButton("Done", this);
+            content.findViewById(R.id.donebtn).setOnClickListener(this);
 
             return noneBuilder.create();
         }else if(title.equals("Not Enough")){
@@ -52,7 +57,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
             noneBuilder.setView(content);
 
             // add the buttons
-            noneBuilder.setNegativeButton("Done", this);
+            content.findViewById(R.id.donebtn).setOnClickListener(this);
 
             return noneBuilder.create();
         }else if(title.equals("No Face Fill")){
@@ -63,7 +68,7 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
             noneBuilder.setView(content);
 
             // add the buttons
-            noneBuilder.setNegativeButton("Done", this);
+            content.findViewById(R.id.donebtn).setOnClickListener(this);
 
             return noneBuilder.create();
         }else{
@@ -74,30 +79,29 @@ public class MyAlertDialogFragment extends DialogFragment implements DialogInter
             modeBuilder.setView(content);
 
             // add the buttons
-            modeBuilder.setPositiveButton("Flashcard Mode", this);
-            modeBuilder.setNeutralButton("Quiz Mode", this);
-
+            content.findViewById(R.id.btn2).setOnClickListener(this);
+            content.findViewById(R.id.btn1).setOnClickListener(this);
             return modeBuilder.create();
         }
     }
 
-    public void onClick(DialogInterface dialogInterface, int item){
+    public void onClick(View view){
 
-        if(item == DialogInterface.BUTTON_POSITIVE){
-
+        if(view.getId() == R.id.btn2){
             Intent intent = new Intent(getContext(), Flashcard.class);
             intent.putExtra(QuizFragment.QUIZ_KEY, quiz);
             startActivity(intent);
 
             //flash.onFlashClick();
-        }  else if (item == DialogInterface.BUTTON_NEUTRAL){
+        }  else if (view.getId() == R.id.btn1){
             Intent intent = new Intent(getContext(), Quiz.class);
             intent.putExtra(QuizFragment.FILL_IN_BLANK, fib);
             intent.putExtra(QuizFragment.QUIZ_KEY, quiz);
             intent.putExtra(QuizFragment.QUIZ_TYPE_KEY, type);
             startActivity(intent);
         }
-        else if (item == DialogInterface.BUTTON_NEGATIVE){
+        else if (view.getId() == R.id.donebtn){
+            dismiss();
         }
 
     }

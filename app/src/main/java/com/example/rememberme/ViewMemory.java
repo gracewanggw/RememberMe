@@ -77,12 +77,29 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
         updateViews();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        dbSource.open();
+        memory = dbSource.fetchMemoryByIndex(memoryId);
+        updateViews();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dbSource.close();
+    }
+
     public void updateViews() {
         back.setText("< Back to " + framily.getNameFirst());
         title.setText(memory.getTitle());
         text.setText(memory.getText());
-        Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
-        image.setImageBitmap(bmp);
+        if(memory.getImage() != null) {
+            Bitmap bmp= BitmapFactory.decodeByteArray(memory.getImage(), 0 , memory.getImage().length);
+            Bitmap rotatedBmp = ImageRotation.rotateImage(bmp, 90);
+            image.setImageBitmap(rotatedBmp);
+        }
     }
 
     @Override
@@ -94,6 +111,7 @@ public class ViewMemory extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.edit:
+                finish();
                 intent = new Intent(this, AddEditMemoryActivity.class);
                 intent.putExtra(ID_MEMORY, memoryId);
                 intent.putExtra(FramilyProfile.ID_KEY, framilyId);

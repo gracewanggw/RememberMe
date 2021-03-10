@@ -79,8 +79,6 @@ public class Quiz extends AppCompatActivity implements View.OnClickListener {
         quiz = myintent.getParcelableArrayListExtra(QuizFragment.QUIZ_KEY);
         type = myintent.getIntExtra(QuizFragment.QUIZ_TYPE_KEY, 0);
 
-
-        Log.d("in quiz act", ""+quiz.size());
         questions = new QuizQuestions(quiz, this.getApplicationContext());
         correct_answers = 0;
         wrong_answers = 0;

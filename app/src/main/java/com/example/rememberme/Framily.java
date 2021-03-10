@@ -52,6 +52,7 @@ public class Framily {
     public void setMemories(ArrayList<Long> memories) {this.memories = memories;}
     public ArrayList<Long> getMemories() {return memories;}
     public void addMemory(Long memory) {memories.add(memory);}
+    public void removeMemory(Long memory) {memories.remove(memory);}
 
     public void setImage(byte[] image) {this.image = image;}
     public byte[] getImage() {return image;}

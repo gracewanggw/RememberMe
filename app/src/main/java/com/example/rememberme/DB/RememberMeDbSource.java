@@ -174,7 +174,6 @@ public class RememberMeDbSource {
         entry.setText(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.TEXT)));
         entry.setImage(cursor.getBlob(cursor.getColumnIndex(RememberMeDbHelper.IMAGE_MEMORY)));
         entry.setAudio(cursor.getString(cursor.getColumnIndex(RememberMeDbHelper.AUDIO)));
-
         cursor.close();
         return entry;
     }
@@ -243,7 +242,10 @@ public class RememberMeDbSource {
         values.put(RememberMeDbHelper.PHOTO_FILE, framily.getPhotoFileName());
         if (!framily.getMemories().isEmpty())
             values.put(RememberMeDbHelper.MEMORIES, arrayListToByteArray(framily.getMemories()));
+        else
+            values.putNull(RememberMeDbHelper.MEMORIES);
         database.update(RememberMeDbHelper.TABLE_NAME_FRAMILY, values, RememberMeDbHelper.ID_FRAMILY + " = " + rowId, null);
+        Log.d("rdudak", "Db source updated memories: " + framily.getMemories());
     }
 
     public void updateMemoryEntry(Long rowId) {
