@@ -139,7 +139,7 @@ public class AddEditMemoryActivity extends AppCompatActivity implements View.OnC
         if (memoryId < 0) {
             Log.d("rdudak", "no id found -> new memory");
             memory = new Memory();
-            removeMemory.setVisibility(View.GONE);
+            removeMemory.setVisibility(View.INVISIBLE);
         }
         else {
             Log.d("rdudak", "memory id = " + memoryId);
